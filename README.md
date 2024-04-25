@@ -14,7 +14,7 @@
 
 - Clone repository.
   ```bash
-   git clone
+   git clone https://github.com/Zeddxx/enimi.git
   ```
   
 - Go into server directory and install its dependencies and run the server.
