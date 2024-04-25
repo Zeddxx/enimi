@@ -1,6 +1,7 @@
 import { IAnimeInfo, IEpisodeId, IRecommendations, ISearchedAnime, IStreamingLinks, ITrending } from "@/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+// const BASE_URL: string = "http://localhost:4000";
 const BASE_URL: string = "";
 
 export const api = createApi({
@@ -11,43 +12,43 @@ export const api = createApi({
   endpoints: (builder) => ({
     getTrending: builder.query<ITrending, void>({
       query: () => ({
-        url: "/trending",
+        url: "/api/trending",
         method: "GET",
       }),
     }),
     getPopular: builder.query<ITrending, void>({
       query: () => ({
-        url: "/popular",
+        url: "/api/popular",
         method: "GET",
       }),
     }),
     getAnimeInfoById: builder.query<IAnimeInfo, { id: string }>({
       query: ({ id }: { id: string }) => ({
-        url: `/info?id=${id}`,
+        url: `/api/info?id=${id}`,
         method: "GET",
       }),
     }),
     getRecommendationById: builder.query<IRecommendations, { id: string }>({
       query: ({ id }: { id: string }) => ({
-        url: `/recommendations?id=${id}`,
+        url: `/api/recommendations?id=${id}`,
         method: "GET",
       }),
     }),
     getAnimeEpisodeDetails: builder.query<IEpisodeId, { id: string }>({
       query: ({ id }: { id: string }) => ({
-        url: `/episode?id=${id}`,
+        url: `/api/episode?id=${id}`,
         method: "GET",
       }),
     }),
     getEpisodeLinks: builder.query<IStreamingLinks, { id: string }>({
       query: ({ id }: { id: string }) => ({
-        url: `/episode-streaming?id=${id}`,
+        url: `/api/episode-streaming?id=${id}`,
         method: "GET",
       }),
     }),
     getSearchedAnime: builder.query<ISearchedAnime, { query: string, page: number }>({
       query: ({ query, page }: { query: string, page: number }) => ({
-        url: `/search?query=${query}&page=${page}`,
+        url: `/api/search?query=${query}&page=${page}`,
         method: "GET",
       })
     })
