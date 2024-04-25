@@ -1,7 +1,7 @@
 import { IAnimeInfo, IEpisodeId, IRecommendations, ISearchedAnime, IStreamingLinks, ITrending } from "@/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const BASE_URL: string = "http://localhost:4000/api" || "";
+const BASE_URL: string = "";
 
 export const api = createApi({
   reducerPath: "api",
