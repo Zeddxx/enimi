@@ -76,7 +76,7 @@ html {
 }
 
 .info_banner_container {
-  @apply h-[50vw] max-h-80 right-0 opacity-55 w-full absolute top-0 -z-10 min-h-60 before:absolute before:bottom-0 before:w-full before:h-[75%] before:bg-gradient-to-t before:from-white before:via-white before:to-transparent;
+  @apply h-[50vw] max-h-96 right-0 opacity-55 w-full absolute top-0 -z-10 min-h-60 before:absolute before:bottom-0 before:w-full before:h-[75%] before:bg-gradient-to-t before:from-white before:via-white before:to-transparent;
 }
 
 .info_description {
@@ -85,4 +85,15 @@ html {
 
 .sub_headings {
   @apply text-pretty text-3xl font-semibold mt-7 mb-3
+}
+
+.veritcal-text {
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  text-orientation: use-glyph-orientation;
+  text-align: left;
+}
+
+.anime_card_wrapper {
+  @apply grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 sm:grid-cols-3 gap-4;
 }

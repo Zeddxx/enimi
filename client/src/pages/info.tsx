@@ -1,4 +1,6 @@
 import AnimeRelation from "@/components/anime-relation";
+import SEO from "@/components/seo";
+import AnimeCard from "@/components/shared/anime-card";
 import AnimeInfoTitleContainer from "@/components/shared/anime-info-title-container";
 import AnimePoster from "@/components/shared/anime-poster";
 import BannerImage from "@/components/shared/banner-image";
@@ -7,7 +9,7 @@ import {
   useGetAnimeInfoByIdQuery,
   useGetRecommendationByIdQuery,
 } from "@/redux/api";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const Info = () => {
   const { animeId } = useParams();
@@ -26,8 +28,15 @@ const Info = () => {
 
   return (
     <section className="relative w-full">
+      <SEO
+        title={`${data.title.userPreferred} | Enimi`}
+        description={data.description}
+        name="Enimi Anime Details"
+        type="webpage"
+      />
+      {/* Info Banner */}
       <BannerImage bannerImage={data.bannerImage} />
-      <div className="max-w-screen-2xl mx-auto px-4 w-full pt-32">
+      <div className="max-w-screen-2xl mx-auto px-4 w-full pt-40">
         <div className="w-full flex lg:flex-row flex-col">
           {/* cover image container */}
           <AnimePoster coverImage={data.coverImage.large} />
@@ -102,31 +111,13 @@ const Info = () => {
           </div>
         </div>
 
-        {/* Relations */}
-        <h3 className="sub_headings">Relations</h3>
         <AnimeRelation relation={data.relation} id={id} />
 
         <div className="my-5">
           <h4 className="sub_headings">Recommendations</h4>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 sm:grid-cols-3 gap-4">
+          <div className="anime_card_wrapper">
             {recommendations?.results.map((anime) => (
-              <div key={anime.id} className="aspect-[12/16]">
-                <Link
-                  to={`/${anime.animeId}`}
-                  className="h-full w-full rounded-md overflow-hidden block shadow"
-                >
-                  <img
-                    src={anime.coverImage.large}
-                    alt="anime image poster"
-                    className="h-full w-full object-cover"
-                  />
-                </Link>
-                <h5 className="mt-2 font-medium">
-                  <Link preventScrollReset={false} to={`/${anime.animeId}`} className="hover:text-primary line-clamp-1 transition-colors duration-200">
-                    {anime.title.userPreferred}
-                  </Link>
-                </h5>
-              </div>
+              <AnimeCard key={anime.id} anime={anime} />
             ))}
           </div>
         </div>

@@ -13,6 +13,14 @@ export type ITitle = {
   userPreferred: string;
 };
 
+
+export type ISearchedAnime = {
+  code: number
+  message: string
+  pageInfo: IPage
+  results: IAnime[]
+}
+
 export type ITag = {
   id: number;
   name: string;
@@ -98,7 +106,7 @@ export type IAnimeInfo = {
   genres: string[];
   id: string;
   id_provider: IProvider;
-  anime_episodes: [{ episodeNumber: number; episodeId: string }];
+  anime_episodes: [{ title: number; id: string }];
   nextair: INextAiringEpisode;
   popularity: number;
   relation: IAnime[];
@@ -128,3 +136,16 @@ export type IEpisode = {
 export type IEpisodeId = {
   episodes: IEpisode[];
 };
+
+export type ISource = {
+  isM3U8: boolean;
+  quality: string
+  url: string
+}
+
+export type IStreamingLinks = {
+  headers: {
+    Referer: string;
+  }
+  sources: ISource[]
+}

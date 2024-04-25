@@ -16,12 +16,15 @@ const AnimeInfoTitleContainer = ({ data }: { data: IAnimeInfo }) => {
         <p className="anime_utils">Rating: {data?.score.decimalScore}</p>
         <p className="anime_utils">Status: {data?.status}</p>
         <p className="anime_utils">Duration: {data?.duration}</p>
+        {data.nextair && (
+          <p className="anime_utils">Next Episode: {data.nextair.episode}</p>
+        )}
       </div>
 
       {/* ANIME CTA BUTTON */}
       <div className="w-full flex sm:flex-row flex-col gap-3 mt-3">
         <Link
-          to={`/watch/${data?.anime_episodes[0].episodeId}`}
+          to={`/watch/${data?.anime_episodes[0].id}`}
           className={cn(
             buttonVariants({
               className: "rounded-none w-full truncate",
@@ -36,7 +39,7 @@ const AnimeInfoTitleContainer = ({ data }: { data: IAnimeInfo }) => {
           size="icon"
         >
           <Bookmark className="h-4 w-4 group-hover:fill-primary text-primary transition-colors duration-300" />
-          <span className="ml-2 block sm:hidden">Watch Later</span>
+          <span className="ml-2">Watch Later</span>
         </Button>
       </div>
     </div>

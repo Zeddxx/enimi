@@ -22,12 +22,12 @@ const AnimeCarousel = ({ animes }: { animes: IAnime[] }) => {
           delay: 7000,
         }),
       ]}
-      className="relative w-full"
+      className="relative w-full max-w-screen-2xl mx-auto"
     >
       <CarouselContent>
         {animes.map((anime) => (
           <CarouselItem
-            className="h-[50vw] pl-0 max-h-[560px] min-h-72 w-full"
+            className="h-[50vw] pl-0 max-h-[620px] min-h-72 w-full"
             key={anime.id}
           >
             <div className="w-full h-full relative">
@@ -39,7 +39,7 @@ const AnimeCarousel = ({ animes }: { animes: IAnime[] }) => {
                 />
               </div>
 
-              <div className="ml-10 max-w-3xl bottom-8 absolute space-y-3">
+              <div className="ml-8 max-w-3xl bottom-8 absolute space-y-3">
                 <div className="aspect-[12/18] w-36 rounded-md overflow-hidden shadow-sm hidden mb-4 lg:block">
                   <img
                     src={anime.coverImage.large}

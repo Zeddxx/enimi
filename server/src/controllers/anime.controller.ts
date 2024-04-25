@@ -44,7 +44,7 @@ export const trending = async (req: Request, res: Response) => {
 export const popular = async (req: Request, res: Response) => {
   try {
     const { limit, page } = req.query;
-    const animeLimit = Number(limit) || 8;
+    const animeLimit = Number(limit) || 15;
     const animePage = Number(page) || 1;
 
     const anime = await getPopularAnime(animeLimit, animePage);
@@ -52,7 +52,21 @@ export const popular = async (req: Request, res: Response) => {
     if (!anime) {
       return res.status(404).json({ message: "Not found!" });
     }
-    return res.status(200).json(anime);
+
+    const popular = anime.results.map((result) => {
+      const animeId =
+        result.title.english.toLowerCase().split(" ").join("-") +
+        "-" +
+        result.id;
+      return { ...result, animeId: animeId };
+    });
+
+    return res.status(200).json({
+      code: 200,
+      message: "success",
+      page: anime.page,
+      results: popular,
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Something went wrong!" });
@@ -81,10 +95,11 @@ export const info = async (req: Request, res: Response) => {
         "-" +
         animeInfo.id;
 
-    const episodes = await scrapeEpisodes(animeInfo.title.userPreferred);
-    console.log(episodes);
+    const episodes = await scrapeEpisodes(animeInfo.id_provider.idGogo);
 
-    return res.status(200).json({ ...animeInfo, animeId, anime_episodes: episodes });
+    return res
+      .status(200)
+      .json({ ...animeInfo, animeId, anime_episodes: episodes.reverse() });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Something went wrong!" });
@@ -105,7 +120,21 @@ export const searched = async (req: Request, res: Response) => {
 
     const searchAnime = await getSearchedAnime(q, p, l);
 
-    return res.status(200).json(searchAnime);
+    if(!searchAnime) {
+      return res.status(404).json({ message: "No searched query found!" })
+    }
+
+    const anime = searchAnime.results.map((anime) => {
+      const animeId = anime.title.userPreferred.toLowerCase().split(" ").join("-") + "-" + anime.id;
+      return { ...anime, animeId }
+    })
+
+    return res.status(200).json({
+      code: 200,
+      message: "success",
+      page: searchAnime.pageInfo,
+      results: anime,
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Something went wrong!" });
@@ -115,7 +144,7 @@ export const searched = async (req: Request, res: Response) => {
 export const episode = async (req: Request, res: Response) => {
   try {
     const { id, dub } = req.query;
-    const animeDub = dub ? dub as string : "false";
+    const animeDub = dub ? (dub as string) : "false";
     const animeId = id as string;
 
     const animeEpisode = await getAnimeEpisodesById(animeId, animeDub);

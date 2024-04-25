@@ -9,12 +9,19 @@ const AnimeRelation = ({
   relation: IAnime[];
   id: string;
 }) => {
+  const filteredRelations = relation
+    .filter((relation) => relation.type !== "MANGA")
+    .filter((anime) => anime.status !== "NOT_YET_RELEASED");
+
+  if (filteredRelations.length === 0) {
+    return null;
+  }
+
   return (
-    <div className="w-full gap-3 grid xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-5 sm:grid-cols-4">
-      {relation
-        .filter((relation) => relation.type !== "MANGA")
-        .splice(0, 12)
-        .map((relation) => (
+    <>
+      <h3 className="sub_headings">Relations</h3>
+      <div className="w-full gap-3 grid xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-5 sm:grid-cols-4">
+        {filteredRelations.splice(0, 12).map((relation) => (
           <Link
             to={`/${
               relation.title.userPreferred.toLowerCase().split(" ").join("-") +
@@ -35,7 +42,8 @@ const AnimeRelation = ({
             <p className="text-sm truncate">{relation.title.userPreferred}</p>
           </Link>
         ))}
-    </div>
+      </div>
+    </>
   );
 };
 export default AnimeRelation;

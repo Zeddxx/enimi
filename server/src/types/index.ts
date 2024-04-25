@@ -113,3 +113,11 @@ export type IAnimeInfo = {
 export type IRecommendations = {
     results: IAnime[]
 }
+
+
+export type ISearchedAnime = {
+    code: number
+    message: string
+    pageInfo: IPage
+    results: IAnime[]
+}

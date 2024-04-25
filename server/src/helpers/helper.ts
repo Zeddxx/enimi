@@ -1,6 +1,6 @@
 import axios from "axios";
 import "dotenv/config";
-import { IAnimeInfo, IRecommendations, ITrending } from "../types";
+import { IAnimeInfo, IRecommendations, ISearchedAnime, ITrending } from "../types";
 
 const baseUrl: string = (process.env.BACKEND_URL as string) || "";
 
@@ -27,7 +27,7 @@ export const getPopularAnime = async (limit: number, page: number) => {
         headers: { Accept: "application/json" },
       }
     );
-    return data;
+    return data as ITrending;
   } catch (error) {
     console.log(error);
     throw Error;
@@ -70,7 +70,7 @@ export const getSearchedAnime = async (
         headers: { Accept: "application/json" },
       }
     );
-    return data;
+    return data as ISearchedAnime
   } catch (error) {
     console.log(error);
     throw Error;
@@ -79,8 +79,14 @@ export const getSearchedAnime = async (
 
 export const getAnimeEpisodesStream = async (id: string) => {
   try {
-    const { data } = await axios.get(baseUrl + `/stream/${id}`, {
-      headers: { Accept: "application/json" },
+    const streamUrl: string = process.env.CONSUMET_URL as string;
+    // const { data } = await axios.get(baseUrl + `/stream/${id}`, {
+    //   headers: { Accept: "application/json" },
+    // });
+    const { data } = await axios.get(streamUrl + `/${id}`, {
+      headers: {
+        Accept: "application/json",
+      },
     });
     return data;
   } catch (error) {
@@ -104,34 +110,15 @@ interface Episode {
   episodeId: string;
 }
 
-export const scrapeEpisodes = async (title: string): Promise<Episode[]> => {
-    try {
-      const { data: searchedAnime } = await axios.get("http://127.0.0.1:3000/search/" + title);
-  
-      if (!searchedAnime) {
-        return [];
-      }
-  
-      const { data: scrappedEpisodes } = await axios.get("http://127.0.0.1:3000/getAnime/" + searchedAnime[0]?.anime_id);
-  
-      if (!scrappedEpisodes || !scrappedEpisodes.episode_id) {
-        return [];
-      }
-  
-      // Extract episode IDs array from scrappedEpisodes object
-      const episodeIds: string[] = scrappedEpisodes.episode_id;
-  
-      // Construct array of episode objects with episode number
-      const episodes: Episode[] = episodeIds.map((episodeId: string, index: number) => {
-        return {
-          episodeNumber: index + 1,
-          episodeId
-        };
-      });
-  
-      return episodes;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  };
+export const scrapeEpisodes = async (id: string): Promise<Episode[]> => {
+  const BASE_BACKEND_URL = process.env.BASE_BACKEND_URL as string;
+  try {
+    const { data } = await axios.get(
+      `${BASE_BACKEND_URL}/api/v1/episode/${id}`
+    );
+    return data.episodes;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
