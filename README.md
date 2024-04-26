@@ -13,33 +13,33 @@
 ## Installation
 
 - Clone repository.
-  ```bash
-   git clone https://github.com/Zeddxx/enimi.git
-  ```
+```bash
+git clone https://github.com/Zeddxx/enimi.git
+```
   
 - Go into server directory and install its dependencies and run the server.
   
-  ```bash
-   cd server && npm install && npm run dev
-  ```
+```bash
+cd server && npm install && npm run dev
+```
 
 - Response from backend.
 
-  ```bash
-   Listening at http://localhost:4000
-  ```
+```bash
+Listening at http://localhost:4000
+```
   
 - Go to client directory and do the same. (open another terminal)
 
-   ```bash
-    cd client && npm install && npm run dev
-  ```
+```bash
+cd client && npm install && npm run dev
+```
 
 - Response from client.
 
-   ```bash
-    running at http://localhost:5173
-  ```
+```bash
+running at http://localhost:5173
+```
 
   ## Deployment.
   deploy your instance at **render** as i found it way more simple for MERN stack.
