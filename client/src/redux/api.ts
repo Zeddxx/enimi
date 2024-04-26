@@ -1,4 +1,4 @@
-import { IAnimeInfo, IEpisodeId, IRecommendations, ISearchedAnime, IStreamingLinks, ITrending } from "@/types";
+import { IAnimeInfo, IEpisodeId, IRecents, IRecommendations, ISearchedAnime, IStreamingLinks, ITrending } from "@/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // const BASE_URL: string = "http://localhost:4000";
@@ -51,7 +51,13 @@ export const api = createApi({
         url: `/api/search?query=${query}&page=${page}`,
         method: "GET",
       })
-    })
+    }),
+    getRecentAnimes: builder.query<IRecents[], void>({
+      query: () => ({
+        url: "/api/recents",
+        method: "GET"
+      }),
+    }),
   }),
 });
 
@@ -62,5 +68,6 @@ export const {
   useGetRecommendationByIdQuery,
   useGetAnimeEpisodeDetailsQuery,
   useGetEpisodeLinksQuery,
-  useGetSearchedAnimeQuery
+  useGetSearchedAnimeQuery,
+  useGetRecentAnimesQuery
 } = api;

@@ -67,7 +67,7 @@ html {
 }
 
 .info_banner_container {
-  @apply h-[50vw] max-h-96 right-0 opacity-55 w-full absolute top-0 -z-10 min-h-60 before:absolute before:bottom-0 before:w-full before:h-[75%] before:bg-gradient-to-t before:from-white before:dark:from-black before:via-white before:dark:via-black before:to-transparent;
+  @apply h-[50vw] max-h-96 right-0 opacity-55 w-full absolute top-0 -z-10 min-h-60 before:absolute before:bottom-0 before:w-full before:h-[75%] before:bg-gradient-to-t before:from-white before:dark:from-[#121212] before:via-white before:dark:via-[#121212] before:to-transparent;
 }
 
 .info_description {

@@ -1,8 +1,8 @@
-const BannerImage = ({ bannerImage } : { bannerImage: string }) => {
+const BannerImage = ({ bannerImage, fallbackImg } : { bannerImage: string, fallbackImg: string }) => {
   return (
     <div className="info_banner_container">
         <img
-          src={bannerImage}
+          src={bannerImage ?? fallbackImg}
           alt="anime banner image"
           className="h-full w-full object-cover"
         />

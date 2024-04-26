@@ -25,8 +25,8 @@ const PopularAnimeCarousel = ({ populars }: PopularAnimeProps) => {
           </div>
 
           <div className="flex items-center h-12 relative">
-            <CarouselPrevious className="top-1/2 -translate-y-1/2 md:w-24 absolute md:-translate-x-40 -translate-x-6 rounded-none" />
-            <CarouselNext className="top-1/2 -translate-y-1/2 right-0 md:w-24 absolute rounded-none" />
+            <CarouselPrevious variant="default" className="top-1/2 -translate-y-1/2 md:w-24 absolute md:-translate-x-40 -translate-x-6 rounded-none" />
+            <CarouselNext variant="default" className="top-1/2 -translate-y-1/2 right-0 md:w-24 absolute rounded-none" />
           </div>
         </div>
         <CarouselContent>
@@ -36,7 +36,7 @@ const PopularAnimeCarousel = ({ populars }: PopularAnimeProps) => {
                 <Link to={`/${anime.animeId}`} className="veritcal-text dark:text-white hover:text-primary dark:hover:text-primary text-secondary-foreground truncate h-64 text-base font-medium pr-0 pl-2">
                   {anime.title.userPreferred}
                 </Link>
-                <Link to={`/${anime.animeId}`} className="aspect-[12/14]">
+                <Link to={`/${anime.animeId}`} className="aspect-[12/16]">
                   <img
                     src={anime.coverImage.large}
                     alt=""

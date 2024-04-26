@@ -1,4 +1,5 @@
 import AnimeRelation from "@/components/anime-relation";
+import Loader from "@/components/loader/loader";
 import SEO from "@/components/seo";
 import AnimeCard from "@/components/shared/anime-card";
 import AnimeInfoTitleContainer from "@/components/shared/anime-info-title-container";
@@ -19,7 +20,7 @@ const Info = () => {
   const { data: recommendations } = useGetRecommendationByIdQuery({ id });
 
   if (isLoading) {
-    return <p className="">Loading...</p>;
+    return <Loader />
   }
 
   if (!data) {
@@ -35,7 +36,7 @@ const Info = () => {
         type="webpage"
       />
       {/* Info Banner */}
-      <BannerImage bannerImage={data.bannerImage} />
+      <BannerImage bannerImage={data.bannerImage} fallbackImg={data.coverImage.large} />
       <div className="max-w-screen-2xl mx-auto px-4 w-full pt-40">
         <div className="w-full flex lg:flex-row flex-col">
           {/* cover image container */}
@@ -68,7 +69,7 @@ const Info = () => {
           </div>
 
           {/* additional information */}
-          <div className="lg:max-w-sm w-full lg:p-6 p-0 rounded mt-6 lg:mt-0">
+          <div className="lg:max-w-sm w-full lg:p-6 p-0 flex-shrink-0 rounded mt-6 lg:mt-0">
             <div className="space-y-2">
               {/* studios container */}
               <div className="">

@@ -149,3 +149,14 @@ export type IStreamingLinks = {
   }
   sources: ISource[]
 }
+
+export type IRecents = {
+  animeId: string
+  episode: string
+  episode_id: string
+  id: string
+  image_url: string
+  subOrdub: string
+  title: string
+  anilistId: string
+}

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import {
+  fetchRecentAnimes,
   getAnimeEpisodesById,
   getAnimeEpisodesStream,
   getAnimeInfoById,
@@ -7,6 +8,7 @@ import {
   getPopularAnime,
   getSearchedAnime,
   getTrendingAnime,
+  mergeAnilistIdFromTitle,
   scrapeEpisodes,
 } from "../helpers/helper";
 
@@ -200,4 +202,38 @@ export const recommendations = async (req: Request, res: Response) => {
 
     return res.status(200).json({ results: animes });
   } catch (error) {}
+};
+
+export const recents = async (req: Request, res: Response) => {
+  try {
+    const recentsAnimeWithoutAnilistId = await fetchRecentAnimes();
+
+    if (!recentsAnimeWithoutAnilistId) {
+      return res.status(400).json({ message: "no recent anime found!" });
+    }
+
+    const promises = recentsAnimeWithoutAnilistId.results.map(async (anime) => {
+      try {
+        const anilistSearch = await mergeAnilistIdFromTitle(anime.title);
+
+        if (!anilistSearch) return null;
+        const anilistId = anilistSearch[0].id;
+        const animeId = anime.id + "-" + anilistId;
+        return { ...anime, animeId, anilistId };
+      } catch (error) {
+        console.error("Error merging Anilist ID:", error);
+        return null;
+      }
+    });
+
+    const mergedAnimeData = await Promise.all(promises);
+
+    // Filter out null values (errors)
+    const validMergedAnimeData = mergedAnimeData.filter((anime) => anime !== null);
+
+    return res.status(200).json(validMergedAnimeData);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "something went wrong!" });
+  }
 };

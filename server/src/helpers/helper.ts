@@ -1,8 +1,9 @@
 import axios from "axios";
 import "dotenv/config";
-import { IAnimeInfo, IRecommendations, ISearchedAnime, ITrending } from "../types";
+import { IAnime, IAnimeInfo, IRecentAnime, IRecommendations, ISearchedAnime, ITrending } from "../types";
 
 const baseUrl: string = process.env.NODE_ENV === "production" ? process.env.BACKEND_URL as string : "http://localhost:8080/api/v2";
+const BASE_BACKEND_URL = process.env.BASE_BACKEND_URL as string;
 
 export const getTrendingAnime = async (limit: number, page: number) => {
   try {
@@ -83,7 +84,7 @@ export const getAnimeEpisodesStream = async (id: string) => {
     // const { data } = await axios.get(baseUrl + `/stream/${id}`, {
     //   headers: { Accept: "application/json" },
     // });
-    const { data } = await axios.get(streamUrl + `/${id}`, {
+    const { data } = await axios.get(streamUrl + `/anime/gogoanime/watch/${id}`, {
       headers: {
         Accept: "application/json",
       },
@@ -111,7 +112,6 @@ interface Episode {
 }
 
 export const scrapeEpisodes = async (id: string): Promise<Episode[]> => {
-  const BASE_BACKEND_URL = process.env.BASE_BACKEND_URL as string;
   try {
     const { data } = await axios.get(
       `${BASE_BACKEND_URL}/api/v1/episode/${id}`
@@ -122,3 +122,30 @@ export const scrapeEpisodes = async (id: string): Promise<Episode[]> => {
     throw error;
   }
 };
+
+export const fetchRecentAnimes = async () => {
+  try {
+    const { data } = await axios.get(BASE_BACKEND_URL + "/api/v1/recentepisode/all");
+
+    if(!data) return;
+
+    return data as IRecentAnime
+  } catch (error) {
+    console.log(error);
+    throw Error
+  }
+}
+
+export const mergeAnilistIdFromTitle = async (title: string) => {
+const CONSUMET_URL = process.env.CONSUMET_URL as string;
+  try {
+    const { data } = await axios.get(CONSUMET_URL + `/meta/anilist/${title}`);
+
+    if(!data) return;
+
+    return data.results as IAnime[];
+  } catch (error) {
+    console.log(error);
+    throw Error
+  }
+}

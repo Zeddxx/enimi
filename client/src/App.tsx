@@ -8,6 +8,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { cn } from "./lib/utils";
 import Home from "./pages/home";
 import Search from "./pages/search";
+import Footer from "./components/footer";
 
 export default function App() {
 
@@ -15,7 +16,7 @@ export default function App() {
   return (
     <HelmetProvider context={helmetContext}>
       <nav className={cn(
-        "w-full sticky top-0 z-20 dark:bg-stone-900 bg-white",
+        "w-full sticky top-0 z-20 dark:bg-[#121212] bg-white",
       )}>
         <Navbar />
       </nav>
@@ -27,6 +28,9 @@ export default function App() {
         <Route path="/search" element={<Search />} />
       </Routes>
 
+      <footer>
+        <Footer />
+      </footer>
       <ScrollTopTransition />
     </HelmetProvider>
   );

@@ -1,4 +1,5 @@
 import Episodes from "@/components/episodes";
+import Loader from "@/components/loader/loader";
 import EnimiPlayer from "@/components/players/enimi-player";
 import { destructureId } from "@/lib/utils";
 import { useGetAnimeInfoByIdQuery, useGetEpisodeLinksQuery } from "@/redux/api";
@@ -14,7 +15,7 @@ const Watch = () => {
   });
 
   if (isLoading || isInfoLoading) {
-    return <p className="">Loading...</p>;
+    return <Loader />;
   }
 
   if (!data?.sources) {

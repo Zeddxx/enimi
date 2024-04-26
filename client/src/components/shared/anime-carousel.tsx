@@ -2,8 +2,8 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+  // CarouselNext,
+  // CarouselPrevious,
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
 import { IAnime } from "@/types";
@@ -31,7 +31,7 @@ const AnimeCarousel = ({ animes }: { animes: IAnime[] }) => {
             key={anime.id}
           >
             <div className="w-full h-full relative">
-              <div className="absolute h-full w-[75%] right-0 -z-10 before:h-full before:absolute before:w-1/2 before:bg-gradient-to-r before:from-white before:dark:from-black before:to-transparent">
+              <div className="absolute h-full w-[75%] right-0 -z-10 before:h-full before:absolute before:w-1/2 before:bg-gradient-to-r before:from-white before:dark:from-[#121212] before:dark:via-[#121212]/80 before:-left-2 before:to-transparent">
                 <img
                   src={anime.bannerImage ?? anime.coverImage.extraLarge}
                   alt="anime image"
@@ -72,10 +72,10 @@ const AnimeCarousel = ({ animes }: { animes: IAnime[] }) => {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <div className="absolute bottom-4 right-4 w-16 grid gap-4 grid-cols-2">
+      {/* <div className="absolute bottom-4 right-4 w-16 grid gap-4 grid-cols-2">
         <CarouselPrevious className="translate-x-0 translate-y-0 right-0 top-0" />
         <CarouselNext className="translate-x-0 translate-y-0 right-0 top-0" />
-      </div>
+      </div> */}
     </Carousel>
   );
 };

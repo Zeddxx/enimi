@@ -3,6 +3,7 @@ import {
   episode,
   info,
   popular,
+  recents,
   recommendations,
   searched,
   stream,
@@ -17,4 +18,5 @@ export default (router: Router) => {
   router.get("/api/episode-streaming", stream);
   router.get("/api/search", searched);
   router.get("/api/recommendations", recommendations)
+  router.get("/api/recents", recents)
 };

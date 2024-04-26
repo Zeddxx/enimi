@@ -1,4 +1,5 @@
 import PopularAnimeCarousel from "@/components/popular-anime-carousel";
+import RecentsAnime from "@/components/recents-anime";
 import SEO from "@/components/seo";
 import AnimeCarousel from "@/components/shared/anime-carousel";
 import { useGetPopularQuery, useGetTrendingQuery } from "@/redux/api";
@@ -29,6 +30,10 @@ const Home = () => {
 
       <div className="px-4 my-6 max-w-screen-2xl w-full mx-auto">
         <PopularAnimeCarousel populars={popular.results} />
+      </div>
+
+      <div className="px-4 max-w-screen-2xl w-full mx-auto">
+        <RecentsAnime />
       </div>
     </section>
   );

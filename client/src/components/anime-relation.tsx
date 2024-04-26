@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils";
 import { IAnime } from "@/types";
-import { Link } from "react-router-dom";
 
 const AnimeRelation = ({
   relation,
@@ -22,8 +21,8 @@ const AnimeRelation = ({
       <h3 className="sub_headings">Relations</h3>
       <div className="w-full gap-3 grid xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-5 sm:grid-cols-4">
         {filteredRelations.splice(0, 12).map((relation) => (
-          <Link
-            to={`/${
+          <a
+            href={`/${
               relation.title.userPreferred.toLowerCase().split(" ").join("-") +
               "-" +
               relation.id
@@ -40,7 +39,7 @@ const AnimeRelation = ({
               className="absolute h-full w-full blur-sm opacity-65 inset-0 object-cover -z-10"
             />
             <p className="text-sm truncate">{relation.title.userPreferred}</p>
-          </Link>
+          </a>
         ))}
       </div>
     </>
