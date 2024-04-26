@@ -24,7 +24,7 @@ const AnimeInfoTitleContainer = ({ data }: { data: IAnimeInfo }) => {
       {/* ANIME CTA BUTTON */}
       <div className="w-full flex sm:flex-row flex-col gap-3 mt-3">
         <Link
-          to={`/watch/${data?.anime_episodes[0].id}`}
+          to={`/watch/${data?.anime_episodes[0].id}-${data.id}`}
           className={cn(
             buttonVariants({
               className: "rounded-none w-full truncate",

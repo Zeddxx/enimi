@@ -17,3 +17,11 @@ export function formatDate(year: number | undefined, month: number | undefined, 
 
   return formattedDate;
 }
+
+export function destructureId(value: string) {
+  const lastIndex = value.lastIndexOf("-");
+  const episodeId = value.substring(0, lastIndex);
+  const animeId = value.substring(lastIndex + 1);
+
+  return { episodeId, animeId }
+}

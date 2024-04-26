@@ -106,7 +106,7 @@ export type IAnimeInfo = {
   genres: string[];
   id: string;
   id_provider: IProvider;
-  anime_episodes: [{ title: number; id: string }];
+  anime_episodes: [{ title: string; id: string }];
   nextair: INextAiringEpisode;
   popularity: number;
   relation: IAnime[];

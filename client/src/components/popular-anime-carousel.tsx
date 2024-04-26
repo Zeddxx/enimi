@@ -36,7 +36,7 @@ const PopularAnimeCarousel = ({ populars }: PopularAnimeProps) => {
                 <Link to={`/${anime.animeId}`} className="veritcal-text dark:text-white hover:text-primary dark:hover:text-primary text-secondary-foreground truncate h-64 text-base font-medium pr-0 pl-2">
                   {anime.title.userPreferred}
                 </Link>
-                <Link to={`/${anime.animeId}`} className="aspect-[12/15]">
+                <Link to={`/${anime.animeId}`} className="aspect-[12/14]">
                   <img
                     src={anime.coverImage.large}
                     alt=""

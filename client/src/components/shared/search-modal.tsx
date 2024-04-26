@@ -7,10 +7,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { Input } from "../ui/input";
+import { cn } from "@/lib/utils";
 
 const SearchModal = () => {
   const [query, setQuery] = useState<string>("");
@@ -20,15 +21,14 @@ const SearchModal = () => {
     const constructedURI = query.split(" ").join("-");
     window.location.assign(`/search?a=${constructedURI}`);
   };
+
   return (
     <div>
       <Dialog>
-        <DialogTrigger>
-          <Button size="icon" variant="outline">
-            <Search className="text-primary h-5 w-5" />
-          </Button>
+        <DialogTrigger className={cn(buttonVariants({ variant: "outline", size: "icon" }))}>
+            <Search className="h-5 w-5" />
         </DialogTrigger>
-        <DialogContent>
+        <DialogContent className="border-muted">
           <DialogHeader>
             <DialogTitle>Search Anime</DialogTitle>
             <DialogDescription>

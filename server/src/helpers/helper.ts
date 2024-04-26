@@ -2,7 +2,7 @@ import axios from "axios";
 import "dotenv/config";
 import { IAnimeInfo, IRecommendations, ISearchedAnime, ITrending } from "../types";
 
-const baseUrl: string = (process.env.BACKEND_URL as string) || "";
+const baseUrl: string = process.env.NODE_ENV === "production" ? process.env.BACKEND_URL as string : "http://localhost:8080/api/v2";
 
 export const getTrendingAnime = async (limit: number, page: number) => {
   try {

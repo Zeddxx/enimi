@@ -5,20 +5,17 @@ import Info from "./pages/info";
 import ScrollTopTransition from "./components/scroll-top-transition";
 import Watch from "./pages/watch";
 import { HelmetProvider } from "react-helmet-async";
-import useScroll from "./hooks/use-scroll";
 import { cn } from "./lib/utils";
 import Home from "./pages/home";
 import Search from "./pages/search";
 
 export default function App() {
-  const { isScrolled } = useScroll()
 
   const helmetContext = {}
   return (
     <HelmetProvider context={helmetContext}>
       <nav className={cn(
-        "w-full fixed top-0 z-[99999] duration-300",
-        isScrolled ? "bg-white" : "bg-transparent"
+        "w-full sticky top-0 z-20 dark:bg-stone-900 bg-white",
       )}>
         <Navbar />
       </nav>

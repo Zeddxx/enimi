@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     credentials: true,
-    origin: "https://enimi.onrender.com",
+    origin: process.env.NODE_ENV === "production" ? "https://enimi.onrender.com" : "*",
   })
 );
 
