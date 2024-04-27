@@ -34,7 +34,7 @@ const Navbar = () => {
           <Sun className="h-4 w-4 absolute dark:opacity-100 opacity-0 dark:-rotate-90 rotate-0 transition-all duration-300" />
           <Moon className="h-4 w-4 absolute dark:opacity-0 opacity-100 dark:rotate-0 -rotate-90 transition-all duration-300" />
         </Button>
-        <div className="min-w-[13rem] hidden md:block w-full">
+        <div className="min-w-[13rem] hidden sm:block w-full">
           <Button className="w-full">Login</Button>
         </div>
       </div>

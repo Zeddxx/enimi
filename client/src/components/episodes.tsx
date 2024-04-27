@@ -11,10 +11,12 @@ const Episodes = ({
   episodes,
   id,
   animeId,
+  isFocused
 }: {
   episodes?: IEpisode[];
   id: string;
   animeId?: string;
+  isFocused?: boolean;
 }) => {
   const [searchEpisode, setSearchEpisode] = useState<string>("");
 
@@ -41,7 +43,10 @@ const Episodes = ({
   });
 
   return (
-    <aside className="2xl:max-w-xs w-full relative h-[476.55px] overflow-hidden">
+    <aside className={cn(
+      "2xl:max-w-xs w-full relative h-[476.55px] overflow-hidden",
+      isFocused && "opacity-0"
+    )}>
       <div className="w-full p-2 border-b border-muted flex justify-between items-center">
         <p>Episodes</p>
 
@@ -54,7 +59,7 @@ const Episodes = ({
         />
       </div>
       {episodes.length > 24 ? (
-        <div className="grid overflow-y-scroll h-full gap-3 py-3 grid-cols-4 place-content-start">
+        <div className="grid overflow-y-scroll h-full gap-3 py-3 pb-16 pr-2 grid-cols-4 place-content-start">
           {(filteredEpisodes && filteredEpisodes.length > 0
             ? filteredEpisodes
             : episodes
@@ -69,7 +74,7 @@ const Episodes = ({
                 )}
                 key={episode.id}
               >
-                <p className="text-sm">EP {episode.id.split("-").pop()}</p>
+                <p className="text-xs font-medium">EP {episode.id.split("-").pop()}</p>
               </a>
             ))}
         </div>

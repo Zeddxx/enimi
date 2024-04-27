@@ -1,25 +1,31 @@
+// React imports
 import { Route, Routes } from "react-router-dom";
-import Landing from "./pages/landing";
-import Navbar from "./components/shared/navbar";
-import Info from "./pages/info";
-import ScrollTopTransition from "./components/scroll-top-transition";
-import Watch from "./pages/watch";
 import { HelmetProvider } from "react-helmet-async";
+
+// utilities
 import { cn } from "./lib/utils";
-import Home from "./pages/home";
-import Search from "./pages/search";
-import Footer from "./components/footer";
+
+// Components
+import ScrollTopTransition from "@/components/scroll-top-transition";
+import Footer from "@/components/footer";
+import Navbar from "@/components/shared/navbar";
+import Navigator from "@/components/shared/navigator";
+
+// pages
+import { Home, Info, Landing, Search, Watch } from "./pages";
 
 export default function App() {
-
-  const helmetContext = {}
+  const helmetContext = {};
   return (
     <HelmetProvider context={helmetContext}>
-      <nav className={cn(
-        "w-full sticky top-0 z-20 dark:bg-[#121212] bg-white",
-      )}>
+      {/* main enimi navbar */}
+      <nav
+        className={cn("w-full sticky top-0 z-[999] dark:bg-[#121212] bg-white")}
+      >
         <Navbar />
       </nav>
+
+      {/* all enimi routes! */}
       <Routes>
         <Route path="/" index element={<Landing />} />
         <Route path="/home" index element={<Home />} />
@@ -28,10 +34,20 @@ export default function App() {
         <Route path="/search" element={<Search />} />
       </Routes>
 
+      {/* main application footer. */}
       <footer>
         <Footer />
       </footer>
-      <ScrollTopTransition />
+
+      {/* a reseter to throw user to top whenever the pathname changes! */}
+      <>
+        <ScrollTopTransition />
+      </>
+
+      {/* scroll to top navigator. */}
+      <>
+        <Navigator />
+      </>
     </HelmetProvider>
   );
 }

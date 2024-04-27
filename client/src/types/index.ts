@@ -94,6 +94,11 @@ export type IScore = {
   decimalScore: number;
 };
 
+export type IAnimeEpisode = {
+  title: string;
+  id: string
+}
+
 export type IAnimeInfo = {
   bannerImage: string;
   coverImage: ICoverImage;
@@ -106,7 +111,7 @@ export type IAnimeInfo = {
   genres: string[];
   id: string;
   id_provider: IProvider;
-  anime_episodes: [{ title: string; id: string }];
+  anime_episodes: IAnimeEpisode[];
   nextair: INextAiringEpisode;
   popularity: number;
   relation: IAnime[];

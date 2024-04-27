@@ -1,0 +1,5 @@
+export { default as Home } from "./home"
+export { default as Landing } from "./landing"
+export { default as Info } from "./info"
+export { default as Watch } from "./watch"
+export { default as Search } from "./search"

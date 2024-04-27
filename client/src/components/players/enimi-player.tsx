@@ -7,9 +7,12 @@ import Player from "./player";
 
 type EnimiPlayerProps = {
   sources: ISource[];
+  id: string;
 };
 
-const EnimiPlayer = ({ sources }: EnimiPlayerProps) => {
+Artplayer.LOG_VERSION = false;
+
+const EnimiPlayer = ({ sources, id }: EnimiPlayerProps) => {
   const [url, setUrl] = useState<string>("");
 
   const fetchDefaultUrl = () => {
@@ -44,10 +47,16 @@ const EnimiPlayer = ({ sources }: EnimiPlayerProps) => {
   }
 
   const options: Option = {
+    id: id,
     container: ".artplayer-app",
     url: url,
     customType: {
       m3u8: playM3u8,
+    },
+    icons: {
+      loading: `<span class="animate-spin h-7 w-7">
+        <img src="/video-loader.svg" class="invert object-contain h-full w-full" />
+      </span>`,
     },
     volume: 1,
     isLive: false,
