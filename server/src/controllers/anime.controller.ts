@@ -15,7 +15,7 @@ import {
 export const trending = async (req: Request, res: Response) => {
   try {
     const { limit, page } = req.query;
-    const animeLimit = Number(limit) || 8;
+    const animeLimit = Number(limit) || 10;
     const animePage = Number(page) || 1;
     const anime = await getTrendingAnime(animeLimit, animePage);
 
@@ -23,11 +23,14 @@ export const trending = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "Not found!" });
     }
 
-    const trending = anime.results.map((result) => {
+    const filterOutNotReleasedAnime = anime.results.filter((anime) => anime.status !== "NOT_YET_RELEASED");
+
+    const trending = filterOutNotReleasedAnime.map((result) => {
       const animeId =
         result.title.english.toLowerCase().split(" ").join("-") +
         "-" +
         result.id;
+
       return { ...result, animeId: animeId };
     });
 
