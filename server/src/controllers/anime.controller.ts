@@ -15,7 +15,7 @@ import {
 export const trending = async (req: Request, res: Response) => {
   try {
     const { limit, page } = req.query;
-    const animeLimit = Number(limit) || 10;
+    const animeLimit = Number(limit) || 12;
     const animePage = Number(page) || 1;
     const anime = await getTrendingAnime(animeLimit, animePage);
 
@@ -23,11 +23,14 @@ export const trending = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "Not found!" });
     }
 
-    const filterOutNotReleasedAnime = anime.results.filter((anime) => anime.status !== "NOT_YET_RELEASED");
+    const filterOutNotReleasedAnime = anime.results.filter(
+      (anime) =>
+        anime.status !== "NOT_YET_RELEASED" && anime.format !== "SPECIAL"
+    );
 
     const trending = filterOutNotReleasedAnime.map((result) => {
       const animeId =
-        result.title.english.toLowerCase().split(" ").join("-") +
+        result.title.userPreferred.toLowerCase().split(" ").join("-") +
         "-" +
         result.id;
 
@@ -125,14 +128,17 @@ export const searched = async (req: Request, res: Response) => {
 
     const searchAnime = await getSearchedAnime(q, p, l);
 
-    if(!searchAnime) {
-      return res.status(404).json({ message: "No searched query found!" })
+    if (!searchAnime) {
+      return res.status(404).json({ message: "No searched query found!" });
     }
 
     const anime = searchAnime.results.map((anime) => {
-      const animeId = anime.title.userPreferred.toLowerCase().split(" ").join("-") + "-" + anime.id;
-      return { ...anime, animeId }
-    })
+      const animeId =
+        anime.title.userPreferred.toLowerCase().split(" ").join("-") +
+        "-" +
+        anime.id;
+      return { ...anime, animeId };
+    });
 
     return res.status(200).json({
       code: 200,
@@ -232,7 +238,9 @@ export const recents = async (req: Request, res: Response) => {
     const mergedAnimeData = await Promise.all(promises);
 
     // Filter out null values (errors)
-    const validMergedAnimeData = mergedAnimeData.filter((anime) => anime !== null);
+    const validMergedAnimeData = mergedAnimeData.filter(
+      (anime) => anime !== null
+    );
 
     return res.status(200).json(validMergedAnimeData);
   } catch (error) {
