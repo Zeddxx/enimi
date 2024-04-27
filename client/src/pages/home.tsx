@@ -1,3 +1,4 @@
+import Loader from "@/components/loader/loader";
 import PopularAnimeCarousel from "@/components/popular-anime-carousel";
 import RecentsAnime from "@/components/recents-anime";
 import SEO from "@/components/seo";
@@ -9,7 +10,7 @@ const Home = () => {
   const { data: popular, isLoading: isPopularLoading } = useGetPopularQuery()
 
   if (isTrendingLoading && isPopularLoading) {
-    return <p className="">loading...</p>;
+    return <Loader />;
   }
 
   if (!trending || !popular) {
