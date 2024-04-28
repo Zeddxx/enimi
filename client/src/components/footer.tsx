@@ -23,7 +23,7 @@ const Footer = () => {
         </div>
 
         <div className="">
-            <p className="">
+            <p className="text-center text-sm text-muted-foreground">
                 All right reserved to its corresponding developer.
             </p>
         </div>

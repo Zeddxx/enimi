@@ -12,7 +12,8 @@ import Navbar from "@/components/shared/navbar";
 import Navigator from "@/components/shared/navigator";
 
 // pages
-import { Home, Info, Landing, Search, Watch } from "./pages";
+import { Home, Info, Landing, Login, Register, Search, Watch } from "./pages";
+import AuthLayout from "./layouts/auth-layout";
 
 export default function App() {
   const helmetContext = {};
@@ -32,6 +33,11 @@ export default function App() {
         <Route path="/:animeId" element={<Info />} />
         <Route path="/watch/:episodeId" element={<Watch />} />
         <Route path="/search" element={<Search />} />
+
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
       </Routes>
 
       {/* main application footer. */}
