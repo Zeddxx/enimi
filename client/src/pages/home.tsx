@@ -8,7 +8,6 @@ import { useGetPopularQuery, useGetTrendingQuery } from "@/redux/api";
 const Home = () => {
   const { data: trending, isLoading: isTrendingLoading } = useGetTrendingQuery();
   const { data: popular, isLoading: isPopularLoading } = useGetPopularQuery()
-  console.log(trending);
 
   if (isTrendingLoading && isPopularLoading) {
     return <Loader />;
@@ -17,8 +16,6 @@ const Home = () => {
   if (!trending || !popular) {
     return <div className="">no</div>;
   }
-
-//   console.log(popular);
 
   return (
     <section>

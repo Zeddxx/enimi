@@ -12,7 +12,7 @@ const RecentsAnime = () => {
       <h4 className="sub_headings">Recents Episodes</h4>
       <div className="anime_card_wrapper">
         {data?.map((anime) => (
-          <div key={anime.id} className="aspect-[12/16]">
+          <div key={anime.id} className="sm:aspect-[12/16] aspect-[9/14]">
             <a
               href={`/watch/${anime.episode_id}-${anime.anilistId}`}
               className="h-full w-full rounded-md overflow-hidden block shadow relative"
