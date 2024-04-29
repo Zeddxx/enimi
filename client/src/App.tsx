@@ -12,7 +12,7 @@ import Navbar from "@/components/shared/navbar";
 import Navigator from "@/components/shared/navigator";
 
 // pages
-import { Home, Info, Landing, Login, Register, Search, Watch } from "./pages";
+import { Alive, Home, Info, Landing, Login, Register, Search, Watch } from "./pages";
 import AuthLayout from "./layouts/auth-layout";
 
 export default function App() {
@@ -33,6 +33,7 @@ export default function App() {
         <Route path="/:animeId" element={<Info />} />
         <Route path="/watch/:episodeId" element={<Watch />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/stay-alive" element={<Alive />} />
 
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />

@@ -4,15 +4,21 @@ import cors from "cors";
 import routes from "./routes/routes";
 import cookieParser from "cookie-parser";
 import path from "path";
+import { dbConnection } from "./connections";
 
 const app = express();
+
+dbConnection();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     credentials: true,
-    origin: process.env.NODE_ENV === "production" ? "https://enimi.onrender.com" : "*",
+    origin:
+      process.env.NODE_ENV === "production"
+        ? "https://enimi.onrender.com"
+        : "*",
   })
 );
 

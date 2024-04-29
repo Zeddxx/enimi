@@ -88,3 +88,7 @@ html {
 .anime_card_wrapper {
   @apply grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 sm:grid-cols-3 gap-4;
 }
+
+.error_msg_state {
+  @apply text-destructive bg-destructive/15 py-2 capitalize text-sm text-center w-full flex px-4 mt-2 rounded;
+}
