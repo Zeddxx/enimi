@@ -27,7 +27,7 @@ export const auth = createApi({
         method: "POST",
         body: body,
       }),
-      invalidatesTags: (result, error) =>
+      invalidatesTags: (_, error) =>
         error ? [] : ["current-user", "verify-token"],
     }),
     verifyToken: builder.query<unknown, void>({
@@ -52,7 +52,7 @@ export const auth = createApi({
         credentials: "include",
         method: "POST",
       }),
-      invalidatesTags: (result, error) => error ? [] : ['current-user', 'verify-token']
+      invalidatesTags: (_, error) => error ? [] : ['current-user', 'verify-token']
     }),
   }),
 });
