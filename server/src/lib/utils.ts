@@ -26,7 +26,9 @@ export const sendEmailVerification = async (user: IUser, res: Response) => {
   const token = _id + uuidv4();
 
   const APP_URL =
-    process.env.NODE_ENV === "production" ? "" : "http://localhost:4000";
+    process.env.NODE_ENV === "production"
+      ? "https://enimi.onrender.com"
+      : "http://localhost:4000";
 
   const link = APP_URL + "/api/auth/verify/" + _id + "/" + token;
 
@@ -119,11 +121,9 @@ export const sendEmailVerification = async (user: IUser, res: Response) => {
       transporter
         .sendMail(mailOptions)
         .then(() => {
-          return res
-            .status(201)
-            .send({
-              message: `Verification email has been sended to ${email}. Please check and verify your account!`,
-            });
+          return res.status(201).send({
+            message: `Verification email has been sended to ${email}. Please check and verify your account!`,
+          });
         })
         .catch((error) => {
           console.error(error);
