@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { IAnime } from "@/types";
+import { IAnime } from "@/types/anime.types";
 
 const AnimeRelation = ({
   relation,

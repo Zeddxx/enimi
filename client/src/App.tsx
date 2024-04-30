@@ -1,5 +1,5 @@
 // React imports
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 
 // utilities
@@ -12,10 +12,25 @@ import Navbar from "@/components/shared/navbar";
 import Navigator from "@/components/shared/navigator";
 
 // pages
-import { Alive, Home, Info, Landing, Login, Register, Search, Watch } from "./pages";
+import {
+  Alive,
+  Home,
+  Info,
+  Landing,
+  Login,
+  Profile,
+  Register,
+  Search,
+  Watch,
+} from "./pages";
 import AuthLayout from "./layouts/auth-layout";
 
+import Toaster from "@/components/toaster";
+import { useAuth } from "./context";
+import MainLayout from "./layouts/main-layouts";
+
 export default function App() {
+  const { isLoggedIn } = useAuth();
   const helmetContext = {};
   return (
     <HelmetProvider context={helmetContext}>
@@ -35,7 +50,11 @@ export default function App() {
         <Route path="/search" element={<Search />} />
         <Route path="/stay-alive" element={<Alive />} />
 
-        <Route element={<AuthLayout />}>
+        <Route element={isLoggedIn ? <MainLayout /> : <Navigate to="/login" />}>
+          <Route path="/profile" element={<Profile />} />
+        </Route>
+
+        <Route element={!isLoggedIn ? <AuthLayout /> : <Navigate to="/home" />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Route>
@@ -55,6 +74,8 @@ export default function App() {
       <>
         <Navigator />
       </>
+
+      <Toaster />
     </HelmetProvider>
   );
 }

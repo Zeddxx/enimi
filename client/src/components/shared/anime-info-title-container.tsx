@@ -1,6 +1,6 @@
 import { Bookmark } from "lucide-react";
 import { Button, buttonVariants } from "../ui/button";
-import { IAnimeInfo } from "@/types";
+import { IAnimeInfo } from "@/types/anime.types";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 

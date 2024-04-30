@@ -12,6 +12,7 @@
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
     "@reduxjs/toolkit": "^2.2.3",
@@ -26,6 +27,7 @@
     "react-dom": "^18.2.0",
     "react-helmet-async": "^2.0.4",
     "react-hook-form": "^7.51.3",
+    "react-hot-toast": "^2.4.1",
     "react-redux": "^9.1.1",
     "react-router-dom": "^6.23.0",
     "tailwind-merge": "^2.3.0",

@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
 import { Button, buttonVariants } from "../ui/button";
 import SearchModal from "./search-modal";
-import { useTheme } from "@/context/theme-context";
 import { Moon, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTheme } from "@/context";
+import SignedOut from "../auth/signed-out";
+import SignedIn from "../auth/signed-in";
+import UserButton from "../auth/user-button";
 
 const Navbar = () => {
   const { toggleTheme } = useTheme();
@@ -35,14 +38,21 @@ const Navbar = () => {
           <Sun className="h-4 w-4 absolute dark:opacity-100 opacity-0 dark:-rotate-90 rotate-0 transition-all duration-300" />
           <Moon className="h-4 w-4 absolute dark:opacity-0 opacity-100 dark:rotate-0 -rotate-90 transition-all duration-300" />
         </Button>
-        <div className="min-w-[13rem] hidden sm:block w-full">
-          <Link
-            to="/login"
-            className={cn(buttonVariants({ className: "w-full" }))}
-          >
-            Login
-          </Link>
-        </div>
+
+        <SignedOut>
+          <div className="min-w-[13rem] hidden sm:block w-full">
+            <Link
+              to="/login"
+              className={cn(buttonVariants({ className: "w-full" }))}
+            >
+              Login
+            </Link>
+          </div>
+        </SignedOut>
+
+        <SignedIn className="flex items-center justify-center">
+          <UserButton />
+        </SignedIn>
       </div>
     </div>
   );

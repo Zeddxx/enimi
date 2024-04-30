@@ -1,6 +1,6 @@
 import axios from "axios";
 import "dotenv/config";
-import { IAnime, IAnimeInfo, IRecentAnime, IRecommendations, ISearchedAnime, ITrending } from "../types";
+import { IAnime, IAnimeInfo, IRecentAnime, IRecommendations, ISearchedAnime, ITrending } from "../types/anime.types";
 
 const baseUrl: string = process.env.NODE_ENV === "production" ? process.env.BACKEND_URL as string : "http://localhost:8080/api/v2";
 const BASE_BACKEND_URL = process.env.BASE_BACKEND_URL as string;

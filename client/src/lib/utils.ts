@@ -1,4 +1,4 @@
-import { IAnimeEpisode } from "@/types";
+import { IAnimeEpisode } from "@/types/anime.types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 

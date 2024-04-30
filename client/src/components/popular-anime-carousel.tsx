@@ -1,4 +1,4 @@
-import { IAnime } from "@/types";
+import { IAnime } from "@/types/anime.types";
 import {
   Carousel,
   CarouselContent,

@@ -1,4 +1,4 @@
-import { IAnime } from "@/types";
+import { IAnime } from "@/types/anime.types";
 
 const AnimeCard = ({ anime }: { anime: IAnime }) => {
   return (

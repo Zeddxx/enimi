@@ -6,7 +6,7 @@ import {
   // CarouselPrevious,
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
-import { IAnime } from "@/types";
+import { IAnime } from "@/types/anime.types";
 import Autoplay from "embla-carousel-autoplay";
 import { Link } from "react-router-dom";
 import { buttonVariants } from "../ui/button";

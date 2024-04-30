@@ -1,4 +1,4 @@
-import { ISource } from "@/types";
+import { ISource } from "@/types/anime.types";
 import Artplayer from "artplayer";
 import Option from "artplayer/types/option";
 import Hls from "hls.js";

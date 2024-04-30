@@ -8,7 +8,7 @@ import {
     BreadcrumbSeparator,
   } from "@/components/ui/breadcrumb";
 import { cn } from "@/lib/utils";
-import { IAnimeEpisode } from "@/types";
+import { IAnimeEpisode } from "@/types/anime.types";
 
 interface Props {
     title: string

@@ -2,26 +2,32 @@ import { FormProvider, useForm } from "react-hook-form";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { useRegisterMutation } from "@/redux/auth";
+import { useLoginMutation } from "@/redux/auth";
+import toast from "react-hot-toast";
 
-interface IRegister {
-  username: string;
+interface ILogin {
   email: string;
   password: string;
 }
 
-const RegisterForm = () => {
-  const form = useForm<IRegister>();
-  const [registerUser, { isLoading }] = useRegisterMutation();
+const LoginForm = () => {
+  const form = useForm<ILogin>();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = form;
 
-  const onSubmit = handleSubmit(async (values: IRegister) => {
+  const [login, { isLoading }] = useLoginMutation();
+
+  const onSubmit = handleSubmit(async (values: ILogin) => {
     try {
-      await registerUser(values).unwrap();
+      toast.promise(login(values).unwrap(), {
+        loading: "Logging in...",
+        success: "logged in successfully!",
+        error: "Something went wrong!",
+      });
       form.reset();
     } catch (error) {
       console.log(error);
@@ -31,21 +37,6 @@ const RegisterForm = () => {
   return (
     <FormProvider {...form}>
       <form onSubmit={onSubmit} className="space-y-3">
-        <div className="">
-          <Label className="font-normal text-base">
-            Username
-            <Input
-              placeholder="@enimi"
-              type="text"
-              className="mt-2"
-              {...register("username", { required: "username is required!" })}
-            />
-            {errors.username && (
-              <span className="error_msg_state">{errors.username.message}</span>
-            )}
-          </Label>
-        </div>
-
         <div className="">
           <Label className="font-normal text-base">
             Email
@@ -91,10 +82,10 @@ const RegisterForm = () => {
           className="w-full"
           type="submit"
         >
-          {isLoading ? "Creating..." : "Register"}
+          {isLoading ? "Logging in..." : "Login"}
         </Button>
       </form>
     </FormProvider>
   );
 };
-export default RegisterForm;
+export default LoginForm;

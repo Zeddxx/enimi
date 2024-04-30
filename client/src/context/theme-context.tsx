@@ -1,16 +1,16 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 
 type InitialContextType = {
   theme: string | undefined;
   toggleTheme: () => void;
 };
 
-const initialTheme: InitialContextType = {
+const initialContext: InitialContextType = {
   theme: undefined,
   toggleTheme: () => {},
 };
 
-const ThemeContext = createContext<InitialContextType>(initialTheme);
+const ThemeContext = createContext<InitialContextType>(initialContext);
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [theme, setTheme] = useState<string>();
@@ -45,11 +45,11 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (theme === "dark") {
-        document.documentElement.classList.add("dark");
-        document.documentElement.style.colorScheme = "dark"
+      document.documentElement.classList.add("dark");
+      document.documentElement.style.colorScheme = "dark";
     } else {
-        document.documentElement.classList.remove("dark");
-        document.documentElement.style.colorScheme = "light"
+      document.documentElement.classList.remove("dark");
+      document.documentElement.style.colorScheme = "light";
     }
 
     return () => {
@@ -63,10 +63,15 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider
+      value={{
+        theme,
+        toggleTheme
+      }}
+    >
       {children}
     </ThemeContext.Provider>
   );
 };
 
-export const useTheme = () => useContext(ThemeContext);
+export { ThemeContext }
