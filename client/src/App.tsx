@@ -18,6 +18,7 @@ import {
   Info,
   Landing,
   Login,
+  NotFound,
   Profile,
   Register,
   Search,
@@ -58,6 +59,8 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Route>
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
       {/* main application footer. */}
