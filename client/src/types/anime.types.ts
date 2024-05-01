@@ -100,6 +100,7 @@ export type IAnimeEpisode = {
 }
 
 export type IAnimeInfo = {
+  animeId: string
   bannerImage: string;
   coverImage: ICoverImage;
   description: string;

@@ -7,12 +7,11 @@ import Player from "./player";
 
 type EnimiPlayerProps = {
   sources: ISource[];
-  id: string;
 };
 
 Artplayer.LOG_VERSION = false;
 
-const EnimiPlayer = ({ sources, id }: EnimiPlayerProps) => {
+const EnimiPlayer = ({ sources }: EnimiPlayerProps) => {
   const [url, setUrl] = useState<string>("");
 
   const fetchDefaultUrl = () => {
@@ -23,6 +22,8 @@ const EnimiPlayer = ({ sources, id }: EnimiPlayerProps) => {
         if (source.quality === "1080p") {
           setUrl(source.url);
         } else if (source.quality === "720p") {
+          setUrl(source.url);
+        } else if (source.quality === "default") {
           setUrl(source.url);
         }
       });
@@ -47,7 +48,6 @@ const EnimiPlayer = ({ sources, id }: EnimiPlayerProps) => {
   }
 
   const options: Option = {
-    id: id,
     container: ".artplayer-app",
     url: url,
     customType: {

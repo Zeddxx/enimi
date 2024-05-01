@@ -33,7 +33,7 @@ const HistoryTree = ({ title, id, episodes, animeId } : Props) => {
             <BreadcrumbItem>
               <BreadcrumbLink
                 className="hover:text-primary"
-                href={`/info/${title
+                href={`/${title
                   .toLowerCase()
                   .split(" ")
                   .join("-")}-${animeId}`}

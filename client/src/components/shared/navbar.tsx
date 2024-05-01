@@ -39,15 +39,13 @@ const Navbar = () => {
           <Moon className="h-4 w-4 absolute dark:opacity-0 opacity-100 dark:rotate-0 -rotate-90 transition-all duration-300" />
         </Button>
 
-        <SignedOut>
-          <div className="min-w-[13rem] hidden sm:block w-full">
+        <SignedOut className="min-w-[13rem] hidden sm:block w-full">
             <Link
               to="/login"
               className={cn(buttonVariants({ className: "w-full" }))}
             >
               Login
             </Link>
-          </div>
         </SignedOut>
 
         <SignedIn className="flex items-center justify-center">
