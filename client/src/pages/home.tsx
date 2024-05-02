@@ -6,8 +6,8 @@ import AnimeCarousel from "@/components/shared/anime-carousel";
 import { useGetPopularQuery, useGetTrendingQuery } from "@/redux/api";
 
 const Home = () => {
-  const { data: trending, isLoading: isTrendingLoading } = useGetTrendingQuery();
-  const { data: popular, isLoading: isPopularLoading } = useGetPopularQuery()
+  const { data: trending, isLoading: isTrendingLoading } = useGetTrendingQuery({ limit: "12", page: 1});
+  const { data: popular, isLoading: isPopularLoading } = useGetPopularQuery({ limit: "12", page: 1 })
 
   if (isTrendingLoading && isPopularLoading) {
     return <Loader />;

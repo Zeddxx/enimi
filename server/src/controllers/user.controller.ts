@@ -27,6 +27,15 @@ export const addWatchLater = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Invalid fields." });
     }
 
+    // check if anime is already exists
+    const anime = await WatchLater.find({ userId, animeId });
+
+    if (anime.length > 0) {
+      // if animeId already exists i have to remove it.
+      await WatchLater.findOneAndDelete({ userId, animeId });
+      return res.status(200).json({ message: "success" });
+    }
+
     const watchLater = await WatchLater.create({
       animeId,
       bannerImage,
@@ -66,14 +75,15 @@ export const getWatchLater = async (req: Request, res: Response) => {
 
 export const deleteWatchLater = async (req: Request, res: Response) => {
   try {
-    const { animeId } = req.body;
+    const { id } = req.body;
     const userId = req.userId;
 
     if (!userId) return;
+    if(!id) return;
 
-    await WatchLater.findOneAndDelete({ animeId, userId });
+    await WatchLater.findByIdAndDelete(id);
 
-    return res.status(200).end();
+    return res.status(200).json({ message: "Success!" });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Something went wrong!" });

@@ -18,6 +18,10 @@ const Player = ({ className, option, getInstance } : PlayerProps) => {
         container: artRef.current!
     })
 
+    art.on("video:progress", () => {
+       console.log(art.currentTime);
+    })
+
     art.on("resize", () => {
         art.subtitle.style({
             fontSize: art.height * 0.05 + "px",

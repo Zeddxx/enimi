@@ -7,11 +7,12 @@ import Player from "./player";
 
 type EnimiPlayerProps = {
   sources: ISource[];
+  id: string
 };
 
 Artplayer.LOG_VERSION = false;
 
-const EnimiPlayer = ({ sources }: EnimiPlayerProps) => {
+const EnimiPlayer = ({ sources, id }: EnimiPlayerProps) => {
   const [url, setUrl] = useState<string>("");
 
   const fetchDefaultUrl = () => {
@@ -49,6 +50,7 @@ const EnimiPlayer = ({ sources }: EnimiPlayerProps) => {
 
   const options: Option = {
     container: ".artplayer-app",
+    id: id,
     url: url,
     customType: {
       m3u8: playM3u8,

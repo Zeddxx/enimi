@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import { SendMailOptions, createTransport } from "nodemailer";
-import { IUser } from "../types/auth.types";
+import { IUser } from "../types/main.types";
 import { v4 as uuidv4 } from "uuid";
 import { Response } from "express";
 import { verification } from "../models/verification.model";

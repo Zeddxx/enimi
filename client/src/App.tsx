@@ -18,20 +18,24 @@ import {
   Info,
   Landing,
   Login,
-  NotFound,
+  Popular,
   Profile,
   Register,
   Search,
+  Trending,
   Watch,
+  WatchLater,
 } from "./pages";
 import AuthLayout from "./layouts/auth-layout";
 
 import Toaster from "@/components/toaster";
 import { useAuth } from "./context";
-import MainLayout from "./layouts/main-layouts";
+import ProtectedRoute from "./layouts/protected-route";
+// import MainLayout from "./layouts/main-layouts";
 
 export default function App() {
   const { isLoggedIn } = useAuth();
+
   const helmetContext = {};
   return (
     <HelmetProvider context={helmetContext}>
@@ -50,17 +54,37 @@ export default function App() {
         <Route path="/watch/:episodeId" element={<Watch />} />
         <Route path="/search" element={<Search />} />
         <Route path="/stay-alive" element={<Alive />} />
+        <Route path="/trending" element={<Trending />} />
+        <Route path="/popular" element={<Popular />} />
 
-        <Route element={isLoggedIn ? <MainLayout /> : <Navigate to="/login" />}>
-          <Route path="/profile" element={<Profile />} />
-        </Route>
+        {isLoggedIn && (
+          <>
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/watch-later"
+              element={
+                <ProtectedRoute>
+                  <WatchLater />
+                </ProtectedRoute>
+              }
+            />
+          </>
+        )}
 
         <Route element={!isLoggedIn ? <AuthLayout /> : <Navigate to="/home" />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Route>
 
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<Navigate to="/home" />} />
       </Routes>
 
       {/* main application footer. */}

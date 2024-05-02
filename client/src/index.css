@@ -89,6 +89,37 @@ html {
   @apply grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 sm:grid-cols-3 gap-4;
 }
 
+.anime_card_image_wrapper {
+  @apply h-full w-full rounded-md overflow-hidden block shadow relative;
+}
+
+.anime_card_image_wrapper > img {
+  @apply h-full w-full object-cover duration-300
+}
+
+.anime_card_hover {
+  @apply absolute -bottom-1/2 group-hover:bottom-1/2 duration-300 translate-y-1/2 left-1/2 -translate-x-1/2
+}
+
+.anime_card_title {
+  @apply hover:text-primary line-clamp-1 transition-colors duration-200
+}
+
 .error_msg_state {
   @apply text-destructive bg-destructive/15 py-2 capitalize text-sm text-center w-full flex px-4 mt-2 rounded;
+}
+
+.page_heading {
+  @apply text-5xl font-semibold mt-6;
+}
+
+.page_wrapper {
+  @apply max-w-screen-2xl w-full mx-auto px-4;
+}
+.page_wrapper > p {
+  @apply text-muted-foreground mb-6;
+}
+
+.pagination_container {
+  @apply max-w-7xl mx-auto flex justify-center my-8 w-full px-4;
 }

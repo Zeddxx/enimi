@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button, buttonVariants } from "../ui/button";
 import SearchModal from "./search-modal";
 import { Moon, Sun } from "lucide-react";
@@ -7,9 +7,11 @@ import { useTheme } from "@/context";
 import SignedOut from "../auth/signed-out";
 import SignedIn from "../auth/signed-in";
 import UserButton from "../auth/user-button";
+import { NAVBAR_ITEMS } from "@/constants";
 
 const Navbar = () => {
   const { toggleTheme } = useTheme();
+  const { pathname } = useLocation();
 
   return (
     <div className="max-w-screen-2xl flex items-center h-16 justify-between w-full mx-auto px-4">
@@ -26,6 +28,21 @@ const Navbar = () => {
         </p>
       </Link>
 
+      {/* the navbar items... */}
+      <ul className="flex items-center justify-between gap-x-3">
+        {NAVBAR_ITEMS.map((item) => (
+          <li
+            className={cn(
+              "hover:text-primary duration-300 font-medium hover:underline underline-offset-4",
+              pathname === item.path && "underline text-primary"
+            )}
+            key={item.name}
+          >
+            <Link to={item.path}>{item.name}</Link>
+          </li>
+        ))}
+      </ul>
+
       <div className="flex items-center w-fit gap-x-3">
         {/* Search button */}
         <SearchModal />
@@ -40,12 +57,12 @@ const Navbar = () => {
         </Button>
 
         <SignedOut className="min-w-[13rem] hidden sm:block w-full">
-            <Link
-              to="/login"
-              className={cn(buttonVariants({ className: "w-full" }))}
-            >
-              Login
-            </Link>
+          <Link
+            to="/login"
+            className={cn(buttonVariants({ className: "w-full" }))}
+          >
+            Login
+          </Link>
         </SignedOut>
 
         <SignedIn className="flex items-center justify-center">

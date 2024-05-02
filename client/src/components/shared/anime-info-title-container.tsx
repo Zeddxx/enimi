@@ -8,34 +8,56 @@ import {
   useRemoveWatchLaterMutation,
 } from "@/redux/user";
 import { IoBookmarkOutline, IoBookmark } from "react-icons/io5";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const AnimeInfoTitleContainer = ({ data }: { data: IAnimeInfo }) => {
   const [addWatchLater] = useAddWatchLaterMutation();
   const [removeWatchLater] = useRemoveWatchLaterMutation();
   const { data: watchLater } = useGetWatchLaterQuery();
+  const [id, setId] = useState<string>("");
 
-  const isInWatchList: boolean =
-    watchLater?.some((a) => a.animeId === data.animeId) ?? false;
-  const [isBookmarked, setIsBookmarked] = useState<boolean>(
-    isInWatchList ?? false
-  );
+  const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (watchLater) {
+      const isInList = watchLater.find((item) => item.animeId === data.animeId);
+      setId(isInList?._id ?? "");
+      setIsBookmarked(!!isInList);
+    } else {
+      return;
+    }
+  }, [watchLater, data.animeId]);
 
   const handleAddWatchLater = async () => {
-    await addWatchLater({
-      animeId: data.animeId,
-      bannerImage: data.bannerImage ?? "",
-      coverImage: data.coverImage.large ?? data.coverImage.medium,
-      format: data.format,
-      title: data.title.userPreferred ?? data.title.english,
-    })
-      .unwrap()
-      .then(() => setIsBookmarked(true));
+    toast
+      .promise(
+        addWatchLater({
+          animeId: data.animeId,
+          bannerImage: data.bannerImage ?? "",
+          coverImage: data.coverImage.large ?? data.coverImage.medium,
+          format: data.format,
+          title: data.title.userPreferred ?? data.title.english,
+        }).unwrap(),
+        {
+          loading: `Adding ${data.title.userPreferred} to your watch list...`,
+          success: `Added ${data.title.userPreferred} to your watch list!`,
+          error: `Failed to add ${data.title.userPreferred} to your watch list!`,
+        }
+      )
+      .then(() => setIsBookmarked(true))
+      .catch(() => setIsBookmarked(false));
   };
 
   const handleRemoveWatchList = async () => {
-    await removeWatchLater({ id: data.animeId })
-      .unwrap()
+    if (!id) return;
+
+    toast
+      .promise(removeWatchLater({ id }).unwrap(), {
+        loading: `Removing ${data.title.userPreferred} from your watch list!`,
+        success: `Removed ${data.title.userPreferred} from your watch list`,
+        error: `Could not remove ${data.title.userPreferred} from your watch list!`,
+      })
       .then(() => setIsBookmarked(false));
   };
 

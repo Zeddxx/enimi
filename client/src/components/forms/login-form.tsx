@@ -4,6 +4,9 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useLoginMutation } from "@/redux/auth";
 import toast from "react-hot-toast";
+import { useState } from "react";
+import { isCustomError } from "@/lib/utils";
+import { ExtendedError } from "@/types/more.types";
 
 interface ILogin {
   email: string;
@@ -12,6 +15,7 @@ interface ILogin {
 
 const LoginForm = () => {
   const form = useForm<ILogin>();
+  const [credentialError, setCredentialError] = useState<string>("");
 
   const {
     register,
@@ -23,7 +27,7 @@ const LoginForm = () => {
 
   const onSubmit = handleSubmit(async (values: ILogin) => {
     try {
-      toast.promise(login(values).unwrap(), {
+      toast.promise(handleLogin(values), {
         loading: "Logging in...",
         success: "logged in successfully!",
         error: "Something went wrong!",
@@ -33,6 +37,22 @@ const LoginForm = () => {
       console.log(error);
     }
   });
+
+  const handleLogin = async (values: ILogin) => {
+    try {
+      await login(values).unwrap();
+      setCredentialError("");
+    } catch (error) {
+      if (isCustomError(error)) {
+        setCredentialError((error as ExtendedError).data.message);
+        throw Error;
+      } else {
+        console.error(error);
+        setCredentialError("something went wrong!");
+      }
+      throw Error
+    }
+  };
 
   return (
     <FormProvider {...form}>
@@ -75,6 +95,11 @@ const LoginForm = () => {
             )}
           </Label>
         </div>
+        {credentialError && (
+          <span className="py-2 text-center block bg-destructive/20 px-2 text-destructive">
+            ⚠️ {credentialError}
+          </span>
+        )}
 
         <Button
           isLoading={isLoading}

@@ -72,7 +72,7 @@ const Watch = () => {
 
         {/* the enimi player! */}
         <div className="flex-1 order-first 2xl:order-none">
-          <EnimiPlayer sources={data.sources} />
+          <EnimiPlayer id={id} sources={data.sources} />
           <div className="flex justify-end items-center w-full px-1 my-2 gap-x-1.5">
             <span className="group cursor-pointer text-sm hover:text-primary border border-muted rounded duration-300 p-1.5 flex items-center">
               <ForwardIcon className="h-4 w-4" />

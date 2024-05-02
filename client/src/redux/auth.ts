@@ -1,9 +1,10 @@
+import { BASE_URL } from "@/constants";
 import { ICurrentUser } from "@/types/user.types";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
 // const BASE_URL: string = "http://localhost:4000";
-const BASE_URL: string = "";
+// // const BASE_URL: string = "";
 
 export const auth = createApi({
   reducerPath: "auth",

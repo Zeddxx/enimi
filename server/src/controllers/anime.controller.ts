@@ -12,6 +12,7 @@ import {
   scrapeEpisodes,
 } from "../helpers/helper";
 
+// /api/trending?page=&limit=
 export const trending = async (req: Request, res: Response) => {
   try {
     const { limit, page } = req.query;

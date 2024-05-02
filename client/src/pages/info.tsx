@@ -20,7 +20,7 @@ const Info = () => {
   const { data: recommendations } = useGetRecommendationByIdQuery({ id });
 
   if (isLoading) {
-    return <Loader />
+    return <Loader />;
   }
 
   if (!data) {
@@ -36,7 +36,10 @@ const Info = () => {
         type="webpage"
       />
       {/* Info Banner */}
-      <BannerImage bannerImage={data.bannerImage} fallbackImg={data.coverImage.large} />
+      <BannerImage
+        bannerImage={data.bannerImage}
+        fallbackImg={data.coverImage.large}
+      />
       <div className="max-w-screen-2xl mx-auto px-4 w-full pt-40">
         <div className="w-full flex lg:flex-row flex-col">
           {/* cover image container */}

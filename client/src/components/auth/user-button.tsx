@@ -24,7 +24,7 @@ const UserButton = () => {
         error: "something went wrong!",
       });
     } catch (error) {
-      console.log(error);
+      return false;
     }
   };
 
@@ -59,6 +59,9 @@ const UserButton = () => {
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <Link to="/profile">Profile</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link to="/watch-later">Your List</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>

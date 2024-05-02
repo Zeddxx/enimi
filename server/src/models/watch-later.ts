@@ -1,16 +1,8 @@
 import mongoose, { Schema } from "mongoose";
-
-interface WatchLaterSchemaTypes {
-    animeId: string;
-    coverImage: string;
-    title: string
-    format: string
-    bannerImage: string
-    userId: string
-}
+import { WatchLaterSchemaTypes } from "../types/main.types";
 
 const WatchLaterSchema = new Schema<WatchLaterSchemaTypes>({
-    userId: { type: String, ref: "User", required: true },
+    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
     animeId: { type: String, required: true },
     coverImage: { type: String, required: true },
     bannerImage: { type: String, required: false },

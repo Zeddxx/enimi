@@ -1,8 +1,9 @@
+import { BASE_URL } from "@/constants";
 import { IAnimeInfo, IEpisodeId, IRecents, IRecommendations, ISearchedAnime, IStreamingLinks, ITrending } from "@/types/anime.types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // const BASE_URL: string = "http://localhost:4000";
-const BASE_URL: string = "";
+// // const BASE_URL: string = "";
 
 export const api = createApi({
   reducerPath: "api",
@@ -11,15 +12,15 @@ export const api = createApi({
   }),
   refetchOnFocus: false,
   endpoints: (builder) => ({
-    getTrending: builder.query<ITrending, void>({
-      query: () => ({
-        url: "/api/trending",
+    getTrending: builder.query<ITrending, { limit: string, page: number }>({
+      query: ({ limit, page }) => ({
+        url: `/api/trending?limit=${limit}&page=${page}`,
         method: "GET",
       }),
     }),
-    getPopular: builder.query<ITrending, void>({
-      query: () => ({
-        url: "/api/popular",
+    getPopular: builder.query<ITrending, { limit: string, page: number }>({
+      query: ({ limit, page }) => ({
+        url: `/api/popular?limit=${limit}&page=${page}`,
         method: "GET",
       }),
     }),

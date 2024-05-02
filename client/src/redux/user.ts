@@ -1,8 +1,9 @@
+import { BASE_URL } from "@/constants";
 import { WatchLaterSchemaTypes } from "@/types/user.types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // const BASE_URL: string = "http://localhost:4000";
-const BASE_URL: string = "";
+// // const BASE_URL: string = "";
 
 export const user = createApi({
     reducerPath: "user",
