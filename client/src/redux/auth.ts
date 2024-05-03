@@ -1,5 +1,5 @@
 import { BASE_URL } from "@/constants";
-import { ICurrentUser } from "@/types/user.types";
+import { ICurrentUser, WatchLaterSchemaTypes } from "@/types/user.types";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
@@ -11,7 +11,7 @@ export const auth = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
   }),
-  tagTypes: ["current-user", "verify-token"],
+  tagTypes: ["current-user", "verify-token", "watch-later"],
   endpoints: (builder) => ({
     register: builder.mutation({
       query: (body) => ({
@@ -29,7 +29,7 @@ export const auth = createApi({
         body: body,
       }),
       invalidatesTags: (_, error) =>
-        error ? [] : ["current-user", "verify-token"],
+        error ? [] : ["current-user", "verify-token", "watch-later"],
     }),
     verifyToken: builder.query<unknown, void>({
       query: () => ({
@@ -53,7 +53,34 @@ export const auth = createApi({
         credentials: "include",
         method: "POST",
       }),
-      invalidatesTags: (_, error) => error ? [] : ['current-user', 'verify-token']
+      invalidatesTags: (_, error) =>
+        error ? [] : ["current-user", "verify-token"],
+    }),
+    addWatchLater: builder.mutation({
+      query: (body: WatchLaterSchemaTypes) => ({
+        url: "/api/watch-later",
+        method: "POST",
+        credentials: "include",
+        body: body,
+      }),
+      invalidatesTags: (_, error) => (error ? [] : ["watch-later"]),
+    }),
+    getWatchLater: builder.query<WatchLaterSchemaTypes[], void>({
+      query: () => ({
+        url: "/api/get-watch-later",
+        credentials: "include",
+        method: "GET",
+      }),
+      providesTags: ["watch-later"],
+    }),
+    removeWatchLater: builder.mutation({
+      query: ({ id }: { id: string }) => ({
+        url: "/api/delete-watch-later",
+        method: "DELETE",
+        body: { id },
+        credentials: "include",
+      }),
+      invalidatesTags: (_, error) => (error ? [] : ["watch-later"]),
     }),
   }),
 });
@@ -64,4 +91,7 @@ export const {
   useVerifyTokenQuery,
   useCurrentUserQuery,
   useLogoutMutation,
+  useAddWatchLaterMutation,
+  useGetWatchLaterQuery,
+  useRemoveWatchLaterMutation,
 } = auth;

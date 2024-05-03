@@ -26,7 +26,6 @@ import {
   Watch,
   WatchLater,
 } from "./pages";
-import AuthLayout from "./layouts/auth-layout";
 
 import Toaster from "@/components/toaster";
 import { useAuth } from "./context";
@@ -50,7 +49,7 @@ export default function App() {
       <Routes>
         <Route path="/" index element={<Landing />} />
         <Route path="/home" index element={<Home />} />
-        <Route path="/:animeId" element={<Info />} />
+        <Route path="/anime/:animeId" element={<Info />} />
         <Route path="/watch/:episodeId" element={<Watch />} />
         <Route path="/search" element={<Search />} />
         <Route path="/stay-alive" element={<Alive />} />
@@ -79,10 +78,29 @@ export default function App() {
           </>
         )}
 
-        <Route element={!isLoggedIn ? <AuthLayout /> : <Navigate to="/home" />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Route>
+        {/* <Route element={!isLoggedIn ? <AuthLayout /> : <Navigate to="/home" />}>
+
+        </Route> */}
+        {!isLoggedIn && (
+          <>
+            <Route
+              path="/login"
+              element={
+                <ProtectedRoute>
+                  <Login />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <ProtectedRoute>
+                  <Register />
+                </ProtectedRoute>
+              }
+            />
+          </>
+        )}
 
         <Route path="*" element={<Navigate to="/home" />} />
       </Routes>

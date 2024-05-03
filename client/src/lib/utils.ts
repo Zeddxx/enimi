@@ -103,15 +103,38 @@ export const isCustomError = (error: unknown) => {
  * @param page the current page we are on
  * @returns the array of page number which have to map.
  */
-export const generatePageNumbers = (total: number, page: number) => {
+export const generatePageNumbers = (
+  total: number,
+  page: number,
+  lastPage: number
+) => {
   const totalPages = total || 1;
-  const pagesToShow = 3;
+  const pagesToShow = 5;
   const currentPage = page;
   const pageNumbers = [];
 
-  for (let i = currentPage - pagesToShow; i <= currentPage + pagesToShow; i++) {
-    if (i > 0 && i <= totalPages) {
+  let startPage = 1;
+  let endPage = totalPages;
+
+  if (totalPages > pagesToShow) {
+    const halfPagesToShow = Math.floor(pagesToShow / 2);
+    if (currentPage <= halfPagesToShow) {
+      startPage = 1;
+      endPage = pagesToShow;
+    } else if (currentPage + halfPagesToShow >= totalPages) {
+      startPage = totalPages - pagesToShow + 1;
+      endPage = totalPages;
+    } else {
+      startPage = currentPage - halfPagesToShow;
+      endPage = currentPage + halfPagesToShow;
+    }
+  }
+
+  for (let i = startPage; i <= endPage; i++) {
+    if (i <= lastPage) {
       pageNumbers.push(i);
+    } else {
+      break; // Stop adding pages once lastPage is reached
     }
   }
 

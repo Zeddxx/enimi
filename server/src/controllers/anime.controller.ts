@@ -96,7 +96,7 @@ export const info = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "Info not found!" });
     }
 
-    const animeId = animeInfo.title.english
+    const animeId = animeInfo.title.english !== null
       ? animeInfo.title.english.toLowerCase().split(" ").join("-") +
         "-" +
         animeInfo.id

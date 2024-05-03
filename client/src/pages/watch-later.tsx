@@ -1,5 +1,5 @@
 import Loader from "@/components/loader/loader";
-import { useGetWatchLaterQuery } from "@/redux/user"
+import { useGetWatchLaterQuery } from "@/redux/auth";
 
 const WatchLater = () => {
   const { data, isLoading } = useGetWatchLaterQuery();
@@ -15,11 +15,11 @@ const WatchLater = () => {
         <div className="anime_card_wrapper my-8">
           {data?.map((anime) => (
             <div className="aspect-[12/16]" key={anime._id}>
-              <a href={`/${anime.animeId}`} className="anime_card_image_wrapper group">
+              <a href={`/anime/${anime.animeId}`} className="anime_card_image_wrapper group">
                 <img src={anime.coverImage} alt="anime cover image" className="group-hover:scale-105" />
               </a>
               <a
-              href={`/${anime.animeId}`}
+              href={`/anime/${anime.animeId}`}
               className="anime_card_title mt-1">
                 {anime.title}
               </a>

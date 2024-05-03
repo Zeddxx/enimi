@@ -41,7 +41,7 @@ const PopularAnimeCarousel = ({ populars }: PopularAnimeProps) => {
               <div className="relative flex items-end">
                 <div className="hidden md:block">
                   <Link
-                    to={`/${anime.animeId}`}
+                    to={`/anime/${anime.animeId}`}
                     className="veritcal-text dark:text-white hover:text-primary dark:hover:text-primary text-secondary-foreground truncate h-64 text-base font-medium pr-0 pl-2"
                   >
                     {anime.title.userPreferred}
@@ -51,7 +51,7 @@ const PopularAnimeCarousel = ({ populars }: PopularAnimeProps) => {
                 <div className="md:hidden grid absolute top-0 left-0 place-items-center bg-primary h-10 text-xl w-10">
                 {Number(index) + 1 < 10 ? (`0${Number(index) + 1}`) : Number(index) + 1}
                 </div>
-                <Link to={`/${anime.animeId}`} className="sm:aspect-[12/16] aspect-[8/10]">
+                <Link to={`/anime/${anime.animeId}`} className="sm:aspect-[12/16] aspect-[8/10]">
                   <img
                     src={anime.coverImage.large}
                     alt=""

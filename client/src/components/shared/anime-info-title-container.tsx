@@ -2,23 +2,23 @@ import { Button, buttonVariants } from "../ui/button";
 import { IAnimeInfo } from "@/types/anime.types";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import {
-  useAddWatchLaterMutation,
-  useGetWatchLaterQuery,
-  useRemoveWatchLaterMutation,
-} from "@/redux/user";
+
 import { IoBookmarkOutline, IoBookmark } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useAddWatchLaterMutation, useGetWatchLaterQuery, useRemoveWatchLaterMutation } from "@/redux/auth";
 
 const AnimeInfoTitleContainer = ({ data }: { data: IAnimeInfo }) => {
+  // watch later mutations!
   const [addWatchLater] = useAddWatchLaterMutation();
   const [removeWatchLater] = useRemoveWatchLaterMutation();
   const { data: watchLater } = useGetWatchLaterQuery();
-  const [id, setId] = useState<string>("");
 
+  // react states
+  const [id, setId] = useState<string>("");
   const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
 
+  // use effect to check if anime id is exist in user watch later or not!
   useEffect(() => {
     if (watchLater) {
       const isInList = watchLater.find((item) => item.animeId === data.animeId);
@@ -29,6 +29,7 @@ const AnimeInfoTitleContainer = ({ data }: { data: IAnimeInfo }) => {
     }
   }, [watchLater, data.animeId]);
 
+  // function to add the anime into user's watch later
   const handleAddWatchLater = async () => {
     toast
       .promise(
@@ -45,10 +46,13 @@ const AnimeInfoTitleContainer = ({ data }: { data: IAnimeInfo }) => {
           error: `Failed to add ${data.title.userPreferred} to your watch list!`,
         }
       )
+      //after mutation completes then set the bookmark to true.
       .then(() => setIsBookmarked(true))
+      // if error occurs then do nothing
       .catch(() => setIsBookmarked(false));
   };
 
+  // function to remove the anime from the user's watch list
   const handleRemoveWatchList = async () => {
     if (!id) return;
 
@@ -63,9 +67,12 @@ const AnimeInfoTitleContainer = ({ data }: { data: IAnimeInfo }) => {
 
   return (
     <div className="max-w-md lg:max-w-full w-full mx-auto">
+      {/* anime title */}
       <h1 className="text-[clamp(1.3rem,5vw,2.3rem)] lg:text-start text-center font-medium lg:mt-0 my-3">
         {data.title.english ?? data.title.userPreferred}
       </h1>
+
+      {/* anime details container */}
       <div className="flex lg:justify-start items-center gap-2 flex-wrap justify-center">
         <p className="anime_utils">Episodes: {data?.episodes}</p>
         <p className="anime_utils">Type: {data?.format}</p>

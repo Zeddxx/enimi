@@ -17,7 +17,7 @@ export type ITitle = {
 export type ISearchedAnime = {
   code: number
   message: string
-  pageInfo: IPage
+  page: IPage
   results: IAnime[]
 }
 

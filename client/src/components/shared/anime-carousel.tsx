@@ -56,7 +56,7 @@ const AnimeCarousel = ({ animes }: { animes: IAnime[] }) => {
                 ></p>
 
                 <Link
-                  to={`/${anime.animeId}`}
+                  to={`/anime/${anime.animeId}`}
                   className={cn(
                     buttonVariants({
                       variant: "default",

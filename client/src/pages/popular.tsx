@@ -10,8 +10,6 @@ const Popular = () => {
   const page = Number(searchParams.get("page")) ?? 1;
   const { data, isLoading } = useGetPopularQuery({ limit: "16", page });
 
-  console.log(page);
-
   const handlePagination = (page: number) => {
     window.location.assign(`/popular?page=${page}`);
   };
@@ -42,7 +40,7 @@ const Popular = () => {
           >
             Prev
           </Button>
-          {generatePageNumbers(data?.page.total ?? 1, Number(page)).map(
+          {generatePageNumbers(data?.page.total ?? 1, Number(page), data?.page.lastPage ?? 1).map(
             (pageNum) => (
               <Button
                 variant="outline"
