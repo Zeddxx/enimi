@@ -10,7 +10,7 @@ import {
   useGetAnimeInfoByIdQuery,
   useGetRecommendationByIdQuery,
 } from "@/redux/api";
-import { Navigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const Info = () => {
   const { animeId } = useParams();
