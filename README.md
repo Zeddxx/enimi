@@ -10,6 +10,28 @@
   (created this application to sharpen my skill into mern stack 🥲)
 </p>
 
+## Why I Created Enimi?
+I was way more comfortable with nextjs and wanted to create something using a trending stack which was MERN stack. Enimi was created on that stack to give user faster response with its sleek ui. Learned alot while creating enimi. Implemented a production build features.
+
+## Features
+
+- [x] Authentication.
+  - [x] login using email and password.
+  - [x] Register or Create your account using email, username and password.
+  - [x] Email verification functionality.
+- [x] Bookmark Your Anime.
+- [x] Responsive UI/UX.
+  - [x] Mobile Responsive
+  - [x] TV Responsive.
+  - [x] Desktop Responsive
+  - [x] IPad Responsive.
+- [x] Your Continue watching Tracker
+- [x] Animes
+  - [x] Trending Anime
+  - [x] Popular Anime
+  - [x] Search Anime
+  - [x] Recently Added Anime
+
 ## Installation
 
 - Clone repository.
