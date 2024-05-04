@@ -1,5 +1,13 @@
 import { Schema } from "mongoose";
 
+export interface WatchingSchemaTypes {
+    owner: IUser
+    episodeId: string
+    title: string
+    poster: string
+    episodeNumber: string
+}
+
 export interface IUser {
     _id: string
     username: string;
@@ -7,7 +15,7 @@ export interface IUser {
     password: string;
     avatarUrl: string;
     verified: boolean
-    watchlist: WatchLaterSchemaTypes[]
+    watching: WatchingSchemaTypes[]
 }
 
 export interface WatchLaterSchemaTypes {

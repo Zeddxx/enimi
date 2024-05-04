@@ -1,19 +1,27 @@
+import React from "react";
+
+// anime typpes imports.
 import { ISource } from "@/types/anime.types";
+
+// enimi player imports
 import Artplayer from "artplayer";
-import Option from "artplayer/types/option";
-import Hls from "hls.js";
-import { useEffect, useState } from "react";
 import Player from "./player";
+import Option from "artplayer/types/option";
+
+// player plugin imports
+import Hls from "hls.js";
 
 type EnimiPlayerProps = {
   sources: ISource[];
   id: string
 };
 
+// to disable the version of artplayer displaying on console
 Artplayer.LOG_VERSION = false;
 
 const EnimiPlayer = ({ sources, id }: EnimiPlayerProps) => {
-  const [url, setUrl] = useState<string>("");
+  // to store the url of the anime video quality.
+  const [url, setUrl] = React.useState<string>("");
 
   const fetchDefaultUrl = () => {
     if (!sources) return;
@@ -97,7 +105,7 @@ const EnimiPlayer = ({ sources, id }: EnimiPlayerProps) => {
       })),
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchDefaultUrl();
   }, []);
 

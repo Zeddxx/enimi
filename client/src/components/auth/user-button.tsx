@@ -1,5 +1,14 @@
+// react imports
+import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+
+// auth context
 import { useAuth } from "@/context";
+
+// lucide icons
 import { Loader } from "lucide-react";
+
+// shadcn components
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,14 +16,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Link } from "react-router-dom";
+
+// redux mutations
 import { useLogoutMutation } from "@/redux/auth";
-import toast from "react-hot-toast";
 
 const UserButton = () => {
   const { user, isLoading } = useAuth();
   const [logout] = useLogoutMutation();
-
 
   const handleLogout = async () => {
     try {

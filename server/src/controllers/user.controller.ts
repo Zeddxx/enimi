@@ -1,11 +1,14 @@
 import { Request, Response } from "express";
 import User from "../models/user.model";
 import WatchLater from "../models/watch-later";
+import Watching from "../models/currently-watching";
 
 export const currentUser = async (req: Request, res: Response) => {
   try {
     const userId = req.userId;
-    const user = await User.findById(userId).select("-password");
+    const user = await User.findById(userId)
+      .populate("watching")
+      .select("-password");
 
     if (!user) {
       return res.status(400).json({ message: "Unauthorized!" });
@@ -79,7 +82,7 @@ export const deleteWatchLater = async (req: Request, res: Response) => {
     const userId = req.userId;
 
     if (!userId) return;
-    if(!id) return;
+    if (!id) return;
 
     await WatchLater.findByIdAndDelete(id);
 
@@ -87,5 +90,83 @@ export const deleteWatchLater = async (req: Request, res: Response) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Something went wrong!" });
+  }
+};
+
+export const addCurrentlyWatching = async (req: Request, res: Response) => {
+  try {
+    const userId = req.userId;
+    const { episodeId, title, poster, episodeNumber } = req.body;
+
+    if (!userId) return res.status(404).end();
+
+    if (!episodeId || !title || !poster || !episodeNumber) {
+      return res.status(400).json({ message: "invalid functionality!" });
+    }
+
+    const existingWatchingNumber = await Watching.findOne({
+      owner: userId,
+      episodeNumber,
+    });
+
+    const existingWatchingId = await Watching.findOne({
+      owner: userId,
+      episodeId,
+    });
+
+    if (existingWatchingId) {
+      return res.status(304).end();
+    }
+
+    if (existingWatchingNumber) {
+      return res.status(200).json({ message: "Already" }).end();
+    }
+
+    let watching = await Watching.findOne({ owner: userId, title });
+
+    if (!watching) {
+      // If the user is not already watching an episode with the same title,
+      // create a new Watching document
+      watching = await Watching.create({
+        owner: userId,
+        episodeId,
+        title,
+        poster,
+        episodeNumber,
+      });
+    } else {
+      // If the user is already watching an episode with the same title,
+      // update the episodeId with the new one
+      watching = await Watching.findOneAndUpdate(
+        { owner: userId, title },
+        { episodeId, episodeNumber, poster },
+        { new: true }
+      );
+    }
+
+    // Update the user document to include the ID of the watching document
+    await User.findByIdAndUpdate(userId, {
+      $addToSet: { watching: watching?._id },
+    });
+
+    return res.status(200).json({ message: "OK" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "something went wrong!" });
+  }
+};
+
+export const getCurrentlyWatching = async (req: Request, res: Response) => {
+  try {
+    const userId = req.userId;
+
+    if (!userId) return res.status(404).end();
+
+    const currentlyWatching = await Watching.find({ owner: userId });
+
+    return res.status(200).json(currentlyWatching);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "something went wrong!" });
   }
 };

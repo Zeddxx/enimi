@@ -1,3 +1,4 @@
+// components imports
 import AnimeRelation from "@/components/anime-relation";
 import Loader from "@/components/loader/loader";
 import SEO from "@/components/seo";
@@ -5,24 +6,35 @@ import AnimeCard from "@/components/shared/anime-card";
 import AnimeInfoTitleContainer from "@/components/shared/anime-info-title-container";
 import AnimePoster from "@/components/shared/anime-poster";
 import BannerImage from "@/components/shared/banner-image";
+
+// utlity functions...
 import { formatDate } from "@/lib/utils";
+
+// rtk queries...
 import {
   useGetAnimeInfoByIdQuery,
   useGetRecommendationByIdQuery,
 } from "@/redux/api";
-import { Navigate, useParams } from "react-router-dom";
+
+import { useParams } from "react-router-dom";
 
 const Info = () => {
+  // to get the animeId from the parameter.
   const { animeId } = useParams();
 
+  // logic to get the id from the encoded uri
   const id = animeId?.split("-").pop() ?? "";
+
+  // rtk queries...
   const { data, isLoading } = useGetAnimeInfoByIdQuery({ id });
   const { data: recommendations } = useGetRecommendationByIdQuery({ id });
 
+  // if loading show the loading state...
   if (isLoading) {
     return <Loader />;
   }
 
+  // if no data just return nothing
   if (!data) {
     return null;
   }

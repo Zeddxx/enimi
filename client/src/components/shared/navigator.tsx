@@ -1,6 +1,6 @@
 import useScroll from "@/hooks/use-scroll"
 import { ChevronUp } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 
 const Navigator = () => {
   const { isScrolled } = useScroll()

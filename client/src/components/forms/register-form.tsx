@@ -1,9 +1,26 @@
+// react imports...
+import React from "react";
+import toast from "react-hot-toast";
+
+// react hook form imports...
 import { FormProvider, useForm } from "react-hook-form";
+
+// shadcn components imports...
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+
+// rtk mutations...
 import { useRegisterMutation } from "@/redux/auth";
 
+// utlities functions...
+import { isCustomError } from "@/lib/utils";
+
+// types imports...
+import { ExtendedError } from "@/types/more.types";
+
+
+// interface for registering a user.
 interface IRegister {
   username: string;
   email: string;
@@ -12,22 +29,50 @@ interface IRegister {
 
 const RegisterForm = () => {
   const form = useForm<IRegister>();
+
+  // state to store the error and success message getting back from the backend.
+  const [credentialError, setCredentialError] = React.useState<string>("");
+  const [credentialSuccess, setCredentialSuccess] = React.useState<string>("");
+
+  // register user mutations.
   const [registerUser, { isLoading }] = useRegisterMutation();
+
+  // form state destructoring...
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = form;
 
+  // onSubmit handler
   const onSubmit = handleSubmit(async (values: IRegister) => {
+    try {
+      toast.promise(handleRegister(values), {
+        loading: "Creating account...",
+        success: "Account created successfully!. Check your email to verify.",
+        error: "Something went wrong!",
+      }).then(() => setCredentialSuccess(`Check your email ${values.email.slice(0,5)+'****'} and verify your account!`))
+      form.reset();
+    } catch (error) {
+      throw Error;
+    }
+  });
+
+  const handleRegister = async (values: IRegister) => {
     try {
       await registerUser(values).unwrap();
       form.reset();
     } catch (error) {
-      console.log(error);
+      if (isCustomError(error)) {
+        setCredentialError((error as ExtendedError).data.message);
+        throw Error;
+      } else {
+        console.error(error);
+        setCredentialError("something went wrong!");
+      }
+      throw Error;
     }
-  });
-
+  };
   return (
     <FormProvider {...form}>
       <form onSubmit={onSubmit} className="space-y-3">
@@ -84,6 +129,18 @@ const RegisterForm = () => {
             )}
           </Label>
         </div>
+
+        {credentialSuccess && (
+          <span className="p-2 text-center text-green-500 bg-green-200 block">
+            {credentialSuccess}
+          </span>
+        )}
+
+        {credentialError && (
+          <span className="py-2 text-center block bg-destructive/20 px-2 text-destructive">
+            ⚠️ {credentialError}
+          </span>
+        )}
 
         <Button
           isLoading={isLoading}

@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react"
+import React from "react"
 
 const useScroll = (threshold = 20) => {
-    const [isScrolled, setIsScrolled] = useState<boolean>(false)
+    const [isScrolled, setIsScrolled] = React.useState<boolean>(false)
 
-    useEffect(() => {
+    React.useEffect(() => {
         const handleWatchScroll = () => {
             if(scrollY > threshold) {
                 setIsScrolled(true);

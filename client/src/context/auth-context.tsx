@@ -1,6 +1,6 @@
 import { useCurrentUserQuery, useVerifyTokenQuery } from "@/redux/auth";
 import { ICurrentUser } from "@/types/user.types";
-import { createContext, useEffect, useState } from "react";
+import React from "react";
 
 interface InitialContextType {
   isLoading: boolean;
@@ -14,15 +14,15 @@ const initialContext: InitialContextType = {
   isLoggedIn: false,
 };
 
-const AuthContext = createContext<InitialContextType>(initialContext);
+const AuthContext = React.createContext<InitialContextType>(initialContext);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [authState, setAuthState] =
-    useState<InitialContextType>(initialContext);
+    React.useState<InitialContextType>(initialContext);
   const { isError } = useVerifyTokenQuery();
   const { data, isLoading } = useCurrentUserQuery();
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!isLoading) {
       setAuthState({
         user: data ?? null,

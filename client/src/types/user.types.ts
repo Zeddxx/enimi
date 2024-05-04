@@ -14,3 +14,12 @@ export interface WatchLaterSchemaTypes {
   bannerImage: string
   _id?: string
 }
+
+export type ICurrentlyWatching = {
+  episodeId: string
+  episodeNumber: string
+  owner: string
+  poster: string
+  title: string
+  _id: string
+}

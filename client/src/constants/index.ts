@@ -2,6 +2,7 @@
 export const BASE_URL: string = "";
 
 export const NAVBAR_ITEMS = [
-    { name: "Popular" , path: "/popular" },
-    { name: "Trending", path: "/trending" }
-]
+  { name: "Home", path: "/home" },
+  { name: "Popular", path: "/popular" },
+  { name: "Trending", path: "/trending" },
+];

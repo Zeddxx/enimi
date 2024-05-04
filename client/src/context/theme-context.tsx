@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React from "react";
 
 type InitialContextType = {
   theme: string | undefined;
@@ -10,12 +10,12 @@ const initialContext: InitialContextType = {
   toggleTheme: () => {},
 };
 
-const ThemeContext = createContext<InitialContextType>(initialContext);
+const ThemeContext = React.createContext<InitialContextType>(initialContext);
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [theme, setTheme] = useState<string>();
+  const [theme, setTheme] = React.useState<string>();
 
-  useEffect(() => {
+  React.useEffect(() => {
     const handleSystemThemeChange = (
       e: MediaQueryListEvent | MediaQueryList
     ) => {
@@ -43,7 +43,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (theme === "dark") {
       document.documentElement.classList.add("dark");
       document.documentElement.style.colorScheme = "dark";

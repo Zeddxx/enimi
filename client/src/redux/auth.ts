@@ -1,17 +1,14 @@
 import { BASE_URL } from "@/constants";
-import { ICurrentUser, WatchLaterSchemaTypes } from "@/types/user.types";
+import { ICurrentUser, ICurrentlyWatching, WatchLaterSchemaTypes } from "@/types/user.types";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { createApi } from "@reduxjs/toolkit/query/react";
-
-// const BASE_URL: string = "http://localhost:4000";
-// // const BASE_URL: string = "";
 
 export const auth = createApi({
   reducerPath: "auth",
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
   }),
-  tagTypes: ["current-user", "verify-token", "watch-later"],
+  tagTypes: ["current-user", "verify-token", "watch-later", 'currently-watching'],
   endpoints: (builder) => ({
     register: builder.mutation({
       query: (body) => ({
@@ -54,7 +51,7 @@ export const auth = createApi({
         method: "POST",
       }),
       invalidatesTags: (_, error) =>
-        error ? [] : ["current-user", "verify-token"],
+        error ? [] : ["current-user", "verify-token", "watch-later"],
     }),
     addWatchLater: builder.mutation({
       query: (body: WatchLaterSchemaTypes) => ({
@@ -82,6 +79,23 @@ export const auth = createApi({
       }),
       invalidatesTags: (_, error) => (error ? [] : ["watch-later"]),
     }),
+    addWatching: builder.mutation({
+      query: (body) => ({
+        url: "/api/watching",
+        method: "POST",
+        credentials: "include",
+        body,
+      }),
+      invalidatesTags: (_, err) => err ? [] : ['currently-watching']
+    }),
+    getCurrentlyWatching: builder.query<ICurrentlyWatching[], void>({
+      query: () => ({
+        url: "/api/get-watching",
+        method: "GET",
+        credentials: "include"
+      }),
+      providesTags: ['currently-watching']
+    })
   }),
 });
 
@@ -94,4 +108,6 @@ export const {
   useAddWatchLaterMutation,
   useGetWatchLaterQuery,
   useRemoveWatchLaterMutation,
+  useAddWatchingMutation,
+  useGetCurrentlyWatchingQuery
 } = auth;

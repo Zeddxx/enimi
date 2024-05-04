@@ -1,3 +1,4 @@
+import ContinueWatching from "@/components/continue-watching";
 import Loader from "@/components/loader/loader";
 import PopularAnimeCarousel from "@/components/popular-anime-carousel";
 import RecentsAnime from "@/components/recents-anime";
@@ -29,6 +30,11 @@ const Home = () => {
 
       <div className="px-4 my-6 max-w-screen-2xl w-full mx-auto">
         <PopularAnimeCarousel populars={popular.results} />
+      </div>
+
+      <div className="px-4 my-6 max-w-screen-2xl w-full mx-auto">
+      <h1 className="text-3xl mb-4">Continue Watching.</h1>
+        <ContinueWatching />
       </div>
 
       <div className="px-4 max-w-screen-2xl w-full mx-auto">

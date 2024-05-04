@@ -1,13 +1,27 @@
-import { FormProvider, useForm } from "react-hook-form";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { useLoginMutation } from "@/redux/auth";
+// react imports...
+import React from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useState } from "react";
+
+// react hook form imports...
+import { FormProvider, useForm } from "react-hook-form";
+
+// shadcn components import...
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+
+// rtk mutations import...
+import { useLoginMutation } from "@/redux/auth";
+
+// utility functions imports...
 import { isCustomError } from "@/lib/utils";
+
+// types imports...
 import { ExtendedError } from "@/types/more.types";
 
+
+// interface types for login user
 interface ILogin {
   email: string;
   password: string;
@@ -15,16 +29,28 @@ interface ILogin {
 
 const LoginForm = () => {
   const form = useForm<ILogin>();
-  const [credentialError, setCredentialError] = useState<string>("");
 
+  // state to store the error getting from the server...
+  const [credentialError, setCredentialError] = React.useState<string>("");
+
+  // navigator to navigate user after login
+  const navigate = useNavigate();
+
+  // params to search for callback url
+  const [searchParams] = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") ?? "/home"
+
+  // form states destructured.
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = form;
 
+  // login mutation function.
   const [login, { isLoading }] = useLoginMutation();
 
+  // onSubmit handler!
   const onSubmit = handleSubmit(async (values: ILogin) => {
     try {
       toast.promise(handleLogin(values), {
@@ -34,7 +60,7 @@ const LoginForm = () => {
       });
       form.reset();
     } catch (error) {
-      console.log(error);
+      throw Error;
     }
   });
 
@@ -42,6 +68,8 @@ const LoginForm = () => {
     try {
       await login(values).unwrap();
       setCredentialError("");
+      // if all good the navigate user back to the callback url.
+      navigate(callbackUrl, { replace: true });
     } catch (error) {
       if (isCustomError(error)) {
         setCredentialError((error as ExtendedError).data.message);
@@ -50,7 +78,7 @@ const LoginForm = () => {
         console.error(error);
         setCredentialError("something went wrong!");
       }
-      throw Error
+      throw Error;
     }
   };
 

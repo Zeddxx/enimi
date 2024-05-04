@@ -8,16 +8,7 @@ const Register = () => {
         {/* <img src="" alt="" /> */}
       </div>
 
-      <div className="h-full flex flex-col justify-between items-center w-full">
-        <div className="flex items-center justify-between w-full px-8">
-            <div className="text-lg text-primary font-semibold">
-                Enimi
-            </div>
-
-            <div className="">
-                
-            </div>
-        </div>
+      <div className="h-full flex flex-col justify-center min-h-[calc(100dvh-80px)] items-center w-full">
 
         <div className="w-full rounded border-muted sm:px-8 px-4 max-w-lg mx-auto">
           <h1 className="text-[clamp(1.5rem,6vw,2.4rem)] font-medium">
@@ -47,7 +38,6 @@ const Register = () => {
           </div>
         </div>
 
-        <div className="flex items-center justify-between"></div>
       </div>
     </>
   );

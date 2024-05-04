@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 
 // utilities
-import { cn } from "./lib/utils";
+import { cn } from "@/lib/utils";
 
 // Components
 import ScrollTopTransition from "@/components/scroll-top-transition";
@@ -25,12 +25,12 @@ import {
   Trending,
   Watch,
   WatchLater,
-} from "./pages";
+} from "@/pages";
 
 import Toaster from "@/components/toaster";
-import { useAuth } from "./context";
-import ProtectedRoute from "./layouts/protected-route";
-// import MainLayout from "./layouts/main-layouts";
+import { useAuth } from "@/context";
+import ProtectedRoute from "@/layouts/protected-route";
+import OpenedMenu from "@/components/menu/opened-menu";
 
 export default function App() {
   const { isLoggedIn } = useAuth();
@@ -44,6 +44,9 @@ export default function App() {
       >
         <Navbar />
       </nav>
+
+      {/* Opened menu! */}
+      <OpenedMenu />
 
       {/* all enimi routes! */}
       <Routes>

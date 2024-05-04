@@ -1,18 +1,43 @@
-import { Button, buttonVariants } from "../ui/button";
-import { IAnimeInfo } from "@/types/anime.types";
-import { Link } from "react-router-dom";
-import { cn } from "@/lib/utils";
-
-import { IoBookmarkOutline, IoBookmark } from "react-icons/io5";
+// react imports
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useAddWatchLaterMutation, useGetWatchLaterQuery, useRemoveWatchLaterMutation } from "@/redux/auth";
+
+// shadcn components imports.
+import { Button, buttonVariants } from "@/components/ui/button";
+
+// types imports...
+import { IAnimeInfo } from "@/types/anime.types";
+
+// Utilities imports...
+import { cn } from "@/lib/utils";
+
+// react icons imports...
+import { IoBookmarkOutline, IoBookmark } from "react-icons/io5";
+
+// redux mutations and queries...
+import {
+  useAddWatchLaterMutation,
+  useGetWatchLaterQuery,
+  useRemoveWatchLaterMutation,
+} from "@/redux/auth";
+
+// auth contexts...
+import { useAuth } from "@/context";
 
 const AnimeInfoTitleContainer = ({ data }: { data: IAnimeInfo }) => {
   // watch later mutations!
   const [addWatchLater] = useAddWatchLaterMutation();
   const [removeWatchLater] = useRemoveWatchLaterMutation();
   const { data: watchLater } = useGetWatchLaterQuery();
+
+  // authentication context
+  const { isLoggedIn } = useAuth();
+
+  // encode the current pathname and make it a callback url.
+  const { pathname } = useLocation();
+  const callbackUrl = encodeURIComponent(pathname);
+  const navigate = useNavigate();
 
   // react states
   const [id, setId] = useState<string>("");
@@ -31,6 +56,10 @@ const AnimeInfoTitleContainer = ({ data }: { data: IAnimeInfo }) => {
 
   // function to add the anime into user's watch later
   const handleAddWatchLater = async () => {
+    if (!isLoggedIn) {
+      navigate(`/login?callbackUrl=${callbackUrl}`, { replace: false });
+      return;
+    }
     toast
       .promise(
         addWatchLater({

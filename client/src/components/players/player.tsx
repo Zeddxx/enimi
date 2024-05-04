@@ -1,6 +1,6 @@
 import Artplayer from "artplayer"
 import Option from "artplayer/types/option"
-import { useEffect, useRef } from "react"
+import React from "react"
 
 type PlayerProps = {
     className: string
@@ -10,16 +10,12 @@ type PlayerProps = {
 }
 
 const Player = ({ className, option, getInstance } : PlayerProps) => {
-  const artRef = useRef<HTMLDivElement | null>(null);
+  const artRef = React.useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const art = new Artplayer({
         ...option,
         container: artRef.current!
-    })
-
-    art.on("video:progress", () => {
-       console.log(art.currentTime);
     })
 
     art.on("resize", () => {

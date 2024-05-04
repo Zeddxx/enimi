@@ -1,15 +1,22 @@
+// shadcn components imports...
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  // CarouselNext,
-  // CarouselPrevious,
 } from "@/components/ui/carousel";
-import { cn } from "@/lib/utils";
-import { IAnime } from "@/types/anime.types";
+import { buttonVariants } from "@/components/ui/button";
+
+// plugins for the shadcn carousel components..
 import Autoplay from "embla-carousel-autoplay";
+
+// utilities functions...
+import { cn } from "@/lib/utils";
+
+// types imports...
+import { IAnime } from "@/types/anime.types";
+
+// RRD imports...
 import { Link } from "react-router-dom";
-import { buttonVariants } from "../ui/button";
 
 const AnimeCarousel = ({ animes }: { animes: IAnime[] }) => {
   return (
@@ -65,7 +72,9 @@ const AnimeCarousel = ({ animes }: { animes: IAnime[] }) => {
                   )}
                 >
                   Watch Now -
-                  <span className="truncate ml-1">{anime.title.userPreferred}</span>
+                  <span className="truncate ml-1">
+                    {anime.title.userPreferred}
+                  </span>
                 </Link>
               </div>
             </div>

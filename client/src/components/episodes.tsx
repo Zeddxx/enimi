@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
-import { useState } from "react";
-import { Input } from "./ui/input";
+import React from "react";
+import { Input } from "@/components/ui/input";
 
 interface IEpisode {
   title: string;
@@ -11,14 +11,14 @@ const Episodes = ({
   episodes,
   id,
   animeId,
-  isFocused
+  isFocused,
 }: {
   episodes?: IEpisode[];
   id: string;
   animeId?: string;
   isFocused?: boolean;
 }) => {
-  const [searchEpisode, setSearchEpisode] = useState<string>("");
+  const [searchEpisode, setSearchEpisode] = React.useState<string>("");
 
   if (!episodes || !animeId) return null;
 
@@ -43,10 +43,12 @@ const Episodes = ({
   });
 
   return (
-    <aside className={cn(
-      "2xl:max-w-xs w-full relative h-[476.55px] overflow-hidden",
-      isFocused && "opacity-0"
-    )}>
+    <aside
+      className={cn(
+        "2xl:max-w-xs w-full relative h-[476.55px] overflow-hidden",
+        isFocused && "opacity-0"
+      )}
+    >
       <div className="w-full p-2 border-b border-muted flex justify-between items-center">
         <p>Episodes</p>
 
@@ -74,7 +76,9 @@ const Episodes = ({
                 )}
                 key={episode.id}
               >
-                <p className="text-xs font-medium">EP {episode.id.split("-").pop()}</p>
+                <p className="text-xs font-medium">
+                  EP {episode.id.split("-").pop()}
+                </p>
               </a>
             ))}
         </div>

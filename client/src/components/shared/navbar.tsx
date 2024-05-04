@@ -1,35 +1,71 @@
+// react imports
 import { Link, useLocation } from "react-router-dom";
-import { Button, buttonVariants } from "../ui/button";
-import SearchModal from "./search-modal";
-import { Moon, Sun } from "lucide-react";
+
+// shadcn component imports.
+import { Button, buttonVariants } from "@/components/ui/button";
+
+// lucide icons imports
+import { MenuIcon, Moon, Sun } from "lucide-react";
+
+// utility functions imports
 import { cn } from "@/lib/utils";
+
+// context imports
 import { useTheme } from "@/context";
-import SignedOut from "../auth/signed-out";
-import SignedIn from "../auth/signed-in";
-import UserButton from "../auth/user-button";
+
+// auth buttons imports
+import SignedOut from "@/components/auth/signed-out";
+import SignedIn from "@/components/auth/signed-in";
+import UserButton from "@/components/auth/user-button";
+
+// constants imports
 import { NAVBAR_ITEMS } from "@/constants";
+
+// components imports
+import SearchModal from "@/components/shared/search-modal";
+
+// redux imports
+import { useDispatch } from "react-redux";
+import { setIsMenuOpen } from "@/redux/utilities/utils.redux";
 
 const Navbar = () => {
   const { toggleTheme } = useTheme();
   const { pathname } = useLocation();
 
+  // redux dispatch state.
+  const dispatch = useDispatch();
+
   return (
     <div className="max-w-screen-2xl flex items-center h-16 justify-between w-full mx-auto px-4">
-      <Link to="/home" className="flex items-center">
-        <span className="h-8 w-8">
-          <img
-            src="/logo.gif"
-            alt="enimi logo"
-            className="h-full w-full object-cover"
-          />
-        </span>
-        <p className="font-medium text-2xl ml-2 text-pretty text-primary">
-          enimi
-        </p>
-      </Link>
+
+      <div className="flex items-center gap-x-3">
+      {/* menu trigger container button */}
+        <Button
+          onClick={() => dispatch(setIsMenuOpen(true))}
+          className="flex lg:hidden"
+          variant="outline"
+          size="icon"
+        >
+          <MenuIcon />
+        </Button>
+
+        {/* main application logo! */}
+        <Link to="/home" className="flex items-center">
+          <span className="h-8 w-8">
+            <img
+              src="/logo.gif"
+              alt="enimi logo"
+              className="h-full w-full object-cover"
+            />
+          </span>
+          <p className="font-medium text-2xl ml-2 hidden lg:block text-pretty text-primary">
+            enimi
+          </p>
+        </Link>
+      </div>
 
       {/* the navbar items... */}
-      <ul className="flex items-center justify-between gap-x-3">
+      <ul className="lg:flex items-center justify-between gap-x-3 hidden">
         {NAVBAR_ITEMS.map((item) => (
           <li
             className={cn(
@@ -56,7 +92,8 @@ const Navbar = () => {
           <Moon className="h-4 w-4 absolute dark:opacity-0 opacity-100 dark:rotate-0 -rotate-90 transition-all duration-300" />
         </Button>
 
-        <SignedOut className="min-w-[13rem] hidden sm:block w-full">
+        {/* if user is signed out the only show this links */}
+        <SignedOut className="min-w-[13rem] hidden lg:block w-full">
           <Link
             to="/login"
             className={cn(buttonVariants({ className: "w-full" }))}
@@ -65,6 +102,7 @@ const Navbar = () => {
           </Link>
         </SignedOut>
 
+        {/* show user button only to signed in user! */}
         <SignedIn className="flex items-center justify-center">
           <UserButton />
         </SignedIn>
