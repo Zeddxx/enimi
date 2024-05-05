@@ -13,7 +13,11 @@ const initialContext: InitialContextType = {
 const ThemeContext = React.createContext<InitialContextType>(initialContext);
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [theme, setTheme] = React.useState<string>();
+  const [theme, setTheme] = React.useState<string | undefined>(() => {
+    const storedTheme = localStorage.getItem("enimi");
+
+    return storedTheme ? storedTheme : undefined;
+  });
 
   React.useEffect(() => {
     const handleSystemThemeChange = (
@@ -33,6 +37,12 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
     // Listen for changes in system theme preference
     systemDarkModeQuery.addEventListener("change", handleSystemThemeChange);
+
+    // check if theme is in local storage or not!
+    const storedTheme = localStorage.getItem("enimi");
+    if (storedTheme && storedTheme !== theme) {
+      setTheme(storedTheme);
+    }
 
     // Cleanup
     return () => {
@@ -59,14 +69,18 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Function to toggle between light and dark themes
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
+    setTheme((prevTheme) => {
+      const newTheme = prevTheme === "dark" ? "light" : "dark";
+      localStorage.setItem("enimi", newTheme);
+      return newTheme;
+    });
   };
 
   return (
     <ThemeContext.Provider
       value={{
         theme,
-        toggleTheme
+        toggleTheme,
       }}
     >
       {children}
@@ -74,4 +88,4 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export { ThemeContext }
+export { ThemeContext };

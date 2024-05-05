@@ -23,6 +23,7 @@ import {
   Register,
   Search,
   Trending,
+  Verify,
   Watch,
   WatchLater,
 } from "@/pages";
@@ -58,6 +59,7 @@ export default function App() {
         <Route path="/stay-alive" element={<Alive />} />
         <Route path="/trending" element={<Trending />} />
         <Route path="/popular" element={<Popular />} />
+        <Route path="/verify" element={<Verify />} />
 
         {isLoggedIn && (
           <>

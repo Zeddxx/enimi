@@ -10,15 +10,21 @@ import { setIsMenuOpen } from "@/redux/utilities/utils.redux";
 
 // utility functions...
 import { cn } from "@/lib/utils";
-import { X } from "lucide-react";
+import { ChevronsUpDown, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import React from "react";
 import { NAVBAR_ITEMS } from "@/constants";
+import SignedIn from "../auth/signed-in";
+import SignedOut from "../auth/signed-out";
+import { useAuth } from "@/context";
 
 const OpenedMenu = () => {
   // redux hooks.
   const dispatch = useDispatch();
   const { isMenuOpen } = useSelector((state: RootState) => state.setUtility);
+
+  // auth
+  const { user } = useAuth();
 
   // react hooks.
   const { pathname } = useLocation();
@@ -48,7 +54,7 @@ const OpenedMenu = () => {
       <aside
         onClick={(e) => e.stopPropagation()}
         className={cn(
-          "fixed left-0 lg:hidden transition-[width] z-[99999] duration-300 top-0 h-screen overflow-hidden bg-white dark:bg-black py-3",
+          "fixed left-0 lg:hidden transition-[width] z-[99999] duration-300 top-0 h-[100dvh] overflow-hidden bg-white dark:bg-black py-3",
           isMenuOpen ? "w-[20rem] sm:w-[24rem]" : "w-0"
         )}
       >
@@ -78,12 +84,33 @@ const OpenedMenu = () => {
           </div>
 
           {isMenuOpen && (
-            <Link
-              className={cn(buttonVariants({ className: "w-full" }))}
-              to={`/login?callbackUrl=${callbackUri}`}
-            >
-              Login
-            </Link>
+            <>
+              <SignedOut>
+                <Link
+                  className={cn(buttonVariants({ className: "w-full" }))}
+                  to={`/login?callbackUrl=${callbackUri}`}
+                >
+                  Login
+                </Link>
+              </SignedOut>
+
+              <SignedIn>
+                <Link
+                  className={cn(
+                    buttonVariants({
+                      className: "w-full flex justify-between text-base",
+                      variant: "outline",
+                    })
+                  )}
+                  to="/profile"
+                >
+                  <span>{user?.username}</span>
+                  <span>
+                    <ChevronsUpDown className="h-4 w-4" />
+                  </span>
+                </Link>
+              </SignedIn>
+            </>
           )}
         </div>
       </aside>

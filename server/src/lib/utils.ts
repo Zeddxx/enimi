@@ -15,6 +15,8 @@ export const hashedValues = async (value: string) => {
 
 const transporter = createTransport({
   host: "smtp-mail.outlook.com",
+  port: 587,
+  secure: false,
   auth: {
     user: AUTH_EMAIL,
     pass: AUTH_PASSWORD,

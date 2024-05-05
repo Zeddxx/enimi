@@ -5,7 +5,8 @@ const AnimeCard = ({ anime }: { anime: IAnime }) => {
   return (
     <div key={anime.id} className="aspect-[12/16]">
       <a
-        href={`/${anime.animeId}`}
+        href={`/anime/${anime.animeId}`}
+        title={anime.title.userPreferred}
         className="anime_card_image_wrapper group"
       >
         <img
@@ -18,10 +19,7 @@ const AnimeCard = ({ anime }: { anime: IAnime }) => {
         </span>
       </a>
       <h5 className="mt-2 font-medium">
-        <a
-          href={`/${anime.animeId}`}
-          className="anime_card_title"
-        >
+        <a href={`/anime/${anime.animeId}`} className="anime_card_title">
           {anime.title.userPreferred}
         </a>
       </h5>

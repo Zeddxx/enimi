@@ -1,3 +1,7 @@
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
+
 const Landing = () => {
   return (
     <section className="w-full">
@@ -10,6 +14,15 @@ const Landing = () => {
           <p className="text-center text-muted-foreground">
             Watch your favorite anime without any anoying ads and popups. Not only this save anime to watch them later with mern functionality.
           </p>
+
+          <div className="flex gap-3 mt-3 max-w-xl w-full">
+          <Link to="/home" className={cn(buttonVariants({ className: "w-full" }))}>
+            Explore.
+          </Link>
+          <Link to="/login" className={cn(buttonVariants({ className: "w-full", variant: "outline"}))}>
+            Login.
+          </Link>
+          </div>
         </div>
       </div>
     </section>

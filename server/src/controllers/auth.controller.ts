@@ -61,13 +61,13 @@ export const verifyEmail = async (req: Request, res: Response) => {
             .then(() => {
               const message: string = "Verification token expired.";
               return res.redirect(
-                `${process.env.APP_URL}/verified?status=error&message=${message}`
+                `${process.env.APP_URL}/verify?status=error&message=${message}`
               );
             })
             .catch((error) => {
               console.log(error);
               return res.redirect(
-                `${process.env.APP_URL}/verified?status=error&message=something went wrong`
+                `${process.env.APP_URL}/verify?status=error&message=something went wrong`
               );
             });
         });
@@ -82,7 +82,7 @@ export const verifyEmail = async (req: Request, res: Response) => {
                     .then(() => {
                       const message: string = "email verified successfully";
                       return res.redirect(
-                        `${process.env.APP_URL}/verified?status=success&message=${message}`
+                        `${process.env.APP_URL}/verify?status=success&message=${message}`
                       );
                     })
                     .catch((error) => {
@@ -90,7 +90,7 @@ export const verifyEmail = async (req: Request, res: Response) => {
                       const message: string =
                         "verification failed or link is expired.";
                       return res.redirect(
-                        `${process.env.APP_URL}/verified?status=error&message=${message}`
+                        `${process.env.APP_URL}/verify?status=error&message=${message}`
                       );
                     });
                 }
@@ -99,25 +99,25 @@ export const verifyEmail = async (req: Request, res: Response) => {
               const message: string =
                 "verification failed or invalid verification link.";
               return res.redirect(
-                `${process.env.APP_URL}/verified?status=error&message=${message}`
+                `${process.env.APP_URL}/verify?status=error&message=${message}`
               );
             }
           })
           .catch((error) => {
             console.log(error);
             return res.redirect(
-              `${process.env.APP_URL}/verified?status=error&message=something went wrong`
+              `${process.env.APP_URL}/verify?status=error&message=something went wrong`
             );
           });
       }
     } else {
       const message: string = "Invalid verification link. try again later.";
       return res.redirect(
-        `${process.env.APP_URL}/verified?status=error&message=${message}`
+        `${process.env.APP_URL}/verify?status=error&message=${message}`
       );
     }
   } catch (error) {
-    return res.redirect(`${process.env.APP_URL}/verified?message=`);
+    return res.redirect(`${process.env.APP_URL}/verify?message=`);
   }
 };
 

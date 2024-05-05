@@ -21,10 +21,11 @@ const ContinueWatching = () => {
     return (
       <div className="anime_card_wrapper">
         {data?.map((anime) => (
-          <div className="sm:aspect-[12/16] aspect-[9/14]" key={anime._id}>
+          <div className="h-auto" key={anime._id}>
             <a
               href={`/watch/${anime.episodeId}`}
-              className="h-full w-full rounded-md overflow-hidden block shadow group relative"
+              title={anime.title}
+              className="w-full rounded-md overflow-hidden block shadow group relative md:h-80 h-72"
             >
               <img
                 src={anime.poster}
