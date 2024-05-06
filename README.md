@@ -11,7 +11,7 @@
 </p>
 
 ## Why I Created Enimi?
-I was way more comfortable with nextjs and wanted to create something using a trending stack which was MERN stack. Enimi was created on that stack to give user faster response with its sleek ui. Learned alot while creating enimi. Implemented a production build features.
+I was much more comfortable with Next.js and wanted to create something using a trending stack, which was the MERN stack. Enimi was created on that stack to provide users with faster responses through its sleek UI. I learned a lot while creating Enimi and implemented production-ready features.
 
 ## Features
 
@@ -32,11 +32,11 @@ I was way more comfortable with nextjs and wanted to create something using a tr
   - [x] Search Anime
   - [x] Recently Added Anime
 
-## .env
+## .env (inside server root directory)
 
 ```bash
  # your authentication main to use email verification.
-AUTH_EMAI= ***@outlook.com
+AUTH_EMAIL= ***@outlook.com
 
 # Authentication email password for nodemailer.
 AUTH_PASSWORD=
