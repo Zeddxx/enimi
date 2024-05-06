@@ -32,6 +32,29 @@ I was way more comfortable with nextjs and wanted to create something using a tr
   - [x] Search Anime
   - [x] Recently Added Anime
 
+## .env
+
+```bash
+ # your authentication main to use email verification.
+AUTH_EMAI= ***@outlook.com
+
+# Authentication email password for nodemailer.
+AUTH_PASSWORD=
+
+# you can use the url for local machine
+BACKEND_URL=https://api.amvstr.me/api/v2
+BASE_BACKEND_URL=https://api.amvstr.me
+
+# consumet url
+CONSUMET_URL=
+
+# use any random key here
+JWT_SECRET=
+
+# your mongo db url
+MONGODB_URI=
+```
+
 ## Installation
 
 - Clone repository.
