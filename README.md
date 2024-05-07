@@ -10,8 +10,24 @@
   (created this application to sharpen my skill into mern stack 🥲)
 </p>
 
+<p align="center">
+  <i>
+ This project is in development as for now.
+</i>
+  <br />
+  <br />
+  <img src="https://img.shields.io/badge/React-Typescript-blue" alt="react badge" />
+  <img src="https://img.shields.io/badge/Express-Typescript-purple" alt="react badge" />
+  <img src="https://img.shields.io/badge/Node-Typescript-green" alt="BACKEND" />
+  <img src="https://img.shields.io/badge/MongoDB-8A2BE2" alt="MOGODB" />
+  <img src="https://img.shields.io/badge/React-Redux-386641" alt="redux" />
+  <img src="https://img.shields.io/badge/React-ContextAPI-blue" alt="react badge" />
+  <br/>
+  <img src="https://img.shields.io/badge/React-Redux%20Toolkit%20Query-E63946" alt="rtk" />
+</p>
+
 ## Why I Created Enimi?
-I was way more comfortable with nextjs and wanted to create something using a trending stack which was MERN stack. Enimi was created on that stack to give user faster response with its sleek ui. Learned alot while creating enimi. Implemented a production build features.
+I was much more comfortable with Next.js and wanted to create something using a trending stack, which was the MERN stack. Enimi was created on that stack to provide users with faster responses through its sleek UI. I learned a lot while creating Enimi and implemented production-ready features.
 
 ## Features
 
@@ -31,6 +47,29 @@ I was way more comfortable with nextjs and wanted to create something using a tr
   - [x] Popular Anime
   - [x] Search Anime
   - [x] Recently Added Anime
+
+## .env (inside server root directory)
+
+```bash
+ # your authentication main to use email verification.
+AUTH_EMAIL= ***@outlook.com
+
+# Authentication email password for nodemailer.
+AUTH_PASSWORD=
+
+# you can use the url for local machine
+BACKEND_URL=https://api.amvstr.me/api/v2
+BASE_BACKEND_URL=https://api.amvstr.me
+
+# consumet url
+CONSUMET_URL=
+
+# use any random key here
+JWT_SECRET=
+
+# your mongo db url
+MONGODB_URI=
+```
 
 ## Installation
 
