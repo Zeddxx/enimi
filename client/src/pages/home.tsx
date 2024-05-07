@@ -10,12 +10,8 @@ const Home = () => {
   const { data: trending, isLoading: isTrendingLoading } = useGetTrendingQuery({ limit: "12", page: 1});
   const { data: popular, isLoading: isPopularLoading } = useGetPopularQuery({ limit: "12", page: 1 })
 
-  if (isTrendingLoading && isPopularLoading) {
+  if (isTrendingLoading || isPopularLoading || !trending || !popular) {
     return <Loader />;
-  }
-
-  if (!trending || !popular) {
-    return <div className="">no</div>;
   }
 
   return (

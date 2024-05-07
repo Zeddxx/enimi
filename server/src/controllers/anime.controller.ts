@@ -11,6 +11,7 @@ import {
   mergeAnilistIdFromTitle,
   scrapeEpisodes,
 } from "../helpers/helper";
+import axios from "axios";
 
 // /api/trending?page=&limit=
 export const trending = async (req: Request, res: Response) => {
@@ -96,13 +97,38 @@ export const info = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "Info not found!" });
     }
 
-    const animeId = animeInfo.title.english !== null
-      ? animeInfo.title.english.toLowerCase().split(" ").join("-") +
-        "-" +
-        animeInfo.id
-      : animeInfo.title.userPreferred.toLowerCase().split(" ").join("-") +
-        "-" +
-        animeInfo.id;
+    const animeId =
+      animeInfo.title.english !== null
+        ? animeInfo.title.english.toLowerCase().split(" ").join("-") +
+          "-" +
+          animeInfo.id
+        : animeInfo.title.userPreferred.toLowerCase().split(" ").join("-") +
+          "-" +
+          animeInfo.id;
+
+    if (!animeInfo.id_provider || !animeInfo.id_provider.idGogo) {
+      try {
+        // searching for the anime by title in consumet gogo provider.
+        const { data } = await axios.get(
+          (process.env.CONSUMET_URL as string) +
+            `/anime/gogoanime/${animeInfo.title.userPreferred}`
+        );
+
+        // catching the id of the first result that matches the title.
+        const animeGogoId = data.results[0].id;
+
+        // getting the episodes
+        const episodes = await scrapeEpisodes(animeGogoId);
+
+        // sending to the client
+        return res
+          .status(200)
+          .json({ ...animeInfo, animeId, anime_episodes: episodes.reverse() });
+      } catch (error) {
+        console.log(error);
+        return res.status(400).json({ message: "anime not found!" });
+      }
+    }
 
     const episodes = await scrapeEpisodes(animeInfo.id_provider.idGogo);
 
