@@ -25,24 +25,39 @@ import HistoryTree from "@/components/history-tree";
 import useStoreAnime from "@/hooks/use-store-anime";
 import { useAuth } from "@/context";
 import { useAddWatchingMutation } from "@/redux/auth";
+import InfoContainer from "@/components/shared/info-container";
 
 const Watch = () => {
+  // react-router-dom hooks
   const { episodeId } = useParams();
+
+  // authentication hook
   const { user } = useAuth();
+
+  // destructuring the animeId and the episode id from the parameter
   const { episodeId: id, animeId } = destructureId(episodeId as string);
 
+  // localstorage hook to set the currently watching anime into localstorage
   const { setAnimeWatch } = useStoreAnime();
 
+  // RTK Query
   const { data, isLoading } = useGetEpisodeLinksQuery({ id: id! });
   const { data: info, isLoading: isInfoLoading } = useGetAnimeInfoByIdQuery({
     id: animeId,
   });
+
+  // RTK mutation to set the current watching into database.
   const [watching] = useAddWatchingMutation();
 
+  // side-effects to add the currently wathing anime into
+  // localStorage if user is !loggedIn
+  // else add into the database of the user.
   React.useEffect(() => {
     const addWatch = async () => {
       try {
+        // checking if all exists then there is not user then.
         if (episodeId && info && !user) {
+          // add anime into localStorage.
           setAnimeWatch({
             episodeId,
             title: info.title.userPreferred,
@@ -50,6 +65,7 @@ const Watch = () => {
             poster: info.coverImage.large,
           });
         } else if (episodeId && info && !!user) {
+          // add anime into user's database.
           await watching({
             episodeId,
             title: info.title.userPreferred,
@@ -65,6 +81,7 @@ const Watch = () => {
     addWatch();
   }, [episodeId, info, user]);
 
+  // lazy importing the player to make the build light weight.
   const EnimiPlayer = React.lazy(
     () => import("@/components/players/enimi-player")
   );
@@ -77,11 +94,13 @@ const Watch = () => {
     return <p className="">No Media found</p>;
   }
 
+  // function to get previous and next episodes from the episodes[]
   const { next, prev } = getEpisodeNavigation(
     info?.anime_episodes ?? [{ title: "", id: "" }],
     id!
   );
 
+  // a function to toggle next or prev episodes.
   const handleNavigation = (type: "NEXT" | "PREV") => {
     if (type === "NEXT") {
       window.location.assign(`/watch/${next}-${animeId}`);
@@ -149,47 +168,7 @@ const Watch = () => {
         </div>
 
         {/* A Brief Introduction. */}
-        <aside className="2xl:max-w-xs w-full p-3 border border-muted rounded">
-          <div className="h-full">
-            <div className="w-full rounded overflow-hidden h-28 relative before:absolute before:bottom-0 before:w-full before:h-1/2 before:left-0 before:bg-gradient-to-t before:from-[#121212] before:via-[#121212]/70 before:to-transparent before:z-10">
-              <img
-                src={info?.bannerImage ?? info?.coverImage.large}
-                alt="anime banner image"
-                className="object-cover brightness-75 h-full w-full"
-              />
-            </div>
-            <div className="mt-1">
-              <h1 className="text-xl font-semibold text-primary">
-                {info?.title.english ?? info?.title.userPreferred}
-              </h1>
-              <div className="flex flex-wrap gap-2 mt-2">
-                {info?.genres.map((genre) => (
-                  <span
-                    key={genre}
-                    className="text-xs px-2 py-px border border-muted text-muted-foreground"
-                  >
-                    {genre}
-                  </span>
-                ))}
-              </div>
-
-              {/* brief description. */}
-              <div className="max-h-28 mt-3 overflow-y-scroll">
-                <p
-                  dangerouslySetInnerHTML={{ __html: info?.description ?? "" }}
-                  className="text-muted-foreground"
-                ></p>
-              </div>
-
-              {/* episodes */}
-              <div className="mt-3">
-                <p className="text-sm">
-                  Total Episodes: {info?.anime_episodes.length}
-                </p>
-              </div>
-            </div>
-          </div>
-        </aside>
+        <InfoContainer info={info!} />
       </div>
     </section>
   );

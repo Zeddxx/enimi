@@ -18,14 +18,18 @@ const Episodes = ({
   animeId?: string;
   isFocused?: boolean;
 }) => {
+  // state to store the searched query of episodes
   const [searchEpisode, setSearchEpisode] = React.useState<string>("");
 
+  // if no episodes and no animeId is provided.
   if (!episodes || !animeId) return null;
 
+  // keyboard onchange event.
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchEpisode(e.target.value);
   };
 
+  // filtering the episodes related to searched.
   const filteredEpisodes = episodes?.filter((episode, index) => {
     const lowerCaseSearchTerm = searchEpisode.toLowerCase();
     if (searchEpisode) {
@@ -45,7 +49,7 @@ const Episodes = ({
   return (
     <aside
       className={cn(
-        "2xl:max-w-xs w-full relative h-[476.55px] overflow-hidden",
+        "2xl:max-w-xs w-full relative max-h-[476.55px] overflow-hidden",
         isFocused && "opacity-0"
       )}
     >

@@ -42,7 +42,7 @@ const Navbar = () => {
       {/* menu trigger container button */}
         <Button
           onClick={() => dispatch(setIsMenuOpen(true))}
-          className="flex lg:hidden"
+          className="flex"
           variant="outline"
           size="icon"
         >
@@ -58,14 +58,14 @@ const Navbar = () => {
               className="h-full w-full object-cover"
             />
           </span>
-          <p className="font-medium text-2xl ml-2 hidden lg:block text-pretty text-primary">
+          {/* <p className="font-medium text-2xl ml-2 hidden lg:block text-pretty text-primary">
             enimi
-          </p>
+          </p> */}
         </Link>
       </div>
 
       {/* the navbar items... */}
-      <ul className="lg:flex items-center justify-between gap-x-3 hidden">
+      <ul className="items-center justify-between gap-x-3 hidden">
         {NAVBAR_ITEMS.map((item) => (
           <li
             className={cn(

@@ -18,6 +18,7 @@ import {
   Info,
   Landing,
   Login,
+  Movies,
   Popular,
   Profile,
   Register,
@@ -67,6 +68,7 @@ export default function App() {
         <Route path="/stay-alive" element={<Alive />} />
         <Route path="/trending" element={<Trending />} />
         <Route path="/popular" element={<Popular />} />
+        <Route path="/movies" element={<Movies />} />
         <Route path="/verify" element={<Verify />} />
 
         {isLoggedIn && (

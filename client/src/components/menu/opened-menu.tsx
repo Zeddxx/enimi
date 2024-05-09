@@ -54,7 +54,7 @@ const OpenedMenu = () => {
       <aside
         onClick={(e) => e.stopPropagation()}
         className={cn(
-          "fixed left-0 lg:hidden transition-[width] z-[99999] duration-300 top-0 h-[100dvh] overflow-hidden bg-white dark:bg-black py-3",
+          "fixed left-0 transition-[width] z-[99999] duration-300 top-0 h-[100dvh] overflow-hidden bg-white dark:bg-black py-3",
           isMenuOpen ? "w-[20rem] sm:w-[24rem]" : "w-0"
         )}
       >
@@ -62,7 +62,7 @@ const OpenedMenu = () => {
           <div className="space-y-7">
             <Button
               onClick={() => dispatch(setIsMenuOpen(false))}
-              className="flex lg:hidden"
+              className="flex"
               variant="outline"
               size="icon"
             >

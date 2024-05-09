@@ -1,5 +1,5 @@
 import ContinueWatching from "@/components/continue-watching";
-import Loader from "@/components/loader/loader";
+import HomeLoader from "@/components/loader/home-loader";
 import PopularAnimeCarousel from "@/components/popular-anime-carousel";
 import RecentsAnime from "@/components/recents-anime";
 import SEO from "@/components/seo";
@@ -7,11 +7,17 @@ import AnimeCarousel from "@/components/shared/anime-carousel";
 import { useGetPopularQuery, useGetTrendingQuery } from "@/redux/api";
 
 const Home = () => {
-  const { data: trending, isLoading: isTrendingLoading } = useGetTrendingQuery({ limit: "12", page: 1});
-  const { data: popular, isLoading: isPopularLoading } = useGetPopularQuery({ limit: "12", page: 1 })
+  const { data: trending, isLoading: isTrendingLoading } = useGetTrendingQuery({
+    limit: "12",
+    page: 1,
+  });
+  const { data: popular, isLoading: isPopularLoading } = useGetPopularQuery({
+    limit: "12",
+    page: 1,
+  });
 
   if (isTrendingLoading || isPopularLoading || !trending || !popular) {
-    return <Loader />;
+    return <HomeLoader />;
   }
 
   return (
@@ -29,7 +35,7 @@ const Home = () => {
       </div>
 
       <div className="px-4 my-6 max-w-screen-2xl w-full mx-auto">
-      <h1 className="text-3xl mb-4">Continue Watching.</h1>
+        <h1 className="text-3xl mb-4">Continue Watching.</h1>
         <ContinueWatching />
       </div>
 
