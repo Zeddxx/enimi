@@ -36,9 +36,18 @@ export const comment = async (req: Request, res: Response) => {
 
 export const getComment = async (req: Request, res: Response) => {
   try {
-    const comments = await Comment.find()
+    const { id } = req.query;
+    const comments = await Comment.find({ animeId: id })
       .populate("author", "-password")
-      .populate("replies");
+      .populate({
+        path: "replies",
+        populate: {
+          path: "author",
+          select: "-password",
+        },
+        options: { sort: { createdAt: -1 } },
+      })
+      .sort({ createdAt: -1 });
     return res.status(200).json(comments);
   } catch (error) {
     console.log(error);

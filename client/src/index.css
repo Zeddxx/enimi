@@ -124,3 +124,7 @@ html {
 .pagination_container {
   @apply max-w-7xl mx-auto flex justify-center my-8 w-full px-4;
 }
+
+.user_avatar {
+  @apply h-10 w-10 shrink-0 rounded-full overflow-hidden bg-[#121212]
+}

@@ -1,5 +1,10 @@
 import { BASE_URL } from "@/constants";
-import { ICurrentUser, ICurrentlyWatching, WatchLaterSchemaTypes } from "@/types/user.types";
+import { IComment } from "@/types/comments.types";
+import {
+  ICurrentUser,
+  ICurrentlyWatching,
+  WatchLaterSchemaTypes,
+} from "@/types/user.types";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
@@ -8,7 +13,13 @@ export const auth = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
   }),
-  tagTypes: ["current-user", "verify-token", "watch-later", 'currently-watching'],
+  tagTypes: [
+    "current-user",
+    "verify-token",
+    "watch-later",
+    "currently-watching",
+    "comments",
+  ],
   endpoints: (builder) => ({
     register: builder.mutation({
       query: (body) => ({
@@ -86,16 +97,51 @@ export const auth = createApi({
         credentials: "include",
         body,
       }),
-      invalidatesTags: (_, err) => err ? [] : ['currently-watching']
+      invalidatesTags: (_, err) => (err ? [] : ["currently-watching"]),
     }),
     getCurrentlyWatching: builder.query<ICurrentlyWatching[], void>({
       query: () => ({
         url: "/api/get-watching",
         method: "GET",
-        credentials: "include"
+        credentials: "include",
       }),
-      providesTags: ['currently-watching']
-    })
+      providesTags: ["currently-watching"],
+    }),
+    getCommentsFromId: builder.query<IComment[], { id: string }>({
+      query: ({ id }: { id: string }) => ({
+        url: `/api/comment?id=${id}`,
+        method: "GET",
+        credentials: "include",
+      }),
+      providesTags: ["comments"],
+    }),
+    addComment: builder.mutation({
+      query: (body) => ({
+        url: "/api/comment",
+        method: "POST",
+        credentials: "include",
+        body,
+      }),
+      invalidatesTags: (_, err) => (err ? [] : ["comments"]),
+    }),
+    toggleLike: builder.mutation({
+      query: (body) => ({
+        url: "/api/comment",
+        method: "PUT",
+        credentials: "include",
+        body,
+      }),
+      invalidatesTags: (_, err) => (err ? [] : ["comments"]),
+    }),
+    addReply: builder.mutation({
+      query: (body) => ({
+        url: "/api/comment/reply",
+        method: "POST",
+        credentials: "include",
+        body,
+      }),
+      invalidatesTags: (_, err) => (err ? [] : ["comments"]),
+    }),
   }),
 });
 
@@ -109,5 +155,9 @@ export const {
   useGetWatchLaterQuery,
   useRemoveWatchLaterMutation,
   useAddWatchingMutation,
-  useGetCurrentlyWatchingQuery
+  useGetCurrentlyWatchingQuery,
+  useGetCommentsFromIdQuery,
+  useAddCommentMutation,
+  useToggleLikeMutation,
+  useAddReplyMutation
 } = auth;

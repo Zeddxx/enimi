@@ -10,60 +10,59 @@ interface ICommentSchema extends Document {
   author: mongoose.Types.ObjectId;
   comment: string;
   _id?: string;
-  createdAt: Date;
   replies: mongoose.Types.ObjectId[];
   likes: mongoose.Types.ObjectId[];
   animeId: string;
   toggleLike(userId: string): void;
 }
 
-const replySchema = new mongoose.Schema<IReplySchema>({
-  author: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  comment: {
-    type: String,
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now(),
-  },
-});
-
-const CommentSchema = new Schema<ICommentSchema>({
-  author: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  comment: {
-    type: String,
-    required: true,
-  },
-  likes: [
-    {
+const replySchema = new mongoose.Schema<IReplySchema>(
+  {
+    author: {
       type: Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
-  ],
-  replies: [
-    {
+    comment: {
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const CommentSchema = new Schema<ICommentSchema>(
+  {
+    author: {
       type: Schema.Types.ObjectId,
-      ref: "Reply",
+      ref: "User",
+      required: true,
     },
-  ],
-  createdAt: {
-    type: Date,
-    default: Date.now(),
+    comment: {
+      type: String,
+      required: true,
+    },
+    likes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    replies: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Reply",
+      },
+    ],
+    animeId: {
+      type: String,
+      required: false,
+    },
   },
-  animeId: {
-    type: String,
-    required: false,
-  },
-});
+  { timestamps: true }
+);
 
 CommentSchema.methods.toggleLike = function (userId: string): void {
   const index = this.likes.indexOf(userId);

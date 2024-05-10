@@ -140,3 +140,28 @@ export const generatePageNumbers = (
 
   return pageNumbers;
 };
+
+export function formatDBDate(dateString: string): string {
+  const date = new Date(dateString);
+  const now = new Date();
+
+  const minutesDiff = Math.floor(
+    (now.getTime() - date.getTime()) / (1000 * 60)
+  );
+  const hoursDiff = Math.floor(minutesDiff / 60);
+  const daysDiff = Math.floor(hoursDiff / 24);
+  const monthDiff = Math.floor(daysDiff / 30);
+
+  if (minutesDiff < 1) {
+    // Adjust threshold here
+    return "Just now";
+  } else if (minutesDiff < 60) {
+    return `${minutesDiff} ${minutesDiff === 1 ? "minute" : "minutes"} ago`;
+  } else if (hoursDiff < 24) {
+    return `${hoursDiff} ${hoursDiff === 1 ? "hour" : "hours"} ago`;
+  } else if (daysDiff < 30) {
+    return `${daysDiff} ${daysDiff === 1 ? "day" : "days"} ago`;
+  } else {
+    return `${monthDiff} ${monthDiff === 1 ? "month" : "months"} ago`;
+  }
+}

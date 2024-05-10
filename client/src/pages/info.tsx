@@ -6,6 +6,7 @@ import AnimeCard from "@/components/shared/anime-card";
 import AnimeInfoTitleContainer from "@/components/shared/anime-info-title-container";
 import AnimePoster from "@/components/shared/anime-poster";
 import BannerImage from "@/components/shared/banner-image";
+import CommentSection from "@/components/shared/comment";
 
 // utlity functions...
 import { formatDate } from "@/lib/utils";
@@ -128,6 +129,16 @@ const Info = () => {
         </div>
 
         <AnimeRelation relation={data.relation} id={id} />
+
+        {/* Comment section */}
+        <div className="w-full">
+          <h3 className="sub_headings">Comments</h3>
+
+          <div className="flex xl:flex-row flex-col gap-4">
+            <CommentSection animeId={animeId} />
+            <div className="max-w-xs w-full flex-shrink-0"></div>
+          </div>
+        </div>
 
         <div className="my-5">
           <h4 className="sub_headings">Recommendations</h4>
