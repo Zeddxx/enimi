@@ -1,7 +1,7 @@
 // --> in local machine uncomment this out!
-export const BASE_URL: string = "http://localhost:4000";
+// export const BASE_URL: string = "http://localhost:4000";
 // --> when deploying uncomment this out!
-// export const BASE_URL: string = "";
+export const BASE_URL: string = "";
 
 export const NAVBAR_ITEMS = [
   { name: "Home", path: "/home" },
