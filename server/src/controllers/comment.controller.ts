@@ -45,7 +45,6 @@ export const getComment = async (req: Request, res: Response) => {
           path: "author",
           select: "-password",
         },
-        options: { sort: { createdAt: -1 } },
       })
       .sort({ createdAt: -1 });
     return res.status(200).json(comments);

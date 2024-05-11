@@ -10,7 +10,11 @@ import Loader from "@/components/loader/loader";
 import { cn, destructureId, getEpisodeNavigation } from "@/lib/utils";
 
 // rtk queries
-import { useGetAnimeInfoByIdQuery, useGetEpisodeLinksQuery } from "@/redux/api";
+import {
+  useGetAnimeInfoByIdQuery,
+  useGetEpisodeLinksQuery,
+  useGetRecommendationByIdQuery,
+} from "@/redux/api";
 
 // lucide icons
 import {
@@ -26,6 +30,7 @@ import useStoreAnime from "@/hooks/use-store-anime";
 import { useAuth } from "@/context";
 import { useAddWatchingMutation } from "@/redux/auth";
 import InfoContainer from "@/components/shared/info-container";
+import AnimeCard from "@/components/shared/anime-card";
 
 const Watch = () => {
   // react-router-dom hooks
@@ -43,6 +48,9 @@ const Watch = () => {
   // RTK Query
   const { data, isLoading } = useGetEpisodeLinksQuery({ id: id! });
   const { data: info, isLoading: isInfoLoading } = useGetAnimeInfoByIdQuery({
+    id: animeId,
+  });
+  const { data: recommendations } = useGetRecommendationByIdQuery({
     id: animeId,
   });
 
@@ -169,6 +177,15 @@ const Watch = () => {
 
         {/* A Brief Introduction. */}
         <InfoContainer info={info!} />
+      </div>
+
+      <div className="my-5 max-w-screen-2xl w-full px-4 mx-auto">
+        <h4 className="sub_headings">Recommendations</h4>
+        <div className="anime_card_wrapper">
+          {recommendations?.results.map((anime) => (
+            <AnimeCard key={anime.id} anime={anime} />
+          ))}
+        </div>
       </div>
     </section>
   );

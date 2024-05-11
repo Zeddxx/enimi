@@ -47,13 +47,13 @@ export default function App() {
         <Navbar />
       </nav>
 
-      <header className="w-full py-2 bg-primary">
+      {/* <header className="w-full py-2 bg-primary">
         <div className="max-w-screen-2xl w-full mx-auto px-4">
           <p className="text-center text-sm">
             If you are getting error white registering please raise an issue on <a href="https://github.com/Zeddxx/enimi" className="underline underline-offset-2" target="_blank">github</a>.
           </p>
         </div>
-      </header>
+      </header> */}
 
       {/* Opened menu! */}
       <OpenedMenu />
