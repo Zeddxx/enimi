@@ -1,3 +1,4 @@
+<img src="/client/public/Banner.gif" alt="banner image gif" />
 <div align="center">
   <img src="/client/public/logo.gif" alt="enimi logo gif version" />
 </div>
