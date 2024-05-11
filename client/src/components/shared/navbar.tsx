@@ -35,6 +35,8 @@ const Navbar = () => {
   // redux dispatch state.
   const dispatch = useDispatch();
 
+  const callbackUrl = encodeURIComponent(pathname);
+
   return (
     <div className="max-w-screen-2xl flex items-center h-16 justify-between w-full mx-auto px-4">
 
@@ -95,7 +97,7 @@ const Navbar = () => {
         {/* if user is signed out the only show this links */}
         <SignedOut className="min-w-[13rem] hidden lg:block w-full">
           <Link
-            to="/login"
+            to={`/login?callbackUrl=${callbackUrl}`}
             className={cn(buttonVariants({ className: "w-full" }))}
           >
             Login

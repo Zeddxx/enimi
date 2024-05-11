@@ -4,7 +4,7 @@ import { addReply, comment, getComment, toggleLikeComment } from "../../controll
 
 export default (router: Router) => {
     router.post("/api/comment", verifyToken, comment)
-    router.get("/api/comment", verifyToken, getComment)
+    router.get("/api/comment", getComment)
     router.put("/api/comment", verifyToken, toggleLikeComment)
     router.post("/api/comment/reply", verifyToken, addReply)
 }

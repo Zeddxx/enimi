@@ -4,21 +4,22 @@ import CommentForm from "../comments/comment-form";
 
 interface Props {
   animeId?: string;
+  title?: string;
 }
 
-const CommentSection = ({ animeId }: Props) => {
+const CommentSection = ({ animeId, title }: Props) => {
   const { data: comments } = useGetCommentsFromIdQuery({ id: animeId || "" });
 
-  if (!animeId) {
+  if (!animeId || !title) {
     return null;
   }
   return (
     <div className="w-full">
       <div className="flex w-full gap-x-3">
-        <CommentForm animeId={animeId} />
+        <CommentForm title={title} animeId={animeId} />
       </div>
       <div className="flex-1">
-        {comments?.map((comment) => (
+        {comments?.slice(0, 5).map((comment) => (
           <Comment key={comment._id} comment={comment} />
         ))}
       </div>

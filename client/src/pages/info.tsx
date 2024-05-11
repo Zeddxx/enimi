@@ -135,7 +135,7 @@ const Info = () => {
           <h3 className="sub_headings">Comments</h3>
 
           <div className="flex xl:flex-row flex-col gap-4">
-            <CommentSection animeId={animeId} />
+            <CommentSection title={data.title.userPreferred} animeId={animeId} />
             <div className="max-w-xs w-full flex-shrink-0"></div>
           </div>
         </div>

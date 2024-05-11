@@ -3,6 +3,9 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { useAddCommentMutation } from "@/redux/auth";
+import { useLocation, useNavigate } from "react-router-dom";
+import SignedIn from "../auth/signed-in";
+import SignedOut from "../auth/signed-out";
 
 interface IComment {
   comment: string;
@@ -10,10 +13,20 @@ interface IComment {
 
 interface Props {
   animeId: string;
+  title: string;
 }
 
-const CommentForm = ({ animeId }: Props) => {
+const CommentForm = ({ animeId, title }: Props) => {
   const [comment, { isLoading }] = useAddCommentMutation();
+
+  const { pathname } = useLocation();
+  const callbackUrl = encodeURIComponent(pathname);
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate(`/login?callbackUrl=${callbackUrl}`, { replace: false });
+  };
+
   const form = useForm<IComment>();
   const {
     register,
@@ -26,7 +39,10 @@ const CommentForm = ({ animeId }: Props) => {
       await comment({
         ...values,
         animeId,
-      }).unwrap();
+      })
+        .unwrap()
+        .then(() => form.reset())
+        .catch((err) => console.error(err));
     } catch (error) {
       console.error(error);
       throw Error;
@@ -35,22 +51,28 @@ const CommentForm = ({ animeId }: Props) => {
 
   return (
     <FormProvider {...form}>
-      <form onSubmit={onSubmit} className="flex w-full gap-3 mb-6">
+      <form
+        onSubmit={onSubmit}
+        className="flex w-full sm:flex-row flex-col gap-3 mb-6"
+      >
         <Label className="w-full">
           <Input
-            placeholder={`Comment to ${animeId}`}
+            placeholder={`Comment to ${title}`}
             className=""
             {...register("comment", { required: "Comment is required!" })}
           />
           {errors.comment && <span>{errors.comment.message}</span>}
         </Label>
-        <Button
-          disabled={isLoading}
-          type="submit"
-          className="max-w-[13rem] rounded-none w-full"
-        >
-          Comment
-        </Button>
+        <SignedIn className="sm:max-w-[13rem] w-full">
+          <Button disabled={isLoading} type="submit" className=" w-full">
+            Comment
+          </Button>
+        </SignedIn>
+        <SignedOut className="sm:max-w-[13rem] w-full">
+          <Button onClick={handleLogin} className=" w-full">
+            Comment
+          </Button>
+        </SignedOut>
       </form>
     </FormProvider>
   );
