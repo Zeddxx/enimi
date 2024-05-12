@@ -14,6 +14,7 @@ interface ICommentSchema extends Document {
   likes: mongoose.Types.ObjectId[];
   animeId: string;
   toggleLike(userId: string): void;
+  isSpoiler: boolean
 }
 
 const replySchema = new mongoose.Schema<IReplySchema>(
@@ -43,6 +44,10 @@ const CommentSchema = new Schema<ICommentSchema>(
     comment: {
       type: String,
       required: true,
+    },
+    isSpoiler: {
+      type: Boolean,
+      default: false
     },
     likes: [
       {

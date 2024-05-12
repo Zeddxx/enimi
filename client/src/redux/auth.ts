@@ -142,6 +142,17 @@ export const auth = createApi({
       }),
       invalidatesTags: (_, err) => (err ? [] : ["comments"]),
     }),
+    deleteComment: builder.mutation({
+      query: ({ id } : { id: string }) => ({
+        url: "/api/comment",
+        method: "DELETE",
+        body: {
+          commentId: id
+        },
+        credentials: "include",
+      }),
+      invalidatesTags: (_, err) => err ? [] : ['comments']
+    })
   }),
 });
 
@@ -159,5 +170,6 @@ export const {
   useGetCommentsFromIdQuery,
   useAddCommentMutation,
   useToggleLikeMutation,
-  useAddReplyMutation
+  useAddReplyMutation,
+  useDeleteCommentMutation
 } = auth;

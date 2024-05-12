@@ -13,6 +13,7 @@ export type IReply = {
 }
 
 export type IComment = {
+    isSpoiler: boolean
     _id: string
     animeId: string
     author: IAuthor

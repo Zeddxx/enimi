@@ -35,9 +35,14 @@ const CommentForm = ({ animeId, title }: Props) => {
   } = form;
 
   const onSubmit = handleSubmit(async (values: IComment) => {
+    const isSpoiler: boolean = values.comment
+      .split(" ")
+      .some((text) => text === "/spoiler");
+    const commentText: string = values.comment.replace(" /spoiler", " ");
     try {
       await comment({
-        ...values,
+        comment: commentText,
+        isSpoiler,
         animeId,
       })
         .unwrap()

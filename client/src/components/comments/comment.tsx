@@ -1,12 +1,24 @@
 import { useAuth } from "@/context";
-import { formatDBDate } from "@/lib/utils";
-import { useAddReplyMutation, useToggleLikeMutation } from "@/redux/auth";
+import { cn, formatDBDate } from "@/lib/utils";
+import {
+  useAddReplyMutation,
+  useDeleteCommentMutation,
+  useToggleLikeMutation,
+} from "@/redux/auth";
 import { IComment } from "@/types/comments.types";
 import { MoreHorizontal } from "lucide-react";
 import React from "react";
 import { GoHeart, GoHeartFill } from "react-icons/go";
 import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import toast from "react-hot-toast";
+import MainComment from "./main-comment";
 
 interface Props {
   comment: IComment;
@@ -30,11 +42,26 @@ const Comment = ({ comment }: Props) => {
 
   // rtk mutations
   const [reply, { isLoading }] = useAddReplyMutation();
+  const [deleteComment] = useDeleteCommentMutation();
 
   // handle like toggle function.
   const handleToggleLike = (commentId: string) => {
     try {
       toggleLike({ commentId }).unwrap();
+    } catch (error) {
+      console.error(error);
+      throw Error;
+    }
+  };
+
+  // handle delete function
+  const handleDelete = async (commentId: string) => {
+    try {
+      toast.promise(deleteComment({ id: commentId }).unwrap(), {
+        loading: "Deleting comment...",
+        error: "Error deleting comment...",
+        success: "Comment deleted successfully!",
+      });
     } catch (error) {
       console.error(error);
       throw Error;
@@ -78,7 +105,7 @@ const Comment = ({ comment }: Props) => {
             </div>
 
             {/* main comment content */}
-            <p className="">{comment.comment}</p>
+            <MainComment comment={comment.comment} isSpoiler={comment.isSpoiler} />
 
             {/* social buttos. */}
             <div className="flex gap-x-2 mt-1 flex-col ">
@@ -134,7 +161,25 @@ const Comment = ({ comment }: Props) => {
               {comment.likes.length}
             </span>
           </div>
-          <MoreHorizontal />
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <MoreHorizontal />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem
+                onClick={() => handleDelete(comment._id)}
+                asChild
+                className={cn(
+                  buttonVariants({
+                    variant: "destructive",
+                    className: "w-full hover:bg-destructive/70",
+                  })
+                )}
+              >
+                <span>Delete</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
 

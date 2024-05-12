@@ -1,10 +1,17 @@
-import { Router } from "express"
-import { verifyToken } from "../../middleware/token.middleware"
-import { addReply, comment, getComment, toggleLikeComment } from "../../controllers/comment.controller"
+import { Router } from "express";
+import { verifyToken } from "../../middleware/token.middleware";
+import {
+  addReply,
+  comment,
+  deleteComment,
+  getComment,
+  toggleLikeComment,
+} from "../../controllers/comment.controller";
 
 export default (router: Router) => {
-    router.post("/api/comment", verifyToken, comment)
-    router.get("/api/comment", getComment)
-    router.put("/api/comment", verifyToken, toggleLikeComment)
-    router.post("/api/comment/reply", verifyToken, addReply)
-}
+  router.post("/api/comment", verifyToken, comment);
+  router.get("/api/comment", getComment);
+  router.put("/api/comment", verifyToken, toggleLikeComment);
+  router.post("/api/comment/reply", verifyToken, addReply);
+  router.delete("/api/comment", verifyToken, deleteComment);
+};

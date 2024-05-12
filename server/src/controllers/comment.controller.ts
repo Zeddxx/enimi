@@ -2,11 +2,12 @@ import { Request, Response } from "express";
 import mongoose from "mongoose";
 import User from "../models/user.model";
 import { Comment, Reply } from "../models/comment.model";
+import { ObjectId } from "mongodb";
 
 export const comment = async (req: Request, res: Response) => {
   try {
     const userId = req.userId;
-    const { comment, animeId } = req.body;
+    const { comment, animeId, isSpoiler } = req.body;
 
     if (!userId) {
       return res.status(403).json({ message: "Access Denied!" });
@@ -21,6 +22,7 @@ export const comment = async (req: Request, res: Response) => {
       author: userId,
       comment,
       animeId,
+      isSpoiler,
     });
 
     await newComment.save();
@@ -124,5 +126,41 @@ export const addReply = async (req: Request, res: Response) => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+export const deleteComment = async (req: Request, res: Response) => {
+  try {
+    const userId = new ObjectId(req.userId);
+    const { commentId } = req.body;
+
+    if (!userId) {
+      res.status(403).json({ message: "Unauthorized!" });
+      return;
+    }
+
+    const comment = await Comment.findById(commentId);
+
+    if (!comment) {
+      res.status(404).json({ message: "comment doesn't exists!" });
+      return;
+    }
+    // console.log({
+    //   userId,
+    //   commentAuthorId: comment.author._id,
+    //   commentAuthor: userId.equals(comment.author._id)
+    // });
+
+    if (!userId.equals(comment.author._id)) {
+      res.status(403).json({ message: "Access Denied!" });
+      return;
+    }
+
+    await Comment.findByIdAndDelete(commentId);
+
+    return res.status(200).end();
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "something went wrong!" });
   }
 };
