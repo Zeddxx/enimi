@@ -4,6 +4,7 @@ import {
   getAnimeEpisodesById,
   getAnimeEpisodesStream,
   getAnimeInfoById,
+  getAnimeMovies,
   getAnimeRecommendationById,
   getPopularAnime,
   getSearchedAnime,
@@ -273,5 +274,41 @@ export const recents = async (req: Request, res: Response) => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "something went wrong!" });
+  }
+};
+
+export const movies = async (req: Request, res: Response) => {
+  try {
+    const moviesWithoutAnilistId = await getAnimeMovies();
+
+    if (!moviesWithoutAnilistId) {
+      res.status(400).json({ message: "cant find movies." });
+      return;
+    }
+
+    const promises = moviesWithoutAnilistId.results.map(async (anime) => {
+      try {
+        const movies = await mergeAnilistIdFromTitle(anime.title);
+
+        if (!movies) return null;
+        const anilistId = movies[0].id;
+        const animeId = anime.id + "-" + anilistId;
+        return { ...anime, animeId, anilistId };
+      } catch (error) {
+        console.log("cant merge anime!");
+        return null;
+      }
+    });
+
+    const mergedAnimeData = await Promise.all(promises);
+
+    const validMergedAnimeData = mergedAnimeData.filter(
+      (anime) => anime !== null
+    );
+
+    return res.status(200).json(validMergedAnimeData);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Something went wrong!" });
   }
 };

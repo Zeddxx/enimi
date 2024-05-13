@@ -1,8 +1,18 @@
 import axios from "axios";
 import "dotenv/config";
-import { IAnime, IAnimeInfo, IRecentAnime, IRecommendations, ISearchedAnime, ITrending } from "../types/anime.types";
+import {
+  IAnime,
+  IAnimeInfo,
+  IRecentAnime,
+  IRecommendations,
+  ISearchedAnime,
+  ITrending,
+} from "../types/anime.types";
 
-const baseUrl: string = process.env.NODE_ENV === "production" ? process.env.BACKEND_URL as string : "http://localhost:8080/api/v2";
+const baseUrl: string =
+  process.env.NODE_ENV === "production"
+    ? (process.env.BACKEND_URL as string)
+    : "http://localhost:8080/api/v2";
 const BASE_BACKEND_URL = process.env.BASE_BACKEND_URL as string;
 
 export const getTrendingAnime = async (limit: number, page: number) => {
@@ -71,7 +81,7 @@ export const getSearchedAnime = async (
         headers: { Accept: "application/json" },
       }
     );
-    return data as ISearchedAnime
+    return data as ISearchedAnime;
   } catch (error) {
     console.log(error);
     throw Error;
@@ -84,11 +94,14 @@ export const getAnimeEpisodesStream = async (id: string) => {
     // const { data } = await axios.get(baseUrl + `/stream/${id}`, {
     //   headers: { Accept: "application/json" },
     // });
-    const { data } = await axios.get(streamUrl + `/anime/gogoanime/watch/${id}`, {
-      headers: {
-        Accept: "application/json",
-      },
-    });
+    const { data } = await axios.get(
+      streamUrl + `/anime/gogoanime/watch/${id}`,
+      {
+        headers: {
+          Accept: "application/json",
+        },
+      }
+    );
     return data;
   } catch (error) {
     console.log(error);
@@ -125,27 +138,39 @@ export const scrapeEpisodes = async (id: string): Promise<Episode[]> => {
 
 export const fetchRecentAnimes = async () => {
   try {
-    const { data } = await axios.get(BASE_BACKEND_URL + "/api/v1/recentepisode/all");
+    const { data } = await axios.get(
+      BASE_BACKEND_URL + "/api/v1/recentepisode/all"
+    );
 
-    if(!data) return;
+    if (!data) return;
 
-    return data as IRecentAnime
+    return data as IRecentAnime;
   } catch (error) {
     console.log(error);
-    throw Error
+    throw Error;
   }
-}
+};
 
 export const mergeAnilistIdFromTitle = async (title: string) => {
-const CONSUMET_URL = process.env.CONSUMET_URL as string;
+  const CONSUMET_URL = process.env.CONSUMET_URL as string;
   try {
     const { data } = await axios.get(CONSUMET_URL + `/meta/anilist/${title}`);
 
-    if(!data) return;
+    if (!data) return;
 
     return data.results as IAnime[];
   } catch (error) {
     console.log(error);
-    throw Error
+    throw Error;
   }
-}
+};
+
+export const getAnimeMovies = async () => {
+  try {
+    const { data } = await axios.get(BASE_BACKEND_URL + "/api/v1/movies/1");
+    return data as IRecentAnime;
+  } catch (error) {
+    console.log(error);
+    throw Error;
+  }
+};

@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   episode,
   info,
+  movies,
   popular,
   recents,
   recommendations,
@@ -19,4 +20,5 @@ export default (router: Router) => {
   router.get("/api/search", searched);
   router.get("/api/recommendations", recommendations)
   router.get("/api/recents", recents)
+  router.get('/api/movies', movies)
 };
