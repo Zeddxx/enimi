@@ -13,7 +13,8 @@ export const verifyToken = async (req: Request, res: Response, next: NextFunctio
     const token = req.cookies['enimi_auth'];
 
     if(!token) {
-        return res.status(403).json({ message: "Access Denied!" })
+        res.status(403).json({ message: "Access Denied!" })
+        return;
     }
 
     try {
@@ -24,6 +25,7 @@ export const verifyToken = async (req: Request, res: Response, next: NextFunctio
         next();
     } catch (error) {
         console.log(error);
-        return res.status(403).json({ message: "Access Denied!" }) 
+        res.status(403).json({ message: "Access Denied!" }).end()
+        return;
     }
 }

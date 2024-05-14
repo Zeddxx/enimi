@@ -165,9 +165,9 @@ export const mergeAnilistIdFromTitle = async (title: string) => {
   }
 };
 
-export const getAnimeMovies = async () => {
+export const getAnimeMovies = async (page: string) => {
   try {
-    const { data } = await axios.get(BASE_BACKEND_URL + "/api/v1/movies/1");
+    const { data } = await axios.get(BASE_BACKEND_URL + `/api/v1/movies/${page}`);
     return data as IRecentAnime;
   } catch (error) {
     console.log(error);

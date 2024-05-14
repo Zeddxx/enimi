@@ -1,5 +1,14 @@
 import { BASE_URL } from "@/constants";
-import { IAnimeInfo, IEpisodeId, IRecents, IRecommendations, ISearchedAnime, IStreamingLinks, ITrending } from "@/types/anime.types";
+import {
+  IAnimeInfo,
+  IEpisodeId,
+  IMovies,
+  IRecents,
+  IRecommendations,
+  ISearchedAnime,
+  IStreamingLinks,
+  ITrending,
+} from "@/types/anime.types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // const BASE_URL: string = "http://localhost:4000";
@@ -12,13 +21,13 @@ export const api = createApi({
   }),
   refetchOnFocus: false,
   endpoints: (builder) => ({
-    getTrending: builder.query<ITrending, { limit: string, page: number }>({
+    getTrending: builder.query<ITrending, { limit: string; page: number }>({
       query: ({ limit, page }) => ({
         url: `/api/trending?limit=${limit}&page=${page}`,
         method: "GET",
       }),
     }),
-    getPopular: builder.query<ITrending, { limit: string, page: number }>({
+    getPopular: builder.query<ITrending, { limit: string; page: number }>({
       query: ({ limit, page }) => ({
         url: `/api/popular?limit=${limit}&page=${page}`,
         method: "GET",
@@ -48,16 +57,25 @@ export const api = createApi({
         method: "GET",
       }),
     }),
-    getSearchedAnime: builder.query<ISearchedAnime, { query: string, page: number }>({
-      query: ({ query, page }: { query: string, page: number }) => ({
+    getSearchedAnime: builder.query<
+      ISearchedAnime,
+      { query: string; page: number }
+    >({
+      query: ({ query, page }: { query: string; page: number }) => ({
         url: `/api/search?query=${query}&page=${page}`,
         method: "GET",
-      })
+      }),
     }),
     getRecentAnimes: builder.query<IRecents[], void>({
       query: () => ({
         url: "/api/recents",
-        method: "GET"
+        method: "GET",
+      }),
+    }),
+    getMovies: builder.query<IMovies[], { page: number }>({
+      query: ({ page } : { page: number }) => ({
+        url: `/api/movies?page=${page}`,
+        method: "GET",
       }),
     }),
   }),
@@ -71,5 +89,6 @@ export const {
   useGetAnimeEpisodeDetailsQuery,
   useGetEpisodeLinksQuery,
   useGetSearchedAnimeQuery,
-  useGetRecentAnimesQuery
+  useGetRecentAnimesQuery,
+  useGetMoviesQuery
 } = api;

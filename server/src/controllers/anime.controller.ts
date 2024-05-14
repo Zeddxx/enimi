@@ -279,7 +279,9 @@ export const recents = async (req: Request, res: Response) => {
 
 export const movies = async (req: Request, res: Response) => {
   try {
-    const moviesWithoutAnilistId = await getAnimeMovies();
+    const { page } = req.query;
+
+    const moviesWithoutAnilistId = await getAnimeMovies(page as string ?? 1);
 
     if (!moviesWithoutAnilistId) {
       res.status(400).json({ message: "cant find movies." });
@@ -291,11 +293,19 @@ export const movies = async (req: Request, res: Response) => {
         const movies = await mergeAnilistIdFromTitle(anime.title);
 
         if (!movies) return null;
+
         const anilistId = movies[0].id;
+
         const animeId = anime.id + "-" + anilistId;
-        return { ...anime, animeId, anilistId };
+        return {
+          ...anime,
+          animeId,
+          anilistId,
+          title: movies[0].title,
+          cover: movies[0].cover,
+          image: movies[0].image,
+        };
       } catch (error) {
-        console.log("cant merge anime!");
         return null;
       }
     });

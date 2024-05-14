@@ -14,7 +14,8 @@ export default (router: Router) => {
     "/api/auth/verify-token",
     verifyToken,
     (req: Request, res: Response) => {
-      return res.status(200).send({ userId: req.userId });
+      res.status(200).send({ userId: req.userId });
+      return;
     }
   );
   router.get("/api/auth/current-user", verifyToken, currentUser);

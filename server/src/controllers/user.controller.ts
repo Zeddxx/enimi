@@ -11,7 +11,8 @@ export const currentUser = async (req: Request, res: Response) => {
       .select("-password");
 
     if (!user) {
-      return res.status(400).json({ message: "Unauthorized!" });
+      res.status(400).json({ message: "Unauthorized!" });
+      return;
     }
 
     return res.json(user);

@@ -166,3 +166,13 @@ export type IRecents = {
   title: string
   anilistId: string
 }
+
+export type IMovies = {
+  anilistId: string
+  animeId: string
+  cover: null | string
+  id: string
+  image: string
+  released: string
+  title: ITitle
+}
