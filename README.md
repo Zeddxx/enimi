@@ -103,5 +103,12 @@ cd client && npm install && npm run dev
 running at http://localhost:5173
 ```
 
-  ## Deployment.
-  deploy your instance at **render** as i found it way more simple for MERN stack.
+## Deployment.
+deploy your instance at **render** as i found it way more simple for MERN stack.
+
+
+## Author or Maintainer
+<a href="https://github.com/Zeddxx">Zeddxx</a>
+
+### Footer
+Thankyou and please do give an star ⭐️ to motivate the developer.
