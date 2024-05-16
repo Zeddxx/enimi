@@ -107,35 +107,38 @@ export const info = async (req: Request, res: Response) => {
           "-" +
           animeInfo.id;
 
-    if (!animeInfo.id_provider || !animeInfo.id_provider.idGogo) {
-      try {
-        // searching for the anime by title in consumet gogo provider.
-        const { data } = await axios.get(
-          (process.env.CONSUMET_URL as string) +
-            `/anime/gogoanime/${animeInfo.title.userPreferred}`
-        );
+    // if (!animeInfo.id_provider || !animeInfo.id_provider.idGogo) {
+    //   try {
+    //     // searching for the anime by title in consumet gogo provider.
+    //     const { data } = await axios.get(
+    //       (process.env.CONSUMET_URL as string) +
+    //         `/anime/gogoanime/${animeInfo.title.userPreferred}`
+    //     );
 
-        // catching the id of the first result that matches the title.
-        const animeGogoId = data.results[0].id;
+    //     // catching the id of the first result that matches the title.
+    //     const animeGogoId = data.results[0].id;
 
-        // getting the episodes
-        const episodes = await scrapeEpisodes(animeGogoId);
+    //     // getting the episodes
+    //     const episodes = await scrapeEpisodes(animeGogoId);
 
-        // sending to the client
-        return res
-          .status(200)
-          .json({ ...animeInfo, animeId, anime_episodes: episodes.reverse() });
-      } catch (error) {
-        console.log(error);
-        return res.status(400).json({ message: "anime not found!" });
-      }
-    }
+    //     // sending to the client
+    //     return res
+    //       .status(200)
+    //       .json({ ...animeInfo, animeId, anime_episodes: episodes.reverse() });
+    //   } catch (error) {
+    //     console.log(error);
+    //     return res.status(400).json({ message: "anime not found!" });
+    //   }
+    // }
 
-    const episodes = await scrapeEpisodes(animeInfo.id_provider.idGogo);
+    // const episodes = await scrapeEpisodes(animeInfo.id_provider.idGogo);
+    const episodes = await getAnimeEpisodesById(animeInfo.id, "false");
 
-    return res
-      .status(200)
-      .json({ ...animeInfo, animeId, anime_episodes: episodes.reverse() });
+    return res.status(200).json({
+      ...animeInfo,
+      animeId,
+      anime_episodes: episodes.episodes,
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Something went wrong!" });
@@ -281,7 +284,7 @@ export const movies = async (req: Request, res: Response) => {
   try {
     const { page } = req.query;
 
-    const moviesWithoutAnilistId = await getAnimeMovies(page as string ?? 1);
+    const moviesWithoutAnilistId = await getAnimeMovies((page as string) ?? 1);
 
     if (!moviesWithoutAnilistId) {
       res.status(400).json({ message: "cant find movies." });

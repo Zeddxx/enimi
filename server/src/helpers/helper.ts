@@ -13,7 +13,9 @@ const baseUrl: string =
   process.env.NODE_ENV === "production"
     ? (process.env.BACKEND_URL as string)
     : "http://localhost:8080/api/v2";
-const BASE_BACKEND_URL = process.env.BASE_BACKEND_URL as string;
+
+// base backend url
+const BASE_BACKEND_URL: string = process.env.BASE_BACKEND_URL as string;
 
 export const getTrendingAnime = async (limit: number, page: number) => {
   try {
@@ -45,6 +47,11 @@ export const getPopularAnime = async (limit: number, page: number) => {
   }
 };
 
+/**
+ * A helper function to get the information about the anime. it take only one parameter which is the anilist id and returns the information about the anime.
+ * @param id anilist id should be numeric but in string format. eg: 21,
+ * @returns information related to the anime as AnimeInfo.
+ */
 export const getAnimeInfoById = async (id: string) => {
   try {
     const { data } = await axios.get(baseUrl + `/info/${id}`, {
@@ -57,6 +64,12 @@ export const getAnimeInfoById = async (id: string) => {
   }
 };
 
+/**
+ * A helper function to get the episodes in array format just by providing the anilist id as an parameter.
+ * @param id string { anilist id which is getting from the anilist api }
+ * @param isDub { typof string either "true" or "false" }
+ * @returns ArrayOf Episodes[]
+ */
 export const getAnimeEpisodesById = async (id: string, isDub: string) => {
   try {
     const { data } = await axios.get(baseUrl + `/episode/${id}?dub=${isDub}`, {
@@ -167,7 +180,9 @@ export const mergeAnilistIdFromTitle = async (title: string) => {
 
 export const getAnimeMovies = async (page: string) => {
   try {
-    const { data } = await axios.get(BASE_BACKEND_URL + `/api/v1/movies/${page}`);
+    const { data } = await axios.get(
+      BASE_BACKEND_URL + `/api/v1/movies/${page}`
+    );
     return data as IRecentAnime;
   } catch (error) {
     console.log(error);
