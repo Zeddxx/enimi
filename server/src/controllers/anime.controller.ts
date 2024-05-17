@@ -12,7 +12,6 @@ import {
   mergeAnilistIdFromTitle,
   scrapeEpisodes,
 } from "../helpers/helper";
-import axios from "axios";
 
 // /api/trending?page=&limit=
 export const trending = async (req: Request, res: Response) => {
@@ -127,13 +126,13 @@ export const info = async (req: Request, res: Response) => {
     //   }
     // }
 
-    // const episodes = await scrapeEpisodes(animeInfo.id_provider.idGogo);
-    const episodes = await getAnimeEpisodesById(animeInfo.id, "false");
+    const episodes = await scrapeEpisodes(animeInfo.id_provider.idGogo);
+    // const episodes = await getAnimeEpisodesById(animeInfo.id);
 
     return res.status(200).json({
       ...animeInfo,
       animeId,
-      anime_episodes: episodes.episodes,
+      anime_episodes: episodes,
     });
   } catch (error) {
     console.log(error);
@@ -181,11 +180,10 @@ export const searched = async (req: Request, res: Response) => {
 
 export const episode = async (req: Request, res: Response) => {
   try {
-    const { id, dub } = req.query;
-    const animeDub = dub ? (dub as string) : "false";
+    const { id } = req.query;
     const animeId = id as string;
 
-    const animeEpisode = await getAnimeEpisodesById(animeId, animeDub);
+    const animeEpisode = await getAnimeEpisodesById(animeId);
 
     return res.status(200).json(animeEpisode);
   } catch (error) {

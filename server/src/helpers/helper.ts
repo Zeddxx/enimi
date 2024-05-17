@@ -54,9 +54,9 @@ export const getPopularAnime = async (limit: number, page: number) => {
  */
 export const getAnimeInfoById = async (id: string) => {
   try {
-    const { data } = await axios.get(baseUrl + `/info/${id}`, {
-      headers: { "Content-Type": "application/json" },
-    });
+    // const { data } = await axios.get(baseUrl + `/info/${id}`);
+    const response = await fetch(baseUrl + `/info/${id}`);
+    const data = await response.json();
     return data as IAnimeInfo;
   } catch (error) {
     console.log(error);
@@ -70,9 +70,9 @@ export const getAnimeInfoById = async (id: string) => {
  * @param isDub { typof string either "true" or "false" }
  * @returns ArrayOf Episodes[]
  */
-export const getAnimeEpisodesById = async (id: string, isDub: string) => {
+export const getAnimeEpisodesById = async (id: string) => {
   try {
-    const { data } = await axios.get(baseUrl + `/episode/${id}?dub=${isDub}`, {
+    const { data } = await axios.get(baseUrl + `/episode/${id}`, {
       headers: { Accept: "application/json" },
     });
     return data;
