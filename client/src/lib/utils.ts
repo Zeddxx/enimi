@@ -1,4 +1,4 @@
-import { IAnimeEpisode } from "@/types/anime.types";
+import { IAnimeEpisode, INextAiringEpisode } from "@/types/anime.types";
 import { ExtendedError } from "@/types/more.types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -164,4 +164,32 @@ export function formatDBDate(dateString: string): string {
   } else {
     return `${monthDiff} ${monthDiff === 1 ? "month" : "months"} ago`;
   }
+}
+
+export function convertToReadableTime(nextAir: INextAiringEpisode | null) {
+  if(!nextAir) return;
+  const date = new Date(nextAir.airingAt * 1000);
+
+  const day = date.getUTCDate();
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const month = monthNames[date.getUTCMonth()];
+
+  const hours = date.getUTCHours().toString().padStart(2, '0');
+  const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+
+  // Determine the suffix for the day
+  const suffix = (day % 10 === 1 && day !== 11) ? 'st' :
+                 (day % 10 === 2 && day !== 12) ? 'nd' :
+                 (day % 10 === 3 && day !== 13) ? 'rd' : 'th';
+
+  return `${day}${suffix} ${month}, ${hours}:${minutes}`;
+}
+
+export function converUppercase(text: string) {
+  if(!text) return "";
+
+  const textArr = text.split(" ");
+  const mapperWords = textArr.map((word) => word.slice(0, 1).toUpperCase() + word.slice(1, word.length).toLowerCase())
+  const words = mapperWords.reduce((acc, curr) => `${acc} ${curr}`)
+  return words;
 }

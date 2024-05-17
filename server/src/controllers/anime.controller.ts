@@ -133,7 +133,7 @@ export const info = async (req: Request, res: Response) => {
     return res.status(200).json({
       ...animeInfo,
       animeId,
-      anime_episodes: episodes,
+      anime_episodes: episodes.reverse(),
     });
   } catch (error) {
     console.log(error);

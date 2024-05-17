@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/breadcrumb";
 
 // utils functions imports...
-import { cn } from "@/lib/utils";
+import { cn, converUppercase } from "@/lib/utils";
 
 // type imports
 import { IAnimeEpisode } from "@/types/anime.types";
@@ -40,7 +40,7 @@ const HistoryTree = ({ title, id, episodes, animeId }: Props) => {
                 .split(" ")
                 .join("-")}-${animeId}`}
             >
-              {title}
+              {converUppercase(title)}
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />

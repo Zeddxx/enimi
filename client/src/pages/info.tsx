@@ -7,6 +7,7 @@ import AnimeInfoTitleContainer from "@/components/shared/anime-info-title-contai
 import AnimePoster from "@/components/shared/anime-poster";
 import BannerImage from "@/components/shared/banner-image";
 import CommentSection from "@/components/shared/comment";
+import ShowMoreModal from "@/components/shared/show-more-modal";
 
 // utlity functions...
 import { formatDate } from "@/lib/utils";
@@ -69,6 +70,10 @@ const Info = () => {
                 className="info_description line-clamp-4"
                 dangerouslySetInnerHTML={{ __html: data.description }}
               ></p>
+              <ShowMoreModal
+                title={data.title.userPreferred}
+                description={data.description}
+              />
             </div>
 
             {/* anime genres[] */}
@@ -135,7 +140,10 @@ const Info = () => {
           <h3 className="sub_headings">Comments</h3>
 
           <div className="flex xl:flex-row flex-col gap-4">
-            <CommentSection title={data.title.userPreferred} animeId={animeId} />
+            <CommentSection
+              title={data.title.userPreferred}
+              animeId={animeId}
+            />
             <div className="max-w-xs w-full flex-shrink-0"></div>
           </div>
         </div>

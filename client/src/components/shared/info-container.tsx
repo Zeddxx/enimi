@@ -1,5 +1,6 @@
 import { IAnimeInfo } from "@/types/anime.types"
 import { Button } from "../ui/button"
+import { converUppercase } from "@/lib/utils"
 
 const InfoContainer = ({ info } : { info: IAnimeInfo }) => {
   
@@ -15,7 +16,7 @@ const InfoContainer = ({ info } : { info: IAnimeInfo }) => {
             </div>
             <div className="mt-1">
               <h1 className="text-xl font-semibold text-primary">
-                {info?.title.english ?? info?.title.userPreferred}
+                {converUppercase(info?.title.userPreferred)}
               </h1>
               <div className="flex flex-wrap gap-2 mt-2">
                 {info?.genres.map((genre) => (

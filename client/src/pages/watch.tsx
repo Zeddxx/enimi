@@ -7,7 +7,13 @@ import Episodes from "@/components/episodes";
 import Loader from "@/components/loader/loader";
 
 // utilites
-import { cn, destructureId, getEpisodeNavigation } from "@/lib/utils";
+import {
+  cn,
+  converUppercase,
+  convertToReadableTime,
+  destructureId,
+  getEpisodeNavigation,
+} from "@/lib/utils";
 
 // rtk queries
 import {
@@ -173,6 +179,18 @@ const Watch = () => {
               <ChevronLast className="h-4 w-4" />
             </button>
           </div>
+
+          {info?.nextair && (
+            <div className="w-full p-2 bg-muted">
+              <p className="w-fit mx-auto">
+                Next Episode of{" "}
+                <span className="text-primary underline underline-offset-1">
+                  {converUppercase(info?.title.userPreferred)}
+                </span>{" "}
+                will be aired at: {convertToReadableTime(info.nextair)}
+              </p>
+            </div>
+          )}
         </div>
 
         {/* A Brief Introduction. */}

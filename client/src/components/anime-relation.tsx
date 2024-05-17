@@ -10,7 +10,8 @@ const AnimeRelation = ({
 }) => {
   const filteredRelations = relation
     .filter((relation) => relation.type !== "MANGA")
-    .filter((anime) => anime.status !== "NOT_YET_RELEASED");
+    .filter((anime) => anime.status !== "NOT_YET_RELEASED")
+    .filter((anime) => anime.format !== "MUSIC")
 
   if (filteredRelations.length === 0) {
     return null;
@@ -22,7 +23,7 @@ const AnimeRelation = ({
       <div className="w-full gap-3 grid xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-5 sm:grid-cols-4">
         {filteredRelations.splice(0, 12).map((relation) => (
           <a
-            href={`/${
+            href={`/anime/${
               relation.title.userPreferred.toLowerCase().split(" ").join("-") +
               "-" +
               relation.id

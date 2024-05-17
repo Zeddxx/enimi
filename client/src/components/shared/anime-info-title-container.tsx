@@ -10,7 +10,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { IAnimeInfo } from "@/types/anime.types";
 
 // Utilities imports...
-import { cn } from "@/lib/utils";
+import { cn, convertToReadableTime } from "@/lib/utils";
 
 // react icons imports...
 import { IoBookmarkOutline, IoBookmark } from "react-icons/io5";
@@ -111,6 +111,9 @@ const AnimeInfoTitleContainer = ({ data }: { data: IAnimeInfo }) => {
         {data.nextair && (
           <p className="anime_utils">Next Episode: {data.nextair.episode}</p>
         )}
+        {data.nextair && (
+          <p className="anime_utils bg-primary">Next Airing: {convertToReadableTime(data?.nextair || null)}</p>
+        )}
       </div>
 
       {/* ANIME CTA BUTTON */}
@@ -123,7 +126,7 @@ const AnimeInfoTitleContainer = ({ data }: { data: IAnimeInfo }) => {
             })
           )}
         >
-          Watch - <span className="truncate ml-1">{data.title.english}</span>
+          Watch - <span className="truncate ml-1">{data.title.userPreferred}</span>
         </Link>
         {isBookmarked ? (
           <Button
