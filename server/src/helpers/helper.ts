@@ -55,7 +55,7 @@ export const getPopularAnime = async (limit: number, page: number) => {
 export const getAnimeInfoById = async (id: string) => {
   try {
     const { data } = await axios.get(baseUrl + `/info/${id}`, {
-      headers: { Accept: "application/json" },
+      headers: { "Content-Type": "application/json" },
     });
     return data as IAnimeInfo;
   } catch (error) {
