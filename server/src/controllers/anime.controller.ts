@@ -99,13 +99,9 @@ export const info = async (req: Request, res: Response) => {
     }
 
     const animeId =
-      animeInfo.title.english !== null
-        ? animeInfo.title.english.toLowerCase().split(" ").join("-") +
-          "-" +
-          animeInfo.id
-        : animeInfo.title.userPreferred.toLowerCase().split(" ").join("-") +
-          "-" +
-          animeInfo.id;
+      animeInfo.title.userPreferred.toLowerCase().split(" ").join("-") +
+      "-" +
+      animeInfo.id;
 
     // if (!animeInfo.id_provider || !animeInfo.id_provider.idGogo) {
     //   try {
