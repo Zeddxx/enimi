@@ -12,7 +12,7 @@ const AnimeCard = ({ anime }: { anime: IAnime }) => {
         <img
           src={anime.coverImage.large}
           alt="anime image poster"
-          className="group-hover:scale-105"
+          className="group-hover:scale-105 group-hover:brightness-50"
         />
         <span className="anime_card_hover">
           <MdOutlinePlayCircleFilled className="h-12 w-12 fill-primary" />

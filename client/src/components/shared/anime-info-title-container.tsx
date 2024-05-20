@@ -112,22 +112,37 @@ const AnimeInfoTitleContainer = ({ data }: { data: IAnimeInfo }) => {
           <p className="anime_utils">Next Episode: {data.nextair.episode}</p>
         )}
         {data.nextair && (
-          <p className="anime_utils bg-primary">Next Airing: {convertToReadableTime(data?.nextair || null)}</p>
+          <p className="anime_utils bg-primary">
+            Next Airing: {convertToReadableTime(data?.nextair || null)}
+          </p>
         )}
       </div>
 
       {/* ANIME CTA BUTTON */}
       <div className="w-full flex sm:flex-row flex-col gap-3 mt-3">
-        <Link
-          to={`/watch/${data?.anime_episodes[0].id}-${data.id}`}
-          className={cn(
-            buttonVariants({
-              className: "rounded-none w-full truncate",
-            })
-          )}
-        >
-          Watch - <span className="truncate ml-1">{data.title.userPreferred}</span>
-        </Link>
+        {data.anime_episodes.length > 0 ? (
+          <Link
+            to={`/watch/${data?.anime_episodes[0].id}-${data.id}`}
+            className={cn(
+              buttonVariants({
+                className: "rounded-none w-full truncate",
+              })
+            )}
+          >
+            Watch -{" "}
+            <span className="truncate ml-1">{data.title.userPreferred}</span>
+          </Link>
+        ) : (
+          <div
+            className={cn(
+              buttonVariants({
+                className: "rounded-none w-full truncate",
+              })
+            )}
+          >
+            No Episodes
+          </div>
+        )}
         {isBookmarked ? (
           <Button
             onClick={handleRemoveWatchList}
