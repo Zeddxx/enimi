@@ -103,8 +103,8 @@ cd client && npm install && npm run dev
 running at http://localhost:5173
 ```
 
-## Deployment.
-deploy your instance at **render** as i found it way more simple for MERN stack.
+## Bugs And Features.
+If you want to request some new features or want to point out some bugs please do open a issue and i will see into it. otherwise you can fix or add those feat. and create a pull request.
 
 
 ## Author or Maintainer
