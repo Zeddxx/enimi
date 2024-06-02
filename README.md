@@ -25,6 +25,7 @@
   <img src="https://img.shields.io/badge/React-ContextAPI-blue" alt="react badge" />
   <br/>
   <img src="https://img.shields.io/badge/React-Redux%20Toolkit%20Query-E63946" alt="rtk" />
+  <img src="https://img.shields.io/badge/Tanstack-query-red" alt="react badge" />
 </p>
 
 ## Why I Created Enimi?
