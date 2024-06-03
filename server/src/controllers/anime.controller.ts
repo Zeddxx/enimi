@@ -13,6 +13,7 @@ import {
   scrapeEpisodes,
 } from "../helpers/helper";
 import axios from "axios";
+import { createAnimeId } from "../lib/utils";
 
 // /api/trending?page=&limit=
 export const trending = async (req: Request, res: Response) => {
@@ -32,10 +33,11 @@ export const trending = async (req: Request, res: Response) => {
     );
 
     const trending = filterOutNotReleasedAnime.map((result) => {
-      const animeId =
-        result.title.userPreferred.toLowerCase().split(" ").join("-") +
-        "-" +
-        result.id;
+      const animeId = createAnimeId(
+        result.title.userPreferred,
+        result.title.english,
+        result.id
+      );
 
       return { ...result, animeId: animeId };
     });
@@ -65,10 +67,11 @@ export const popular = async (req: Request, res: Response) => {
     }
 
     const popular = anime.results.map((result) => {
-      const animeId =
-        result.title.userPreferred.toLowerCase().split(" ").join("-") +
-        "-" +
-        result.id;
+      const animeId = createAnimeId(
+        result.title.userPreferred,
+        result.title.english,
+        result.id
+      );
       return { ...result, animeId: animeId };
     });
 
@@ -98,10 +101,11 @@ export const info = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "Info not found!" });
     }
 
-    const animeId =
-      animeInfo.title.userPreferred.toLowerCase().split(" ").join("-") +
-      "-" +
-      animeInfo.id;
+    const animeId = createAnimeId(
+      animeInfo.title.userPreferred,
+      animeInfo.title.english,
+      animeInfo.id
+    );
 
     if (!animeInfo.id_provider || !animeInfo.id_provider.idGogo) {
       try {
@@ -160,10 +164,11 @@ export const searched = async (req: Request, res: Response) => {
     }
 
     const anime = searchAnime.results.map((anime) => {
-      const animeId =
-        anime.title.userPreferred.toLowerCase().split(" ").join("-") +
-        "-" +
-        anime.id;
+      const animeId = createAnimeId(
+        anime.title.userPreferred,
+        anime.title.english,
+        anime.id
+      );
       return { ...anime, animeId };
     });
 
@@ -225,13 +230,11 @@ export const recommendations = async (req: Request, res: Response) => {
     const recommendations = await getAnimeRecommendationById(id as string);
 
     const animes = recommendations.results.map((anime) => {
-      const animeId = anime.title.english
-        ? anime.title.english.toLowerCase().split(" ").join("-") +
-          "-" +
-          anime.id
-        : anime.title.userPreferred.toLowerCase().split(" ").join("-") +
-          "-" +
-          anime.id;
+      const animeId = createAnimeId(
+        anime.title.userPreferred,
+        anime.title.english,
+        anime.id
+      );
       return { ...anime, animeId };
     });
 
