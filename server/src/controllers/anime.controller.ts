@@ -66,7 +66,7 @@ export const popular = async (req: Request, res: Response) => {
 
     const popular = anime.results.map((result) => {
       const animeId =
-        result.title.english.toLowerCase().split(" ").join("-") +
+        result.title.userPreferred.toLowerCase().split(" ").join("-") +
         "-" +
         result.id;
       return { ...result, animeId: animeId };
