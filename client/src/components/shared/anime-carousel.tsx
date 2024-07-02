@@ -38,7 +38,7 @@ const AnimeCarousel = ({ animes }: { animes: IAnime[] }) => {
             key={anime.id}
           >
             <div className="w-full h-full relative">
-              <div className="absolute h-full w-[75%] right-0 -z-10 before:h-full before:absolute before:w-1/2 before:bg-gradient-to-r before:from-white before:dark:from-[#121212] before:dark:via-[#121212]/90 before:-left-2 before:to-transparent">
+              <div className="absolute h-full w-[75%] right-0 -z-10 [mask-image:linear-gradient(to_right,transparent,white)]">
                 <img
                   src={anime.bannerImage ?? anime.coverImage.extraLarge}
                   alt="anime image"
