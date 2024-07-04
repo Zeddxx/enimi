@@ -1,9 +1,12 @@
 import Loader from "@/components/loader/loader";
-import { useGetMoviesQuery } from "@/redux/api";
+import LoadMore from "@/components/shared/load-more";
+import { useInfiniteMovies } from "@/lib/react-query";
+import React from "react";
 import { MdOutlinePlayCircleFilled } from "react-icons/md";
 
 const Movies = () => {
-  const { data, isLoading } = useGetMoviesQuery({ page: 1 });
+  const { data, hasNextPage, fetchNextPage, isLoading } = useInfiniteMovies();
+  const movies = React.useMemo(() => data?.pages.flat(), [data?.pages]);
 
   if (isLoading) {
     return <Loader />;
@@ -15,8 +18,8 @@ const Movies = () => {
         <h1 className="text-4xl font-medium mb-6 text-primary">Movies</h1>
 
         <div className="anime_card_wrapper">
-          {data?.map((anime) => (
-            <div key={anime.id} className="h-full">
+          {movies?.map((anime, idx) => (
+            <div key={anime.id + idx} className="h-full">
               <a
                 href={`/anime/${anime.animeId}`}
                 title={anime.title.userPreferred}
@@ -47,6 +50,8 @@ const Movies = () => {
             </div>
           ))}
         </div>
+
+        {hasNextPage && <LoadMore fetchNextPage={fetchNextPage} />}
       </div>
     </section>
   );

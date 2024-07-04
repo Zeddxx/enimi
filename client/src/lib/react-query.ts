@@ -1,5 +1,5 @@
 import { BASE_URL } from "@/constants";
-import { IAnime } from "@/types/anime.types";
+import { IAnime, IMovies } from "@/types/anime.types";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 async function fetchPopularAnime({
@@ -77,6 +77,36 @@ export function useInfiniteTrendingAnimes() {
       if (firstPageParam <= 1) {
         return undefined;
       }
+      return firstPageParam - 1;
+    },
+  });
+}
+
+const getMovies = async ({ pageParam }: { pageParam: number }) => {
+  try {
+    const res = await fetch(BASE_URL + `/api/movies?page=${pageParam}`);
+    if (!res.ok) {
+      throw new Error("something went wrong!");
+    }
+
+    const data = await res.json();
+    return data as IMovies[];
+  } catch (error) {
+    throw new Error("Failed to get movies from api!");
+  }
+};
+
+export function useInfiniteMovies() {
+  return useInfiniteQuery({
+    queryKey: ["anime_movies"],
+    queryFn: ({ pageParam }) => getMovies({ pageParam }),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, _, lastPageParam) => {
+      if (lastPage?.length === 0) return undefined;
+      return lastPageParam + 1;
+    },
+    getPreviousPageParam: (_, __, firstPageParam) => {
+      if (firstPageParam <= 1) return undefined;
       return firstPageParam - 1;
     },
   });
