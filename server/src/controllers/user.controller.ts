@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import User from "../models/user.model";
 import WatchLater from "../models/watch-later";
 import Watching from "../models/currently-watching";
+import mongoose from "mongoose";
 
 export const currentUser = async (req: Request, res: Response) => {
   try {
@@ -166,6 +167,35 @@ export const getCurrentlyWatching = async (req: Request, res: Response) => {
     const currentlyWatching = await Watching.find({ owner: userId });
 
     return res.status(200).json(currentlyWatching);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "something went wrong!" });
+  }
+};
+
+export const deleteCurrentlyWatching = async (req: Request, res: Response) => {
+  try {
+    const userId = req.userId;
+    const { episodeId } = req.body;
+
+    if(!episodeId) {
+      return res.status(404).json({ message: "missing episode"})
+    }
+
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ message: "Invalid user ID." });
+    }
+
+    const result = await Watching.findOneAndDelete({
+      owner: userId,
+      episodeId: episodeId,
+    });
+
+    if (!result) {
+      return res.status(404).json({ message: "Anime not found." });
+    }
+
+    return res.status(200).json({ message: "anime finded!" });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "something went wrong!" });

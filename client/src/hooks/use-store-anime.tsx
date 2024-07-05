@@ -1,3 +1,5 @@
+import React from "react";
+
 type CurrentlyWatching = {
   episodeId: string;
   title: string;
@@ -6,13 +8,18 @@ type CurrentlyWatching = {
 };
 
 export default function useLocalStorage() {
-  function getAnimeWatched(): CurrentlyWatching[] | null {
+  const [animeWatched, setAnimeWatched] = React.useState<
+    CurrentlyWatching[] | null
+  >(getInitialWatched);
+
+  function getInitialWatched(): CurrentlyWatching[] | null {
     if (typeof window !== "undefined") {
-      const watched = localStorage.getItem("watched");
+      const watched = window.localStorage.getItem("watched");
       if (watched !== null) {
         return JSON.parse(watched);
       }
     }
+
     return null;
   }
 
@@ -42,6 +49,7 @@ export default function useLocalStorage() {
 
       // Save the updated array back to local storage
       localStorage.setItem("watched", JSON.stringify(toSave));
+      setAnimeWatched(toSave);
     }
   }
 
@@ -56,12 +64,17 @@ export default function useLocalStorage() {
         const updatedAnime = toRemove.filter((item) => item.episodeId !== id);
 
         localStorage.setItem("watched", JSON.stringify(updatedAnime));
+        setAnimeWatched(updatedAnime);
       }
     }
   }
 
+  React.useEffect(() => {
+    setAnimeWatched(getInitialWatched());
+  }, []);
+
   return {
-    getAnimeWatched,
+    animeWatched,
     setAnimeWatch,
     deleteAnime,
   };

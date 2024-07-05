@@ -107,6 +107,15 @@ export const auth = createApi({
       }),
       providesTags: ["currently-watching"],
     }),
+    deleteWatching: builder.mutation({
+      query: (body) => ({
+        url: `/api/watching`,
+        method: "DELETE",
+        credentials: "include",
+        body,
+      }),
+      invalidatesTags: (_, err) => (err ? [] : ["currently-watching"]),
+    }),
     getCommentsFromId: builder.query<IComment[], { id: string }>({
       query: ({ id }: { id: string }) => ({
         url: `/api/comment?id=${id}`,
@@ -143,16 +152,16 @@ export const auth = createApi({
       invalidatesTags: (_, err) => (err ? [] : ["comments"]),
     }),
     deleteComment: builder.mutation({
-      query: ({ id } : { id: string }) => ({
+      query: ({ id }: { id: string }) => ({
         url: "/api/comment",
         method: "DELETE",
         body: {
-          commentId: id
+          commentId: id,
         },
         credentials: "include",
       }),
-      invalidatesTags: (_, err) => err ? [] : ['comments']
-    })
+      invalidatesTags: (_, err) => (err ? [] : ["comments"]),
+    }),
   }),
 });
 
@@ -171,5 +180,6 @@ export const {
   useAddCommentMutation,
   useToggleLikeMutation,
   useAddReplyMutation,
-  useDeleteCommentMutation
+  useDeleteCommentMutation,
+  useDeleteWatchingMutation,
 } = auth;

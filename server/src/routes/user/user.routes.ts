@@ -4,6 +4,7 @@ import {
   addCurrentlyWatching,
   addWatchLater,
   currentUser,
+  deleteCurrentlyWatching,
   deleteWatchLater,
   getCurrentlyWatching,
   getWatchLater,
@@ -23,5 +24,6 @@ export default (router: Router) => {
   router.get("/api/get-watch-later", verifyToken, getWatchLater);
   router.delete("/api/delete-watch-later", verifyToken, deleteWatchLater);
   router.post("/api/watching", verifyToken, addCurrentlyWatching);
-  router.get("/api/get-watching", verifyToken,getCurrentlyWatching);
+  router.delete("/api/watching", verifyToken, deleteCurrentlyWatching);
+  router.get("/api/get-watching", verifyToken, getCurrentlyWatching);
 };

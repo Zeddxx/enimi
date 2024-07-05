@@ -1,21 +1,37 @@
 import { useAuth } from "@/context";
 import useLocalStorage from "@/hooks/use-store-anime";
-import { useGetCurrentlyWatchingQuery } from "@/redux/auth";
+import {
+  useDeleteWatchingMutation,
+  useGetCurrentlyWatchingQuery,
+} from "@/redux/auth";
+import { Trash } from "lucide-react";
 import { MdOutlinePlayCircleFilled } from "react-icons/md";
+import { Button } from "./ui/button";
+import React from "react";
 
 const ContinueWatching = () => {
   const { data, isLoading } = useGetCurrentlyWatchingQuery();
-  const { getAnimeWatched } = useLocalStorage();
+  const { animeWatched, deleteAnime } = useLocalStorage();
   const { isLoggedIn } = useAuth();
+  const [deleteWatchingById] = useDeleteWatchingMutation();
 
   if (isLoading) return <p>loading...</p>;
 
   if (
     (isLoggedIn && data?.length === 0) ||
-    (!isLoggedIn && getAnimeWatched()?.length === 0)
+    (!isLoggedIn && animeWatched?.length === 0)
   ) {
     return <p>No recent animes!</p>;
   }
+
+  const handleDeleteWatching = (e: React.MouseEvent, id: string) => {
+    e.preventDefault();
+    if (!isLoggedIn) {
+      deleteAnime(id);
+    }
+
+    deleteWatchingById({ episodeId: id }).unwrap();
+  };
 
   if (isLoggedIn)
     return (
@@ -40,6 +56,16 @@ const ContinueWatching = () => {
                   Ep {anime.episodeNumber ?? 0}
                 </p>
               </div>
+
+              <div className="absolute -bottom-full w-full p-3 group-hover:bottom-0  duration-300">
+                <Button
+                  onClick={(e) => handleDeleteWatching(e, anime.episodeId)}
+                  variant="outline"
+                  className="w-full"
+                >
+                  <Trash className="" />
+                </Button>
+              </div>
             </a>
             <h5 className="mt-2 font-medium">
               <a
@@ -56,7 +82,7 @@ const ContinueWatching = () => {
 
   return (
     <div className="anime_card_wrapper">
-      {getAnimeWatched()?.map((anime) => (
+      {animeWatched?.map((anime) => (
         <div className="sm:aspect-[12/16] aspect-[9/14]" key={anime.episodeId}>
           <a
             href={`/watch/${anime.episodeId}`}
@@ -74,6 +100,15 @@ const ContinueWatching = () => {
               <p className="bg-primary px-3 py-px text-sm rounded">
                 Ep {anime.episodeNumber ?? 0}
               </p>
+            </div>
+            <div className="absolute -bottom-full w-full p-3 group-hover:bottom-0  duration-300">
+              <Button
+                onClick={(e) => handleDeleteWatching(e, anime.episodeId)}
+                variant="outline"
+                className="w-full"
+              >
+                <Trash className="" />
+              </Button>
             </div>
           </a>
           <h5 className="mt-2 font-medium">
