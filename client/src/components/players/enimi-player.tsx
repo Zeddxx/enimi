@@ -92,7 +92,7 @@ const EnimiPlayer = ({ sources, id }: EnimiPlayerProps) => {
     playsInline: true,
     autoPlayback: true,
     airplay: true,
-    theme: "#D6510D",
+    theme: "#E11D48",
     moreVideoAttr: {
       crossOrigin: "anonymous",
     },
