@@ -113,3 +113,10 @@ If you want to request some new features or want to point out some bugs please d
 
 ### Footer
 Thankyou and please do give an star ⭐️ to motivate the developer.
+
+## Prerequisites
+- Person should have knowledge of server side rendering and client side rendering.
+- Person should know how react.js with typescript works (beginner can adapt it faster).
+- Have a keen knowledge of `react-router-dom`.
+- Should know how to use `react-tanstack-query` and `redux-toolkit-query` for api fetching.
+- Have worked with state management library such as `redux` or `zustand` or `useContext`.
