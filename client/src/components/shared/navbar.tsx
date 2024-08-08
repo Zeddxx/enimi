@@ -60,9 +60,6 @@ const Navbar = () => {
               className="h-full w-full object-cover"
             />
           </span>
-          {/* <p className="font-medium text-2xl ml-2 hidden lg:block text-pretty text-primary">
-            enimi
-          </p> */}
         </Link>
       </div>
 

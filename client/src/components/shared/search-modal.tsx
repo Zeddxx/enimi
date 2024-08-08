@@ -19,9 +19,20 @@ import { Search } from "lucide-react";
 
 // utility functions imports...
 import { cn } from "@/lib/utils";
+import useDebounce from "@/hooks/use-debounce";
+import SearchSuggestions from "../search/search-suggestions";
+import { useLocation } from "react-router-dom";
 
 const SearchModal = () => {
   const [query, setQuery] = React.useState<string>("");
+  const [debouncedValue, setDebouncedValue] = React.useState<string>("");
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const { pathname } = useLocation();
+
+  //debounce function
+  const search = useDebounce((value: string) => {
+    setDebouncedValue(value);
+  }, 500);
 
   // SENDING TO SEARCH ROUTE WITH THE QUERY
   const handleSearch = () => {
@@ -29,10 +40,28 @@ const SearchModal = () => {
     window.location.assign(`/search?a=${constructedURI}`);
   };
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setQuery(value);
+    search(value);
+  };
+
+  const handleClose = () => {
+    setQuery("");
+    setDebouncedValue("");
+    setIsOpen(!isOpen);
+  };
+
+  React.useEffect(() => {
+    if (isOpen) {
+      setIsOpen(false);
+    }
+  }, [pathname]);
   return (
     <div>
-      <Dialog>
+      <Dialog onOpenChange={handleClose} open={isOpen}>
         <DialogTrigger
+          onClick={() => setIsOpen(true)}
           className={cn(buttonVariants({ variant: "outline", size: "icon" }))}
         >
           <Search className="h-5 w-5" />
@@ -51,8 +80,9 @@ const SearchModal = () => {
                   handleSearch();
                 }
               }}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={handleChange}
               placeholder="Search Anime..."
+              value={query}
             />
           </div>
           <DialogFooter className="w-full">
@@ -65,6 +95,10 @@ const SearchModal = () => {
               Search <Search className="ml-2" />
             </Button>
           </DialogFooter>
+
+          {debouncedValue.length > 2 && (
+            <SearchSuggestions setIsOpen={setIsOpen} value={debouncedValue} />
+          )}
         </DialogContent>
       </Dialog>
     </div>

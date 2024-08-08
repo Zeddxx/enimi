@@ -73,7 +73,7 @@ export const api = createApi({
       }),
     }),
     getMovies: builder.query<IMovies[], { page: number }>({
-      query: ({ page } : { page: number }) => ({
+      query: ({ page }: { page: number }) => ({
         url: `/api/movies?page=${page}`,
         method: "GET",
       }),
@@ -90,5 +90,5 @@ export const {
   useGetEpisodeLinksQuery,
   useGetSearchedAnimeQuery,
   useGetRecentAnimesQuery,
-  useGetMoviesQuery
+  useGetMoviesQuery,
 } = api;
