@@ -49,6 +49,7 @@ I was much more comfortable with Next.js and wanted to create something using a 
   - [x] Popular Anime
   - [x] Search Anime
   - [x] Recently Added Anime
+  - [x] Get anime search suggestions.
 
 ## .env (inside server root directory)
 
