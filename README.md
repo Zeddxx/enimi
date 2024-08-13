@@ -50,6 +50,10 @@ I was much more comfortable with Next.js and wanted to create something using a 
   - [x] Search Anime
   - [x] Recently Added Anime
   - [x] Get anime search suggestions.
+- [ ] Admin dashboard
+  - [ ] Admin can see website analytics.
+  - [ ] Can have authority to delete unwanted comments.
+- [ ] User Dashboard
 
 ## .env (inside server root directory)
 
